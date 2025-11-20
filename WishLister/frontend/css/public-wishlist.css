@@ -10,7 +10,7 @@
 }
 
     .back-to-home a {
-        color: #4f46e5;
+        color: #ff69b4;
         text-decoration: none;
         font-weight: 500;
     }
@@ -448,9 +448,7 @@
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #4f46e5;
     background: #f3f4f6;
-    /* Fallback цвет если изображение не загрузится */
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 

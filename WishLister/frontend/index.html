@@ -7,12 +7,34 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Анимированный фон с картинками -->
+    <div class="background-animation">
+        <img src="images/background-gift.png" class="bg-picture size-large" alt="Подарок">
+        <img src="images/background-gift.png" class="bg-picture size-medium" alt="Подарок">
+        <img src="images/background-gift.png" class="bg-picture size-small" alt="Подарок">
+        <img src="images/background-gift.png" class="bg-picture size-large" alt="Подарок">
+        <img src="images/background-gift.png" class="bg-picture size-medium" alt="Подарок">
+        <img src="images/background-gift.png" class="bg-picture size-small" alt="Подарок">
+        <img src="images/background-gift.png" class="bg-picture size-large" alt="Подарок">
+        <img src="images/background-gift.png" class="bg-picture size-medium" alt="Подарок">
+        <img src="images/background-gift.png" class="bg-picture size-small" alt="Подарок">
+        <img src="images/background-gift.png" class="bg-picture size-large" alt="Подарок">
+        <img src="images/background-gift.png" class="bg-picture size-medium" alt="Подарок">
+        <img src="images/background-gift.png" class="bg-picture size-small" alt="Подарок">
+        <img src="images/background-gift.png" class="bg-picture size-large" alt="Подарок">
+        <img src="images/background-gift.png" class="bg-picture size-medium" alt="Подарок">
+        <img src="images/background-gift.png" class="bg-picture size-small" alt="Подарок">
+        <img src="images/background-gift.png" class="bg-picture size-large" alt="Подарок">
+    </div>
     <div id="app">
         <!-- Landing Page -->
         <div id="landing-page" class="page active">
             <div class="container">
                 <header class="landing-header">
-                    <h1>🎁 WishLister</h1>
+                    <div class="logo-container">
+                        <img src="images/logo-gift.png" alt="WishLister" class="site-logo">
+                        <h1>WishLister</h1>
+                    </div>
                     <p class="tagline">Создавай списки желаний и получай именно те подарки, о которых мечтаешь!</p>
                 </header>
 
@@ -111,8 +133,10 @@
         <div id="app-page" class="page">
             <header class="app-header">
                 <div class="header-content">
-                    <h1>🎁 WishLister</h1>
-                    <nav class="main-nav">
+                    <div class="logo-container">
+                        <img src="images/logo-gift.png" alt="WishLister" class="site-logo">
+                        <h1>WishLister</h1>
+                    </div>                    <nav class="main-nav">
                         <button class="nav-btn active" data-page="my-wishlists">Мои вишлисты</button>
                         <button class="nav-btn" data-page="friend-wishlists">Вишлисты друзей</button>
                         <button class="nav-btn" data-page="profile">Профиль</button>
@@ -229,19 +253,19 @@
                         <div class="theme-selector">
                             <div class="theme-option" data-theme-id="1">
                                 <div class="theme-preview" style="background: #fff0f5; border-color: #ff69b4;"></div>
-                                <span>🎀 Розовая</span>
+                                <span>Розовая</span>
                             </div>
                             <div class="theme-option" data-theme-id="2">
                                 <div class="theme-preview" style="background: #f0f8ff; border-color: #1e90ff;"></div>
-                                <span>🔵 Синяя</span>
+                                <span>Синяя</span>
                             </div>
                             <div class="theme-option" data-theme-id="3">
                                 <div class="theme-preview" style="background: #f0fff0; border-color: #32cd32;"></div>
-                                <span>🍏 Зеленая</span>
+                                <span>Зеленая</span>
                             </div>
                             <div class="theme-option" data-theme-id="4">
                                 <div class="theme-preview" style="background: #f8f0ff; border-color: #8a2be2;"></div>
-                                <span>☂️ Фиолетовая</span>
+                                <span>Фиолетовая</span>
                             </div>
                         </div>
                         <span class="error-message" id="wishlist-theme-error"></span>

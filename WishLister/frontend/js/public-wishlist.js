@@ -51,48 +51,48 @@
 
         // Создаем основную структуру
         container.innerHTML = `
-        <div class="public-wishlist-header" id="public-wishlist-header">
-            <div class="wishlist-header-main">
-                <h1 id="public-wishlist-title">${this.escapeHtml(wishlist.title)}</h1>
-                <div class="wishlist-header-bottom">
-                    <div class="wishlist-info">
-                        ${wishlist.description && wishlist.description.trim() !== '' ?
-                `<p id="public-wishlist-description" class="wishlist-description">${this.escapeHtml(wishlist.description)}</p>` :
-                ''
-            }
-                        ${eventDateDisplay ?
-                `<div class="wishlist-event-date">${eventDateDisplay}</div>` :
-                ''
-            }
-                    </div>
-                    <div class="wishlist-page-actions">
-                        <a href="/" class="btn btn-outline">← На главную</a>
+            <div class="public-wishlist-header" id="public-wishlist-header">
+                <div class="wishlist-header-main">
+                    <h1 id="public-wishlist-title">${this.escapeHtml(wishlist.title)}</h1>
+                    <div class="wishlist-header-bottom">
+                        <div class="wishlist-info">
+                            ${wishlist.description && wishlist.description.trim() !== '' ?
+                        `<p id="public-wishlist-description" class="wishlist-description">${this.escapeHtml(wishlist.description)}</p>` :
+                        ''
+                    }
+                            ${eventDateDisplay ?
+                        `<div class="wishlist-event-date">${eventDateDisplay}</div>` :
+                        ''
+                    }
+                        </div>
+                        <div class="wishlist-page-actions">
+                            <a href="/" class="btn btn-outline">← На главную</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="public-actions" id="public-wishlist-actions" style="display: none;">
-            <!-- Будет заполнено ниже -->
-        </div>
+            <div class="public-actions" id="public-wishlist-actions" style="display: none;">
+                <!-- Будет заполнено ниже -->
+            </div>
 
-        <div id="public-wishlist-items" class="items-grid">
-            <!-- Подарки будут здесь -->
-        </div>
+            <div id="public-wishlist-items" class="items-grid">
+                <!-- Подарки будут здесь -->
+            </div>
 
-        <!-- Модальное окно для просмотра подарка -->
-        <div id="public-item-modal" class="modal">
-            <div class="modal-content wide-modal">
-                <div class="modal-header">
-                    <h3 id="public-item-modal-title">Детали подарка</h3>
-                    <button class="close-modal" onclick="publicWishlistApp.closePublicItemModal()">&times;</button>
-                </div>
-                <div id="public-item-modal-content">
-                    <!-- Сюда будет загружаться информация о подарке -->
+            <!-- Модальное окно для просмотра подарка -->
+            <div id="public-item-modal" class="modal">
+                <div class="modal-content wide-modal">
+                    <div class="modal-header">
+                        <h3 id="public-item-modal-title">Детали подарка</h3>
+                        <button class="close-modal" onclick="publicWishlistApp.closePublicItemModal()">&times;</button>
+                    </div>
+                    <div id="public-item-modal-content">
+                        <!-- Сюда будет загружаться информация о подарке -->
+                    </div>
                 </div>
             </div>
-        </div>
-    `;
+        `;
 
         // Применяем тему
         const headerElement = document.getElementById('public-wishlist-header');
@@ -108,17 +108,17 @@
         const actionsElement = document.getElementById('public-wishlist-actions');
         if (!isOwner) {
             actionsElement.innerHTML = `
-            <button id="save-friend-wishlist" class="btn btn-primary theme-button-${wishlist.theme.id}">
-                💾 Запомнить вишлист друга
-            </button>
-            <p class="action-hint">Войдите или зарегистрируйтесь, чтобы сохранить этот вишлист и бронировать подарки</p>
-        `;
+        <button id="save-friend-wishlist" class="btn btn-primary theme-button-${wishlist.theme.id}">
+            💾 Запомнить вишлист друга
+        </button>
+        <p class="action-hint">Войдите или зарегистрируйтесь, чтобы сохранить этот вишлист и бронировать подарки</p>
+    `;
             actionsElement.style.display = 'block';
         } else {
             actionsElement.innerHTML = `
-            <p class="owner-notice">👋 Это ваш вишлист! Друзья не увидят, какие подарки забронированы.</p>
-            <p class="action-hint">Поделитесь этой ссылкой с друзьями, чтобы они могли посмотреть ваш вишлист</p>
-        `;
+        <p class="owner-notice">👋 Это ваш вишлист!</p>
+        <p class="action-hint">Поделитесь этой ссылкой с друзьями, чтобы они могли посмотреть ваш вишлист</p>
+    `;
             actionsElement.style.display = 'block';
         }
 
@@ -129,37 +129,37 @@
         const itemsContainer = document.getElementById('public-wishlist-items');
         if (wishlist.items && wishlist.items.length > 0) {
             itemsContainer.innerHTML = wishlist.items.map(item => `
-            <div class="item-card ${item.isReserved && !isOwner ? 'reserved' : ''}">
-                ${item.imageUrl ? `
-                    <img src="${item.imageUrl}" alt="${this.escapeHtml(item.title)}" class="item-image"
-                         onerror="this.style.display='none'">
-                ` : ''}
-                <h3 class="item-title">${this.escapeHtml(item.title)}</h3>
-                ${item.price ? `<div class="item-price">${item.price.toLocaleString('ru-RU')} ₽</div>` : ''}
-                ${item.description ? `<p class="item-description">${this.escapeHtml(item.description)}</p>` : ''}
-                <div class="desire-level">
-                    ${'💖'.repeat(item.desireLevel)}${'🤍'.repeat(3 - item.desireLevel)}
-                </div>
-                <div class="item-meta">
-                    <div class="item-actions">
-                        <button class="btn btn-outline theme-button-${wishlist.theme.id}" 
-                                onclick="publicWishlistApp.viewPublicItem(${item.id})">
-                            Посмотреть
-                        </button>
+                <div class="item-card"> <!-- ИСПРАВЛЕНО: убран класс reserved -->
+                    ${item.imageUrl ? `
+                        <img src="${item.imageUrl}" alt="${this.escapeHtml(item.title)}" class="item-image"
+                             onerror="this.style.display='none'">
+                    ` : ''}
+                    <h3 class="item-title">${this.escapeHtml(item.title)}</h3>
+                    ${item.price ? `<div class="item-price">${item.price.toLocaleString('ru-RU')} ₽</div>` : ''}
+                    ${item.description ? `<p class="item-description">${this.escapeHtml(item.description)}</p>` : ''}
+                    <div class="desire-level">
+                        ${'💖'.repeat(item.desireLevel)}${'🤍'.repeat(3 - item.desireLevel)}
+                    </div>
+                    <div class="item-meta">
+                        <div class="item-actions">
+                            <button class="btn btn-outline theme-button-${wishlist.theme.id}" 
+                                    onclick="publicWishlistApp.viewPublicItem(${item.id})">
+                                Посмотреть
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        `).join('');
+            `).join('');
 
             // Применяем белый фон к контейнеру подарков
             itemsContainer.className = 'items-grid public-items-container';
         } else {
             itemsContainer.innerHTML = `
-            <div class="empty-state">
-                <h3>В этом вишлисте пока нет подарков</h3>
-                ${isOwner ? '<p>Добавьте первый подарок в своем аккаунте</p>' : '<p>Ваш друг ещё не добавил желаемые подарки</p>'}
-            </div>
-        `;
+        <div class="empty-state">
+            <h3>В этом вишлисте пока нет подарков</h3>
+            ${isOwner ? '<p>Добавьте первый подарок в своем аккаунте</p>' : '<p>Ваш друг ещё не добавил желаемые подарки</p>'}
+        </div>
+    `;
             itemsContainer.className = 'empty-items-container';
         }
     }
@@ -260,11 +260,7 @@
                 <div class="desire-level">
                     ${'💖'.repeat(item.desireLevel)}${'🤍'.repeat(3 - item.desireLevel)}
                 </div>
-                ${item.isReserved && !isOwner ? `
-                    <div class="reservation-status">
-                        ⏳ Уже забронирован
-                    </div>
-                ` : ''}
+                <!-- УБРАНО: статус бронирования для публичного просмотра -->
             </div>
             <div class="item-details-right">
                 ${item.description ? `<p class="item-description"><strong>Описание:</strong> ${this.escapeHtml(item.description)}</p>` : ''}

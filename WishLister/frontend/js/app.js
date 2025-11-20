@@ -918,8 +918,9 @@
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
-    }
+    };
 }
 
 // Инициализация приложения
 const app = new WishListerApp();
+

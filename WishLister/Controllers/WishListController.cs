@@ -127,9 +127,11 @@ public class WishlistController : BaseController
             return;
         }
 
-        // Для публичного доступа скрываем информацию о том, кто забронировал подарки
-        // Для авторизованных пользователей показываем кто забронировал
-        var showReservationDetails = userId.HasValue;
+        var isOwner = userId.HasValue && wishlist.UserId == userId.Value;
+
+        // ИСПРАВЛЕНО: Для публичного доступа ВСЕГДА скрываем информацию о бронировании
+        // Только владелец вишлиста видит реальный статус бронирования
+        var showReservationDetails = isOwner;
 
         // Подготавливаем список предметов с нужной информацией
         var itemsForDisplay = wishlist.Items.Select(i => new
@@ -141,9 +143,10 @@ public class WishlistController : BaseController
             imageUrl = i.ImageUrl,
             desireLevel = i.DesireLevel,
             comment = i.Comment,
-            isReserved = i.IsReserved,
+            // ИСПРАВЛЕНО: Показываем реальный статус бронирования только владельцу
+            isReserved = showReservationDetails ? i.IsReserved : false,
             reservedByUserId = showReservationDetails ? i.ReservedByUserId : null,
-            links = i.Links.Select(l => new
+            links = i.Links?.Select(l => new
             {
                 id = l.Id,
                 url = l.Url,
@@ -151,10 +154,8 @@ public class WishlistController : BaseController
                 price = l.Price,
                 isFromAI = l.IsFromAI,
                 isSelected = l.IsSelected
-            })
+            }) 
         }).ToList();
-
-        var isOwner = userId.HasValue && wishlist.UserId == userId.Value;
 
         await WriteJsonResponse(context, new
         {
@@ -164,7 +165,7 @@ public class WishlistController : BaseController
                 id = wishlist.Id,
                 title = wishlist.Title,
                 description = wishlist.Description,
-                eventDate = wishlist.EventDate?.ToString("yyyy-MM-dd"), // Изменено
+                eventDate = wishlist.EventDate?.ToString("yyyy-MM-dd"),
                 theme = new
                 {
                     id = wishlist.Theme.Id,

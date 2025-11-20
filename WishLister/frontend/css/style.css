@@ -7,8 +7,8 @@
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #5a3d5c;
+    background: linear-gradient(135deg, #fff8f8 0%, #fff0f5 100%);
     min-height: 100vh;
 }
 
@@ -29,11 +29,32 @@ body {
     }
 
 /* Landing Page */
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.site-logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
 .landing-header {
     text-align: center;
     padding: 80px 0 40px;
-    color: white;
+    color: #5a3d5c;
 }
+    .landing-header .logo-container {
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .landing-header .site-logo {
+        width: 80px;
+        height: 80px;
+    }
 
     .landing-header h1 {
         font-size: 4rem;
@@ -45,6 +66,7 @@ body {
     font-size: 1.5rem;
     opacity: 0.9;
     margin-bottom: 3rem;
+    color: #8b668c;
 }
 
 .features {
@@ -55,13 +77,14 @@ body {
 }
 
 .feature {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.9);
     backdrop-filter: blur(10px);
     padding: 2rem;
     border-radius: 15px;
     text-align: center;
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #5a3d5c;
+    border: 1px solid rgba(255, 182, 193, 0.2);
+    box-shadow: 0 4px 15px rgba(255, 182, 193, 0.08);
 }
 
 .feature-icon {
@@ -72,6 +95,7 @@ body {
 .feature h3 {
     margin-bottom: 1rem;
     font-size: 1.3rem;
+    color: #ff69b4;
 }
 
 .auth-buttons {
@@ -96,54 +120,54 @@ body {
 }
 
 .btn-primary {
-    background: #4f46e5;
+    background: #ff69b4;
     color: white;
 }
 
     .btn-primary:hover {
-        background: #4338ca;
+        background: #ff1493;
         transform: translateY(-2px);
     }
 
 .btn-secondary {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 182, 193, 0.15);
+    color: #ff69b4;
+    border: 2px solid rgba(255, 182, 193, 0.3);
 }
 
     .btn-secondary:hover {
-        background: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 182, 193, 0.25);
         transform: translateY(-2px);
     }
 
 .btn-outline {
     background: transparent;
-    border: 2px solid #4f46e5;
-    color: #4f46e5;
+    border: 2px solid #ff69b4;
+    color: #ff69b4;
 }
 
     .btn-outline:hover {
-        background: #4f46e5;
+        background: #ff69b4;
         color: white;
     }
 
 .btn-text {
     background: transparent;
-    color: #666;
+    color: #8b668c;
     border: none;
 }
 
     .btn-text:hover {
-        color: #333;
+        color: #5a3d5c;
     }
 
 .btn-danger {
-    background: #dc2626;
+    background: #ff6b6b;
     color: white;
 }
 
     .btn-danger:hover {
-        background: #b91c1c;
+        background: #ff5252;
     }
 
 /* Формы авторизации */
@@ -159,7 +183,7 @@ body {
     .auth-container h2 {
         text-align: center;
         margin-bottom: 2rem;
-        color: #333;
+        color: #5a3d5c;
     }
 
 .auth-form {
@@ -176,31 +200,33 @@ body {
     .form-group label {
         margin-bottom: 0.5rem;
         font-weight: 500;
-        color: #555;
+        color: #5a3d5c;
     }
 
     .form-group input,
     .form-group textarea {
         padding: 12px;
-        border: 2px solid #e5e7eb;
+        border: 2px solid #f8e8ec;
         border-radius: 8px;
         font-size: 1rem;
         transition: border-color 0.3s ease;
+        background: #fffcfd;
     }
 
         .form-group input:focus,
         .form-group textarea:focus {
             outline: none;
-            border-color: #4f46e5;
+            border-color: #ff69b4;
+            background: white;
         }
 
         .form-group input.error,
         .form-group textarea.error {
-            border-color: #dc2626;
+            border-color: #ff6b6b;
         }
 
 .error-message {
-    color: #dc2626;
+    color: #ff6b6b;
     font-size: 0.875rem;
     margin-top: 0.25rem;
     display: none;
@@ -213,11 +239,14 @@ body {
 /* Главное приложение */
 .app-header {
     background: white;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(255, 182, 193, 0.08);
     position: sticky;
     top: 0;
     z-index: 100;
 }
+    .app-header .logo-container {
+        justify-content: flex-start;
+    }
 
 .header-content {
     max-width: 1200px;
@@ -231,7 +260,6 @@ body {
 }
 
     .header-content h1 {
-        color: #4f46e5;
         font-size: 1.8rem;
     }
 
@@ -245,7 +273,7 @@ body {
     padding: 8px 16px;
     border: none;
     background: transparent;
-    color: #666;
+    color: #8b668c;
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -253,7 +281,7 @@ body {
 
     .nav-btn:hover,
     .nav-btn.active {
-        background: #4f46e5;
+        background: #ff69b4;
         color: white;
     }
 
@@ -278,22 +306,6 @@ body {
         display: block;
     }
 
-/*    .app-section.wishlist-body-theme-1 {
-        background: linear-gradient(135deg, #fff0f5 0%, #ffe0e8 100%);
-    }
-
-    .app-section.wishlist-body-theme-2 {
-        background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%);
-    }
-
-    .app-section.wishlist-body-theme-3 {
-        background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%);
-    }
-
-    .app-section.wishlist-body-theme-4 {
-        background: linear-gradient(135deg, #f8f0ff 0%, #eee0ff 100%);
-    }*/
-
 .section-header {
     display: flex;
     justify-content: space-between;
@@ -304,7 +316,7 @@ body {
 }
 
     .section-header h2 {
-        color: #333;
+        color: #5a3d5c;
         font-size: 2rem;
     }
 
@@ -317,13 +329,13 @@ body {
 
 /* Уже есть */
 .wishlist-card {
-    background: white; /* Это перекрывает тему */
+    background: white;
     border-radius: 12px;
     padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(255, 182, 193, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
-    border-left: 4px solid #4f46e5;
+    border-left: 4px solid #ff69b4;
 }
 
     /* Добавь эти стили ПОСЛЕ .wishlist-card */
@@ -354,20 +366,20 @@ body {
 
     .wishlist-card h3 {
         margin-bottom: 0.5rem;
-        color: #333;
+        color: #5a3d5c;
         font-size: 1.2rem;
     }
 
     .wishlist-card p {
-        color: #666;
+        color: #8b668c;
         margin-bottom: 1rem;
         overflow: hidden;
         text-overflow: ellipsis;
         display: -webkit-box;
-        -webkit-line-clamp: 3; /* Показать максимум 3 строки */
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         line-height: 1.4;
-        max-height: calc(1.4em * 3); /* Высота 3 строк */
+        max-height: calc(1.4em * 3);
     }
 
 /* Цвет заголовка в зависимости от темы */
@@ -398,7 +410,7 @@ body {
     justify-content: space-between;
     align-items: center;
     font-size: 0.875rem;
-    color: #999;
+    color: #8b668c;
 }
 
 .wishlist-actions {
@@ -415,7 +427,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(90, 61, 92, 0.3);
     z-index: 1000; /* Уже есть */
     overflow-y: auto;
 }
@@ -465,16 +477,17 @@ body {
     align-items: center;
     gap: 0.5rem;
     padding: 1rem;
-    border: 2px solid #e5e7eb;
+    border: 2px solid #f8e8ec;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
+    background: #fffcfd;
 }
 
     .theme-option:hover,
     .theme-option.selected {
-        border-color: #4f46e5;
-        background: #f8faff;
+        border-color: #ff69b4;
+        background: #fff8f8;
     }
 
 .theme-preview {
@@ -508,7 +521,7 @@ body {
     }
 
 .desire-text {
-    color: #666;
+    color: #8b668c;
     font-size: 0.9rem;
 }
 
@@ -523,19 +536,19 @@ body {
 .image-preview {
     width: 200px;
     height: 200px;
-    border: 2px dashed #e5e7eb;
+    border: 2px dashed #f8e8ec;
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     overflow: hidden;
-    background: #f9fafb;
+    background: #fffcfd;
     transition: border-color 0.3s ease;
 }
 
     .image-preview:hover {
-        border-color: #4f46e5;
+        border-color: #ff69b4;
     }
 
     .image-preview img {
@@ -543,18 +556,20 @@ body {
         height: 100%;
         object-fit: cover;
     }
+    }
 
 /* Ссылки */
 .links-section {
-    border: 1px solid #e5e7eb;
+    border: 1px solid #f8e8ec;
     border-radius: 8px;
     padding: 1rem;
+    background: #fffcfd;
 }
 
 .ai-links {
     margin-bottom: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #f8e8ec;
 }
 
 .link-item {
@@ -562,15 +577,15 @@ body {
     align-items: center;
     gap: 1rem;
     padding: 0.5rem;
-    border: 1px solid #e5e7eb;
+    border: 1px solid #f8e8ec;
     border-radius: 6px;
     margin-bottom: 0.5rem;
-    background: #f9fafb;
+    background: #fffcfd;
 }
 
     .link-item.selected {
-        border-color: #4f46e5;
-        background: #f0f9ff;
+        border-color: #ff69b4;
+        background: #fff8f8;
     }
 
 .link-input {
@@ -591,7 +606,7 @@ body {
 
 /* Просмотр вишлиста */
 .wishlist-view .wishlist-header {
-    color: #333; /* Черный цвет для описания */
+    color: #5a3d5c;
     padding: 2rem;
     border-radius: 12px 12px 0 0;
     margin: -2rem -2rem 2rem -2rem;
@@ -603,7 +618,7 @@ body {
     background: white;
     border-radius: 16px; /* Закруглённые углы */
     padding: 2rem; /* Внутренние отступы */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05); /* Тень */
+    box-shadow: 0 4px 6px rgba(255, 182, 193, 0.05);
     margin-top: 1rem; /* Отступ сверху */
     min-height: 400px; /* Минимальная высота */
 }
@@ -618,19 +633,19 @@ body {
     background: white;
     border-radius: 12px;
     padding: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(255, 182, 193, 0.08);
     border: 2px solid transparent;
     transition: all 0.3s ease;
 }
 
     .item-card.reserved {
-        border-color: #dc2626;
-        background: #fef2f2;
+        border-color: #ff6b6b;
+        background: #fff8f8;
     }
 
     .item-card:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        box-shadow: 0 6px 12px rgba(255, 182, 193, 0.12);
     }
 
 .item-image {
@@ -639,25 +654,25 @@ body {
     object-fit: cover;
     border-radius: 8px;
     margin-bottom: 1rem;
-    background: #f9fafb;
+    background: #fffcfd;
 }
 
 .item-title {
     font-size: 1.2rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
-    color: #333;
+    color: #5a3d5c;
 }
 
 .item-price {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #059669;
+    color: #87d187;
     margin-bottom: 0.5rem;
 }
 
 .item-description {
-    color: #666;
+    color: #8b668c;
     margin-bottom: 1rem;
     font-size: 0.9rem;
 }
@@ -836,7 +851,6 @@ body {
     height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    border: 4px solid #4f46e5;
 }
 
 .avatar-actions {
@@ -871,7 +885,7 @@ body {
     display: block;
     font-size: 1.5rem;
     font-weight: 600;
-    color: #4f46e5;
+    color: #ff69b4;
 }
 
 .stat-label {
@@ -914,49 +928,6 @@ body {
     .notification.info {
         background: #2563eb;
     }
-
-/* Адаптивность */
-@media (max-width: 768px) {
-    .landing-header h1 {
-        font-size: 2.5rem;
-    }
-
-    .tagline {
-        font-size: 1.2rem;
-    }
-
-    .header-content {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .main-nav {
-        justify-content: center;
-    }
-
-    .section-header {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .modal.active {
-        padding: 1rem;
-    }
-
-    .modal-content {
-        margin: 0;
-    }
-
-    .profile-header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .form-row {
-        flex-direction: column;
-    }
-}
 
 /* Стили для разных тем вишлистов */
 /* Нежные градиенты для фона вишлиста */
@@ -1532,33 +1503,6 @@ body {
     margin-top: 0.5rem;
 }
 
-/* Адаптивность */
-@media (max-width: 768px) {
-    .wishlist-header-bottom {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 1rem;
-    }
-
-    .wishlist-description {
-        min-width: auto;
-        text-align: center;
-    }
-
-    .wishlist-page-actions {
-        justify-content: center;
-    }
-
-    #public-wishlist-title {
-        font-size: 2rem;
-        text-align: center;
-    }
-
-    .public-wishlist-header {
-        padding: 1.5rem;
-    }
-}
-
 /* Цвета тем для публичного вишлиста */
 .wishlist-theme-1.public-wishlist-header {
     background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
@@ -1588,8 +1532,12 @@ body {
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid #4f46e5;
-    background: #f3f4f6;
+    background: #fff8f8;
+}
+
+#user-greeting {
+    font-weight: 500;
+    color: #5a3d5c;
 }
 
 .user-info {
@@ -1599,23 +1547,876 @@ body {
     flex-wrap: wrap;
 }
 
-#user-greeting {
-    font-weight: 500;
-    color: #333;
+
+/* Адаптивные стили */
+@media (max-width: 1200px) {
+    .container {
+        max-width: 100%;
+        padding: 0 15px;
+    }
+
+    .header-content {
+        padding: 1rem 15px;
+    }
+
+    .app-main {
+        padding: 1.5rem 15px;
+    }
 }
 
-/* Адаптивность для мобильных */
 @media (max-width: 768px) {
-    .user-avatar {
-        width: 32px;
-        height: 32px;
+    /* Общие стили для мобильных */
+    body {
+        font-size: 14px;
     }
 
-    .user-avatar-container {
-        gap: 0.5rem;
+    .container {
+        padding: 0 10px;
     }
 
-    #user-greeting {
+    /* Landing Page */
+    .landing-header {
+        padding: 60px 0 30px;
+    }
+
+        .landing-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+    .tagline {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+    }
+
+    .features {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .feature {
+        padding: 1.5rem;
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+    }
+
+    .auth-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+    }
+
+    /* Формы авторизации */
+    .auth-container {
+        margin: 50px auto;
+        padding: 1.5rem;
+        max-width: 90%;
+    }
+
+    /* Шапка приложения */
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.75rem;
+        padding: 0.75rem 10px;
+    }
+
+        .header-content h1 {
+            font-size: 1.5rem;
+        }
+
+    .main-nav {
+        justify-content: center;
+        order: 3;
+        width: 100%;
+    }
+
+    .nav-btn {
+        flex: 1;
+        min-width: 100px;
+        text-align: center;
         font-size: 0.9rem;
+    }
+
+    .user-info {
+        justify-content: center;
+        order: 2;
+    }
+
+    /* Основной контент */
+    .app-main {
+        padding: 1rem 10px;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+        }
+
+    /* Сетки */
+    .wishlists-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .items-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    /* Карточки */
+    .wishlist-card {
+        padding: 1.25rem;
+    }
+
+    .item-card {
+        padding: 1.25rem;
+    }
+
+    /* Модальные окна */
+    .modal.active {
+        padding: 1rem;
+        align-items: flex-start;
+    }
+
+    .modal-content {
+        margin: 0;
+        padding: 1.5rem;
+        max-height: 95vh;
+    }
+
+    .wide-modal {
+        max-width: 100%;
+    }
+
+    .modal-actions {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+        .modal-actions .btn {
+            width: 100%;
+        }
+
+    /* Выбор темы */
+    .theme-selector {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+    }
+
+    .theme-option {
+        padding: 0.75rem;
+    }
+
+    /* Формы в модальных окнах */
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    /* Детали подарка */
+    .item-details-layout {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .item-details-left {
+        flex: none;
+        width: 100%;
+    }
+
+    .item-detail-image {
+        max-width: 100%;
+        height: 250px;
+    }
+
+    /* Профиль */
+    .profile-container {
+        padding: 1.5rem;
+    }
+
+    .profile-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .profile-stats {
+        justify-content: center;
+        gap: 1.5rem;
+    }
+
+    .profile-actions {
+        flex-direction: column;
+    }
+
+        .profile-actions .btn {
+            width: 100%;
+        }
+
+    /* Заголовки вишлистов */
+    .wishlist-view-title {
+        font-size: 2rem;
+    }
+
+    #wishlist-page-header,
+    #friend-wishlist-page-header {
+        padding: 1.25rem;
+    }
+
+    .wishlist-header-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .wishlist-page-actions {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+    }
+
+        .wishlist-page-actions .btn {
+            flex: 1;
+            min-width: 120px;
+        }
+
+    /* Контейнеры подарков */
+    #wishlist-page-items-container,
+    #friend-wishlist-page-items-container {
+        padding: 1.5rem;
+        border-radius: 12px;
+    }
+
+    /* Уведомления */
+    .notification {
+        right: 10px;
+        left: 10px;
+        max-width: calc(100% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    /* Очень маленькие экраны */
+    .container {
+        padding: 0 5px;
+    }
+
+    .landing-header h1 {
+        font-size: 2rem;
+    }
+
+    .tagline {
+        font-size: 1.1rem;
+    }
+
+    .feature {
+        padding: 1.25rem;
+    }
+
+    .feature-icon {
+        font-size: 2rem;
+    }
+
+    .auth-container {
+        margin: 30px auto;
+        padding: 1.25rem;
+        max-width: 95%;
+    }
+
+    .header-content {
+        padding: 0.5rem 5px;
+    }
+
+    .nav-btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+
+    .app-main {
+        padding: 0.75rem 5px;
+    }
+
+    .section-header h2 {
+        font-size: 1.3rem;
+    }
+
+    .wishlist-card,
+    .item-card {
+        padding: 1rem;
+        border-radius: 10px;
+    }
+
+    .modal-content {
+        padding: 1.25rem;
+        border-radius: 10px;
+    }
+
+    .theme-selector {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-container {
+        padding: 1.25rem;
+    }
+
+    .profile-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .wishlist-view-title {
+        font-size: 1.75rem;
+    }
+
+    #wishlist-page-header,
+    #friend-wishlist-page-header {
+        padding: 1rem;
+    }
+
+    #wishlist-page-items-container,
+    #friend-wishlist-page-items-container {
+        padding: 1.25rem;
+    }
+
+    /* Адаптация для элементов форм */
+    .form-group input,
+    .form-group textarea {
+        padding: 10px;
+        font-size: 16px; /* Предотвращает масштабирование в iOS */
+    }
+
+    /* Адаптация для кнопок действий */
+    .wishlist-actions,
+    .item-actions {
+        flex-wrap: wrap;
+    }
+
+        .wishlist-actions .btn,
+        .item-actions .btn {
+            flex: 1;
+            min-width: 80px;
+            font-size: 0.8rem;
+            padding: 8px 12px;
+        }
+}
+
+/* Особые стили для планшетов */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .wishlists-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .items-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .header-content {
+        gap: 1.5rem;
+    }
+
+    .main-nav {
+        order: 2;
+        flex: 1;
+        justify-content: center;
+    }
+
+    .user-info {
+        order: 3;
+    }
+}
+
+/* Портретная ориентация мобильных устройств */
+@media (max-width: 768px) and (orientation: portrait) {
+    .landing-header {
+        padding: 40px 0 20px;
+    }
+
+    .app-main {
+        min-height: calc(100vh - 120px);
+    }
+}
+
+/* Ландшафтная ориентация мобильных устройств */
+@media (max-width: 768px) and (orientation: landscape) {
+    .landing-header {
+        padding: 30px 0 20px;
+    }
+
+    .features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .auth-container {
+        margin: 20px auto;
+    }
+}
+
+/* Поддержка высоких экранов */
+@media (min-height: 800px) and (max-width: 768px) {
+    .landing-header {
+        padding: 80px 0 40px;
+    }
+
+    .auth-container {
+        margin: 80px auto;
+    }
+}
+
+/* Улучшение доступности для касаний */
+@media (hover: none) and (pointer: coarse) {
+    .btn,
+    .nav-btn,
+    .theme-option,
+    .heart {
+        min-height: 44px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        min-height: 44px;
+    }
+
+    .wishlist-card,
+    .item-card {
+        cursor: default;
+    }
+}
+
+/* Поддержка темной темы */
+@media (prefers-color-scheme: dark) {
+    /* Базовые настройки для темной темы */
+    body {
+        background: linear-gradient(135deg, #2a1a2a 0%, #3a2a3a 100%);
+        color: #e8d8e8;
+    }
+
+    .feature,
+    .auth-container,
+    .modal-content,
+    .wishlist-card,
+    .item-card,
+    .profile-container {
+        background: #3a2a3a;
+        color: #e8d8e8;
+        border-color: #4a3a4a;
+    }
+
+    /* Дополнительные стили для темной темы... */
+}
+
+/* Печать */
+@media print {
+    .app-header,
+    .auth-buttons,
+    .modal,
+    .notification {
+        display: none !important;
+    }
+
+    body {
+        background: white !important;
+        color: black !important;
+    }
+
+    .page {
+        display: block !important;
+    }
+}
+
+/* Анимированный фон с картинками */
+.background-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.bg-picture {
+    position: absolute;
+    object-fit: contain;
+    animation: floatGentle 40s infinite ease-in-out;
+    opacity: 0.7; /* Легкая прозрачность */
+}
+
+    /* Три размера: большой, средний, маленький */
+    .bg-picture.size-large {
+        width: 70px;
+        height: 70px;
+    }
+
+    .bg-picture.size-medium {
+        width: 50px;
+        height: 50px;
+    }
+
+    .bg-picture.size-small {
+        width: 35px;
+        height: 35px;
+    }
+
+    /* УГЛЫ */
+    .bg-picture:nth-child(1) {
+        top: 5%;
+        left: 5%;
+        animation-delay: 0s;
+        transform: rotate(-12deg);
+    }
+
+    .bg-picture:nth-child(2) {
+        top: 5%;
+        right: 5%;
+        animation-delay: -25s;
+        transform: rotate(15deg);
+    }
+
+    .bg-picture:nth-child(3) {
+        bottom: 5%;
+        left: 5%;
+        animation-delay: -15s;
+        transform: rotate(28deg);
+    }
+
+    .bg-picture:nth-child(4) {
+        bottom: 5%;
+        right: 5%;
+        animation-delay: -35s;
+        transform: rotate(32deg);
+    }
+
+    /* ВЕРХ */
+    .bg-picture:nth-child(5) {
+        top: 8%;
+        left: 25%;
+        animation-delay: -8s;
+        transform: rotate(-18deg);
+    }
+
+    .bg-picture:nth-child(6) {
+        top: 12%;
+        left: 50%;
+        animation-delay: -18s;
+        transform: rotate(10deg);
+    }
+
+    .bg-picture:nth-child(7) {
+        top: 8%;
+        right: 25%;
+        animation-delay: -28s;
+        transform: rotate(-25deg);
+    }
+
+    /* ЦЕНТР - смещены влево и вправо от центра */
+    .bg-picture:nth-child(8) {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation-delay: -5s;
+        transform: translate(-50%, -50%) rotate(22deg);
+    }
+
+    .bg-picture:nth-child(9) {
+        top: 40%;
+        left: 20%; /* Смещено левее */
+        animation-delay: -22s;
+        transform: rotate(-8deg);
+    }
+
+    .bg-picture:nth-child(10) {
+        top: 40%;
+        right: 20%; /* Смещено правее */
+        animation-delay: -12s;
+        transform: rotate(18deg);
+    }
+
+    .bg-picture:nth-child(11) {
+        top: 60%;
+        left: 25%; /* Смещено левее */
+        animation-delay: -32s;
+        transform: rotate(-30deg);
+    }
+
+    .bg-picture:nth-child(12) {
+        top: 60%;
+        right: 25%; /* Смещено правее */
+        animation-delay: -38s;
+        transform: rotate(25deg);
+    }
+
+    /* НИЗ */
+    .bg-picture:nth-child(13) {
+        bottom: 8%;
+        left: 25%;
+        animation-delay: -14s;
+        transform: rotate(12deg);
+    }
+
+    .bg-picture:nth-child(14) {
+        bottom: 12%;
+        left: 50%;
+        animation-delay: -24s;
+        transform: rotate(-20deg);
+    }
+
+    .bg-picture:nth-child(15) {
+        bottom: 8%;
+        right: 25%;
+        animation-delay: -34s;
+        transform: rotate(8deg);
+    }
+
+    /* БОКОВЫЕ СТОРОНЫ */
+    .bg-picture:nth-child(16) {
+        top: 30%;
+        left: 10%;
+        animation-delay: -20s;
+        transform: rotate(-15deg);
+    }
+
+    /* Анимация для центральных картинок */
+    .bg-picture:nth-child(8) {
+        animation: floatGentleCenter 40s infinite ease-in-out;
+    }
+
+@keyframes floatGentle {
+    0%, 100% {
+        transform: translate(0, 0) rotate(var(--start-rotate, 0deg));
+    }
+
+    25% {
+        transform: translate(15px, -10px) rotate(calc(var(--start-rotate, 0deg) + 10deg));
+    }
+
+    50% {
+        transform: translate(-10px, 8px) rotate(calc(var(--start-rotate, 0deg) - 6deg));
+    }
+
+    75% {
+        transform: translate(8px, 6px) rotate(calc(var(--start-rotate, 0deg) + 4deg));
+    }
+}
+
+@keyframes floatGentleCenter {
+    0%, 100% {
+        transform: translate(-50%, -50%) rotate(22deg);
+    }
+
+    25% {
+        transform: translate(calc(-50% + 12px), calc(-50% - 8px)) rotate(32deg);
+    }
+
+    50% {
+        transform: translate(calc(-50% - 8px), calc(-50% + 6px)) rotate(16deg);
+    }
+
+    75% {
+        transform: translate(calc(-50% + 6px), calc(-50% + 4px)) rotate(26deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .bg-picture {
+        opacity: 0.65; /* Немного меньше прозрачности на маленьких экранах */
+    }
+
+        .bg-picture.size-large {
+            width: 50px;
+            height: 50px;
+        }
+
+        .bg-picture.size-medium {
+            width: 40px;
+            height: 40px;
+        }
+
+        .bg-picture.size-small {
+            width: 30px;
+            height: 30px;
+        }
+
+        /* Адаптивное расположение для планшетов - скрываем часть картинок */
+        .bg-picture:nth-child(9),
+        .bg-picture:nth-child(10),
+        .bg-picture:nth-child(11),
+        .bg-picture:nth-child(12),
+        .bg-picture:nth-child(16) {
+            display: none;
+        }
+
+        /* Обновляем позиции оставшихся */
+        .bg-picture:nth-child(1) {
+            top: 3%;
+            left: 3%;
+        }
+
+        .bg-picture:nth-child(2) {
+            top: 3%;
+            right: 3%;
+        }
+
+        .bg-picture:nth-child(3) {
+            bottom: 3%;
+            left: 3%;
+        }
+
+        .bg-picture:nth-child(4) {
+            bottom: 3%;
+            right: 3%;
+        }
+
+        .bg-picture:nth-child(5) {
+            top: 6%;
+            left: 20%;
+        }
+
+        .bg-picture:nth-child(6) {
+            top: 10%;
+            left: 50%;
+        }
+
+        .bg-picture:nth-child(7) {
+            top: 6%;
+            right: 20%;
+        }
+
+        .bg-picture:nth-child(8) {
+            top: 50%;
+            left: 50%;
+        }
+
+        .bg-picture:nth-child(13) {
+            bottom: 6%;
+            left: 20%;
+        }
+
+        .bg-picture:nth-child(14) {
+            bottom: 10%;
+            left: 50%;
+        }
+
+        .bg-picture:nth-child(15) {
+            bottom: 6%;
+            right: 20%;
+        }
+}
+
+@media (max-width: 480px) {
+    .bg-picture {
+        opacity: 0.6; /* Еще меньше прозрачности на мобильных */
+    }
+
+        .bg-picture.size-large {
+            width: 40px;
+            height: 40px;
+        }
+
+        .bg-picture.size-medium {
+            width: 30px;
+            height: 30px;
+        }
+
+        .bg-picture.size-small {
+            width: 25px;
+            height: 25px;
+        }
+
+        /* На мобильных оставляем только основные позиции */
+        .bg-picture:nth-child(5),
+        .bg-picture:nth-child(7),
+        .bg-picture:nth-child(13),
+        .bg-picture:nth-child(15) {
+            display: none;
+        }
+
+        /* Оставляем 8 картинок: углы + верх/низ по центру + главный центр */
+        .bg-picture:nth-child(1) {
+            top: 5%;
+            left: 5%;
+        }
+
+        .bg-picture:nth-child(2) {
+            top: 5%;
+            right: 5%;
+        }
+
+        .bg-picture:nth-child(3) {
+            bottom: 5%;
+            left: 5%;
+        }
+
+        .bg-picture:nth-child(4) {
+            bottom: 5%;
+            right: 5%;
+        }
+
+        .bg-picture:nth-child(6) {
+            top: 12%;
+            left: 50%;
+        }
+
+        .bg-picture:nth-child(8) {
+            top: 50%;
+            left: 50%;
+        }
+
+        .bg-picture:nth-child(14) {
+            bottom: 12%;
+            left: 50%;
+        }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .site-logo {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .landing-header .site-logo {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .logo-container {
+        gap: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .site-logo {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .landing-header .site-logo {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .logo-container h1 {
+        font-size: 1.5rem;
     }
 }

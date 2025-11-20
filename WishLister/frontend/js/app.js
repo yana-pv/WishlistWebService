@@ -309,7 +309,7 @@
 
     updateUserInterface() {
         if (this.currentUser) {
-            document.getElementById('user-greeting').textContent = `Привет, ${this.currentUser.username} 👋`;
+            document.getElementById('user-greeting').textContent = `Привет, ${this.currentUser.username}`;
 
             // ОБНОВЛЯЕМ АВАТАР
             const avatarElement = document.getElementById('user-avatar');
@@ -828,6 +828,16 @@
 
 
     // --- МЕТОДЫ ДЛЯ РАБОТЫ С ПОДАРКАМИ ---
+    async refreshCurrentWishlist() {
+        const hash = window.location.hash;
+        if (hash.startsWith('#wishlist/')) {
+            const wishlistId = parseInt(hash.split('/')[1]);
+            if (wishlistId) {
+                await this.showWishlistPage(wishlistId);
+            }
+        }
+    }
+
     showCreateItemModal() {
         if (!this.currentWishlist) return;
 

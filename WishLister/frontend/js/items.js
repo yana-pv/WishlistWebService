@@ -188,9 +188,14 @@ WishListerApp.prototype.saveItem = async function () {
             // Обновляем вишлист
             if (this.currentWishlist) {
                 if (typeof app !== 'undefined' && app) {
-                    await app.loadMyWishlists(); // Обновляем список вишлистов
+                    // Обновляем список вишлистов
+                    await app.loadMyWishlists();
+
+                    // ОБНОВЛЯЕМ ТЕКУЩИЙ ВИШЛИСТ ЕСЛИ МЫ НА ЕГО СТРАНИЦЕ
+                    await app.refreshCurrentWishlist();
                 }
             }
+
         } else {
             this.showNotification(data.message || 'Ошибка сохранения', 'error');
         }
@@ -217,16 +222,16 @@ WishListerApp.prototype.deleteItem = async function (itemId) {
         if (response.ok) {
             this.showNotification('Подарок удален', 'success');
 
-            // --- ИСПРАВЛЕНО: Вызов метода из app ---
+            // Обновляем вишлист
             if (this.currentWishlist) {
                 if (typeof app !== 'undefined' && app) {
-                    // Обновляем вишлист через app
-                    await app.loadMyWishlists(); // <-- Обновляем список вишлистов
-                    // Или если нужно обновить текущий открытый вишлист:
-                    // await app.viewWishlist(this.currentWishlist.id); // <-- Но viewWishlist в app.js
+                    // Обновляем список вишлистов
+                    await app.loadMyWishlists();
+
+                    // ОБНОВЛЯЕМ ТЕКУЩИЙ ВИШЛИСТ ЕСЛИ МЫ НА ЕГО СТРАНИЦЕ
+                    await app.refreshCurrentWishlist();
                 }
             }
-            // --- /ИСПРАВЛЕНО ---
         } else {
             this.showNotification('Ошибка удаления подарка', 'error');
         }

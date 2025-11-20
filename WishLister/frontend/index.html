@@ -1,0 +1,428 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WishLister - Создавай списки желаний</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Landing Page -->
+        <div id="landing-page" class="page active">
+            <div class="container">
+                <header class="landing-header">
+                    <h1>🎁 WishLister</h1>
+                    <p class="tagline">Создавай списки желаний и получай именно те подарки, о которых мечтаешь!</p>
+                </header>
+
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">📝</div>
+                        <h3>Создавай вишлисты</h3>
+                        <p>Добавляй товары из любых магазинов с изображениями и ссылками</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">👥</div>
+                        <h3>Делись с друзьями</h3>
+                        <p>Отправляй ссылку на вишлист и друзья увидят твои пожелания</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">💖</div>
+                        <h3>Отмечай желанность</h3>
+                        <p>Покажи насколько сильно ты хочешь каждый подарок с помощью сердечек</p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Бронируй подарки</h3>
+                        <p>Отмечай какие подарки уже выбраны, чтобы избежать повторов</p>
+                    </div>
+                </div>
+
+                <div class="auth-buttons">
+                    <button id="login-btn" class="btn btn-primary">Войти</button>
+                    <button id="register-btn" class="btn btn-secondary">Зарегистрироваться</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Auth Pages -->
+        <div id="login-page" class="page">
+            <div class="auth-container">
+                <h2>Вход в аккаунт</h2>
+                <form id="login-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="login-username">Логин:</label>
+                        <input type="text" id="login-username" name="login" required
+                               minlength="3" maxlength="20" pattern="[a-zA-Z0-9_]+">
+                        <span class="error-message" id="login-username-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Пароль:</label>
+                        <input type="password" id="login-password" name="password" required minlength="6">
+                        <span class="error-message" id="login-password-error"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Войти</button>
+                </form>
+                <p>Нет аккаунта? <a href="#" id="go-to-register">Зарегистрироваться</a></p>
+                <button class="btn btn-text" id="back-to-landing-from-login">← Назад</button>
+            </div>
+        </div>
+
+        <div id="register-page" class="page">
+            <div class="auth-container">
+                <h2>Регистрация</h2>
+                <form id="register-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="register-username">Имя пользователя:</label>
+                        <input type="text" id="register-username" name="username" required
+                               minlength="3" maxlength="20" pattern="[a-zA-Zа-яА-Я0-9_ ]+">
+                        <span class="error-message" id="register-username-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email:</label>
+                        <input type="email" id="register-email" name="email" required>
+                        <span class="error-message" id="register-email-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-login">Логин:</label>
+                        <input type="text" id="register-login" name="login" required
+                               minlength="3" maxlength="20" pattern="[a-zA-Z0-9_]+">
+                        <span class="error-message" id="register-login-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Пароль:</label>
+                        <input type="password" id="register-password" name="password" required minlength="6">
+                        <span class="error-message" id="register-password-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm-password">Подтвердите пароль:</label>
+                        <input type="password" id="register-confirm-password" name="confirmPassword" required>
+                        <span class="error-message" id="register-confirm-password-error"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Зарегистрироваться</button>
+                </form>
+                <p>Уже есть аккаунт? <a href="#" id="go-to-login">Войти</a></p>
+                <button class="btn btn-text" id="back-to-landing-from-register">← Назад</button>
+            </div>
+        </div>
+
+        <!-- Main App -->
+        <div id="app-page" class="page">
+            <header class="app-header">
+                <div class="header-content">
+                    <h1>🎁 WishLister</h1>
+                    <nav class="main-nav">
+                        <button class="nav-btn active" data-page="my-wishlists">Мои вишлисты</button>
+                        <button class="nav-btn" data-page="friend-wishlists">Вишлисты друзей</button>
+                        <button class="nav-btn" data-page="profile">Профиль</button>
+                    </nav>
+                    <div class="user-info">
+                        <div class="user-avatar-container">
+                            <img id="user-avatar" src="" alt="Аватар" class="user-avatar" style="display: none;">
+                            <span id="user-greeting">Привет, ... </span>
+                        </div>
+                        <button id="logout-btn" class="btn btn-outline">Выйти</button>
+                    </div>
+                </div>
+            </header>
+
+            <main class="app-main">
+                <!-- Мои вишлисты -->
+                <div id="my-wishlists-page" class="app-section active">
+                    <div class="section-header">
+                        <h2>Мои вишлисты</h2>
+                        <button id="create-wishlist-btn" class="btn btn-primary">+ Создать вишлист</button>
+                    </div>
+                    <div id="my-wishlists-container" class="wishlists-grid"></div>
+                </div>
+
+                <!-- Вишлисты друзей -->
+                <div id="friend-wishlists-page" class="app-section">
+                    <div class="section-header">
+                        <h2>Вишлисты друзей</h2>
+                    </div>
+                    <div id="friend-wishlists-container" class="wishlists-grid"></div>
+                </div>
+
+                <!-- Вишлист страница (новая вкладка) -->
+                <div id="wishlist-page-page" class="app-section">
+                    <div class="section-header" id="wishlist-page-header">
+                        <h2 id="wishlist-page-title">Загрузка...</h2>
+                        <p id="wishlist-page-description" style="display: none; margin-top: 0.5rem; color: #666;"></p>
+                        <div class="wishlist-page-actions">
+                            <button id="back-to-wishlists-btn" class="btn btn-outline" onclick="window.location.hash = 'wishlists'">← Назад</button> <!-- <-- ДОБАВЬ id -->
+                            <button id="share-wishlist-page-btn" class="btn btn-outline">Поделиться</button>
+                            <button id="edit-wishlist-page-btn" class="btn btn-outline">Редактировать</button>
+                            <button id="add-item-page-btn" class="btn btn-primary">+ Добавить подарок</button>
+                        </div>
+                    </div>
+                    <div id="wishlist-page-items-container" class="items-grid"></div>
+                </div>
+
+                <!-- В app-main, перед закрывающим </main> -->
+                <div id="friend-wishlist-page-page" class="app-section">
+                    <div class="section-header" id="friend-wishlist-page-header">
+                        <div class="wishlist-header-main">
+                            <h2 id="friend-wishlist-page-title">Загрузка...</h2>
+                            <div class="wishlist-header-bottom">
+                                <p id="friend-wishlist-page-description" class="wishlist-description" style="display: none;"></p>
+                                <div class="wishlist-page-actions">
+                                    <button class="btn btn-outline" onclick="app.goToFriends()">← Назад</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="friend-wishlist-page-items-container" class="items-grid"></div>
+                </div>
+
+                <!-- Профиль -->
+                <div id="profile-page" class="app-section">
+                    <div class="profile-container">
+                        <div class="profile-header">
+                            <div class="avatar-section">
+                                <img id="profile-avatar" src="" alt="Аватар" class="avatar-large">
+                                <div class="avatar-actions">
+                                    <input type="file" id="avatar-upload" accept="image/*" style="display: none;">
+                                    <button id="change-avatar-btn" class="btn btn-outline">Изменить фото</button>
+                                    <button id="remove-avatar-btn" class="btn btn-text">Удалить</button>
+                                </div>
+                            </div>
+                            <div class="profile-info">
+                                <h2 id="profile-username"></h2>
+                                <p id="profile-email"></p>
+                                <p class="profile-stats" id="profile-stats"></p>
+                            </div>
+                        </div>
+
+                        <div class="profile-actions">
+                            <button id="edit-profile-btn" class="btn btn-primary">Редактировать профиль</button>
+                            <button id="delete-account-btn" class="btn btn-danger">Удалить аккаунт</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Модальные окна -->
+        <!-- Создание/редактирование вишлиста -->
+        <div id="wishlist-modal" class="modal">
+            <div class="modal-content">
+                <h3 id="wishlist-modal-title">Создать вишлист</h3>
+                <form id="wishlist-form">
+                    <div class="form-group">
+                        <label for="wishlist-title">Название:</label>
+                        <input type="text" id="wishlist-title" required minlength="2" maxlength="100">
+                        <span class="error-message" id="wishlist-title-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="wishlist-description">Описание:</label>
+                        <textarea id="wishlist-description" maxlength="500"></textarea>
+                        <span class="error-message" id="wishlist-description-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="wishlist-event-date">Дата события (необязательно):</label>
+                        <input type="date" id="wishlist-event-date">
+                    </div>
+                    <div class="form-group">
+                        <label>Тема оформления:</label>
+                        <div class="theme-selector">
+                            <div class="theme-option" data-theme-id="1">
+                                <div class="theme-preview" style="background: #fff0f5; border-color: #ff69b4;"></div>
+                                <span>🎀 Розовая</span>
+                            </div>
+                            <div class="theme-option" data-theme-id="2">
+                                <div class="theme-preview" style="background: #f0f8ff; border-color: #1e90ff;"></div>
+                                <span>🔵 Синяя</span>
+                            </div>
+                            <div class="theme-option" data-theme-id="3">
+                                <div class="theme-preview" style="background: #f0fff0; border-color: #32cd32;"></div>
+                                <span>🍏 Зеленая</span>
+                            </div>
+                            <div class="theme-option" data-theme-id="4">
+                                <div class="theme-preview" style="background: #f8f0ff; border-color: #8a2be2;"></div>
+                                <span>☂️ Фиолетовая</span>
+                            </div>
+                        </div>
+                        <span class="error-message" id="wishlist-theme-error"></span>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-text" id="close-wishlist-modal">Отмена</button>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Создание/редактирование подарка -->
+        <div id="item-modal" class="modal">
+            <div class="modal-content wide-modal">
+                <h3 id="item-modal-title">Добавить подарок</h3>
+                <form id="item-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="item-title">Название:</label>
+                            <input type="text" id="item-title" required minlength="2" maxlength="100">
+                            <span class="error-message" id="item-title-error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="item-price">Цена:</label>
+                            <div class="price-input-wrapper">
+                                <input type="number" id="item-price" min="0" step="0.01" placeholder="0.00">
+                                <span class="currency-symbol">₽</span>
+                            </div>
+                            <span class="error-message" id="item-price-error"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item-description">Описание:</label>
+                        <textarea id="item-description" maxlength="500"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="item-comment">Комментарий:</label>
+                        <textarea id="item-comment" maxlength="500" placeholder="Почему ты хочешь этот подарок?"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Желанность:</label>
+                        <div class="desire-level">
+                            <div class="hearts">
+                                <span class="heart" data-level="1">💖</span>
+                                <span class="heart" data-level="2">💖</span>
+                                <span class="heart" data-level="3">💖</span>
+                            </div>
+                            <span class="desire-text" id="desire-text">Немного хочу</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Изображение:</label>
+                        <div class="image-upload">
+                            <input type="file" id="item-image" accept="image/*" style="display: none;">
+                            <div class="image-preview" id="image-preview">
+                                <span>+ Добавить изображение</span>
+                            </div>
+                            <button type="button" id="remove-image-btn" class="btn btn-text" style="display: none;">Удалить</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ссылки на товары:</label>
+                        <div class="links-section">
+                            <div class="ai-links" id="ai-links">
+                                <!-- AI ссылки будут здесь -->
+                            </div>
+                            <div class="manual-links">
+                                <div class="link-input">
+                                    <input type="url" id="manual-link-url" placeholder="https://example.com/product">
+                                    <button type="button" id="add-manual-link" class="btn btn-outline">Добавить ссылку</button>
+                                </div>
+                                <div class="links-list" id="manual-links-list">
+                                    <!-- Ручные ссылки будут здесь -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-text" id="close-item-modal">Отмена</button>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Просмотр вишлиста -->
+        <div id="wishlist-view-modal" class="modal">
+            <div class="modal-content wide-modal wishlist-view">
+                <div class="wishlist-header" id="wishlist-view-header">
+                    <h3 id="wishlist-view-title"></h3>
+                    <p id="wishlist-view-description"></p>
+                    <div class="wishlist-actions">
+                        <button id="share-wishlist-btn" class="btn btn-outline">📤 Поделиться</button>
+                        <button id="edit-wishlist-btn" class="btn btn-outline">✏️ Редактировать</button>
+                        <button id="add-item-btn" class="btn btn-primary">+ Добавить подарок</button>
+                    </div>
+                </div>
+                <div class="items-grid" id="wishlist-items-container">
+                    <!-- Подарки будут здесь -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Модальное окно деталей подарка -->
+        <div id="item-details-modal" class="modal">
+            <div class="modal-content wide-modal">
+                <div class="modal-header">
+                    <h3 id="item-details-title">Детали подарка</h3>
+                </div>
+                <div id="item-details-content">
+                    <!-- Сюда будет загружаться информация о подарке -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Просмотр вишлиста друга -->
+        <div id="friend-wishlist-view-modal" class="modal">
+            <div class="modal-content wide-modal wishlist-view">
+                <div class="wishlist-header" id="friend-wishlist-view-header">
+                    <h3 id="friend-wishlist-view-title"></h3>
+                    <p id="friend-wishlist-view-description"></p>
+                    <p class="friend-name" id="friend-wishlist-owner"></p>
+                </div>
+                <div class="items-grid" id="friend-wishlist-items-container">
+                    <!-- Подарки друга будут здесь -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Редактирование профиля -->
+        <div id="edit-profile-modal" class="modal">
+            <div class="modal-content">
+                <h3>Редактировать профиль</h3>
+                <form id="edit-profile-form">
+                    <div class="form-group">
+                        <label for="edit-username">Имя пользователя:</label>
+                        <input type="text" id="edit-username" required minlength="3" maxlength="20">
+                        <span class="error-message" id="edit-username-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-email">Email:</label>
+                        <input type="email" id="edit-email" required>
+                        <span class="error-message" id="edit-email-error"></span>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-text" id="close-edit-profile-modal">Отмена</button>
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Подтверждение удаления -->
+        <div id="confirm-modal" class="modal">
+            <div class="modal-content">
+                <h3 id="confirm-title">Подтверждение</h3>
+                <p id="confirm-message"></p>
+                <div class="modal-actions">
+                    <button class="btn btn-text" id="cancel-confirm">Отмена</button>
+                    <button class="btn btn-danger" id="confirm-action">Подтвердить</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Уведомления -->
+        <div id="notification" class="notification"></div>
+    </div>
+
+    <!-- В конце body, перед закрывающим тегом -->
+    <script src="js/app.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/validation.js"></script>
+    <script src="js/items.js"></script>
+    <script src="js/friends.js"></script>
+    <script src="js/profile.js"></script>
+</body>
+</html>

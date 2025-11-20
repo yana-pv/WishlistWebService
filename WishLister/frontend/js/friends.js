@@ -332,17 +332,14 @@ WishListerApp.prototype.removeFriendWishlist = async function (friendWishlistId)
     }
 };
 
-// Добавьте этот метод в конец файла friends.js
 WishListerApp.prototype.applyFriendWishlistTheme = function (wishlist) {
     const pageElement = document.getElementById('friend-wishlist-page-page');
     const headerElement = document.getElementById('friend-wishlist-page-header');
     const itemsContainer = document.getElementById('friend-wishlist-page-items-container');
 
     if (pageElement && headerElement && itemsContainer) {
-        // Применяем тему к заголовку
         headerElement.className = `section-header wishlist-theme-${wishlist.theme.id}`;
 
-        // Создаем белый контейнер для подарков
         itemsContainer.style.background = 'white';
         itemsContainer.style.borderRadius = '16px';
         itemsContainer.style.padding = '2rem';

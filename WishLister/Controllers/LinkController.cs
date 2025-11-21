@@ -22,12 +22,9 @@ public class LinkController : BaseController
         try
         {
             var userId = await GetAuthenticatedUserId(context);
-            Console.WriteLine($"[LinkController] Authenticated user ID: {userId}");
-
             var path = request.Url?.AbsolutePath ?? "";
             var method = request.HttpMethod;
 
-            // Генерация AI ссылок может быть публичной или требовать аутентификации
             if (method == "GET" && path.StartsWith("/api/links/ai/"))
             {
                 await GenerateAILinks(context);
@@ -75,6 +72,7 @@ public class LinkController : BaseController
         }
     }
 
+
     private async Task GenerateAILinks(HttpListenerContext context)
     {
         var path = context.Request.Url?.AbsolutePath ?? "";
@@ -102,6 +100,7 @@ public class LinkController : BaseController
             })
         });
     }
+
 
     private async Task AddLink(HttpListenerContext context)
     {
@@ -134,6 +133,7 @@ public class LinkController : BaseController
             }
         });
     }
+
 
     private async Task UpdateLink(HttpListenerContext context)
     {
@@ -178,6 +178,7 @@ public class LinkController : BaseController
         }
     }
 
+
     private async Task DeleteLink(HttpListenerContext context)
     {
         var path = context.Request.Url?.AbsolutePath ?? "";
@@ -210,6 +211,7 @@ public class LinkController : BaseController
     }
 }
 
+
 public class AddLinkRequest
 {
     public string Url { get; set; } = string.Empty;
@@ -219,6 +221,7 @@ public class AddLinkRequest
     public bool IsSelected { get; set; }
     public int ItemId { get; set; }
 }
+
 
 public class UpdateLinkRequest
 {

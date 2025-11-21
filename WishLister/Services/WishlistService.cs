@@ -20,6 +20,7 @@ public class WishlistService
         _linkRepository = linkRepository;
     }
 
+
     public async Task<Wishlist?> CreateWishlistAsync(Wishlist wishlist, int userId)
     {
         var (isValid, validationMessage) = Validators.ValidateWishlist(wishlist.Title, wishlist.Description);
@@ -34,6 +35,7 @@ public class WishlistService
         return await _wishlistRepository.CreateAsync(wishlist);
     }
 
+
     public async Task<List<Wishlist>> GetUserWishlistsAsync(int userId)
     {
         var wishlists = await _wishlistRepository.GetByUserIdAsync(userId);
@@ -46,7 +48,7 @@ public class WishlistService
         return wishlists;
     }
 
-    // --- ИЗМЕНЕНО: Возвращаем Wishlist с Items и Theme ---
+
     public async Task<Wishlist?> GetWishlistWithItemsAsync(int wishlistId, int? userId = null)
     {
         var wishlist = await _wishlistRepository.GetByIdAsync(wishlistId);
@@ -58,7 +60,6 @@ public class WishlistService
     }
 
 
-
     public async Task<Wishlist?> GetWishlistByShareTokenAsync(string shareToken)
     {
         var wishlist = await _wishlistRepository.GetByShareTokenAsync(shareToken);
@@ -67,7 +68,6 @@ public class WishlistService
         wishlist.Theme = await _themeRepository.GetByIdAsync(wishlist.ThemeId);
         wishlist.Items = await _itemRepository.GetByWishlistIdAsync(wishlist.Id);
 
-        // ЗАГРУЖАЕМ ССЫЛКИ ДЛЯ КАЖДОГО ПОДАРКА
         foreach (var item in wishlist.Items)
         {
             item.Links = await _linkRepository.GetByItemIdAsync(item.Id);
@@ -76,10 +76,12 @@ public class WishlistService
         return wishlist;
     }
 
+
     public async Task<bool> CanUserEditWishlistAsync(int wishlistId, int userId)
     {
         return await _wishlistRepository.UserOwnsWishlistAsync(wishlistId, userId);
     }
+
 
     public async Task<Wishlist> UpdateWishlistAsync(Wishlist wishlist)
     {
@@ -92,10 +94,8 @@ public class WishlistService
         return await _wishlistRepository.UpdateAsync(wishlist);
     }
 
-    // --- ДОБАВЛЕНО ---
     public async Task<bool> DeleteWishlistAsync(int id)
     {
         return await _wishlistRepository.DeleteAsync(id);
     }
-    // --- /ДОБАВЛЕНО ---
 }

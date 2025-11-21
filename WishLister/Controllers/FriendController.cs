@@ -14,6 +14,7 @@ public class FriendController : BaseController
         _friendService = friendService;
     }
 
+
     public async Task HandleRequest(HttpListenerContext context)
     {
         var request = context.Request;
@@ -22,7 +23,6 @@ public class FriendController : BaseController
         try
         {
             var userId = await GetAuthenticatedUserId(context);
-            Console.WriteLine($"[FriendController] Authenticated user ID: {userId}");
 
             if (userId == null)
             {
@@ -66,6 +66,7 @@ public class FriendController : BaseController
         }
     }
 
+
     private async Task GetFriendWishlists(HttpListenerContext context, int userId)
     {
         var friendWishlists = await _friendService.GetFriendWishlistsAsync(userId);
@@ -80,7 +81,7 @@ public class FriendController : BaseController
                 friendName = fw.FriendName,
                 title = fw.Wishlist.Title,
                 description = fw.Wishlist.Description,
-                eventDate = fw.Wishlist.EventDate, // ← ДОБАВЬТЕ ЭТУ СТРОКУ
+                eventDate = fw.Wishlist.EventDate, 
                 theme = new
                 {
                     id = fw.Wishlist.Theme.Id,
@@ -91,6 +92,7 @@ public class FriendController : BaseController
             })
         });
     }
+
 
     private async Task AddFriendWishlist(HttpListenerContext context, int userId)
     {
@@ -112,6 +114,7 @@ public class FriendController : BaseController
             }
         });
     }
+
 
     private async Task SaveFriendWishlistFromUrl(HttpListenerContext context, int userId)
     {
@@ -153,6 +156,7 @@ public class FriendController : BaseController
         }
     }
 
+
     private async Task GetFriendWishlist(HttpListenerContext context, int userId)
     {
         var friendWishlistId = GetIdFromUrl(context.Request.Url?.AbsolutePath);
@@ -184,7 +188,6 @@ public class FriendController : BaseController
             desireLevel = i.DesireLevel,
             comment = i.Comment,
             isReserved = i.IsReserved,
-            // ИСПРАВЛЕНИЕ: Только если подарок забронирован, возвращаем reservedByUserId
             reservedByUserId = i.IsReserved ? i.ReservedByUserId : null,
             links = i.Links.Select(l => new
             {
@@ -220,6 +223,7 @@ public class FriendController : BaseController
         });
     }
 
+
     private async Task DeleteFriendWishlist(HttpListenerContext context, int userId)
     {
         var friendWishlistId = GetIdFromUrl(context.Request.Url?.AbsolutePath);
@@ -248,11 +252,13 @@ public class FriendController : BaseController
     }
 }
 
+
 public class AddFriendWishlistRequest
 {
     public string ShareToken { get; set; } = string.Empty;
     public string FriendName { get; set; } = string.Empty;
 }
+
 
 public class SaveFriendWishlistRequest
 {

@@ -13,6 +13,7 @@ public class ItemRepository : IItemRepository
         _connectionString = ConfigHelper.GetConnectionString();
     }
 
+
     public async Task<WishlistItem?> GetByIdAsync(int id)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -44,6 +45,7 @@ public class ItemRepository : IItemRepository
         }
         return null;
     }
+
 
     public async Task<List<WishlistItem>> GetByWishlistIdAsync(int wishlistId)
     {
@@ -80,6 +82,7 @@ public class ItemRepository : IItemRepository
         return items;
     }
 
+
     public async Task<WishlistItem> CreateAsync(WishlistItem item)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -108,6 +111,7 @@ public class ItemRepository : IItemRepository
         return item;
     }
 
+
     public async Task<bool> ReserveItemAsync(int itemId, int userId)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -123,6 +127,7 @@ public class ItemRepository : IItemRepository
         return affected > 0;
     }
 
+
     public async Task<bool> UnreserveItemAsync(int itemId, int userId)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -130,13 +135,14 @@ public class ItemRepository : IItemRepository
 
         var cmd = new NpgsqlCommand(
             "UPDATE wishlist_items SET is_reserved = false, reserved_by_user_id = NULL " +
-            "WHERE id = @id AND reserved_by_user_id = @userId", conn); // Добавлена проверка пользователя
+            "WHERE id = @id AND reserved_by_user_id = @userId", conn); 
         cmd.Parameters.AddWithValue("@id", itemId);
         cmd.Parameters.AddWithValue("@userId", userId);
 
         var affected = await cmd.ExecuteNonQueryAsync();
         return affected > 0;
     }
+
 
     public async Task<WishlistItem> UpdateAsync(WishlistItem item)
     {
@@ -160,6 +166,7 @@ public class ItemRepository : IItemRepository
         return item;
     }
 
+
     public async Task<bool> DeleteAsync(int id)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -171,6 +178,7 @@ public class ItemRepository : IItemRepository
         var affected = await cmd.ExecuteNonQueryAsync();
         return affected > 0;
     }
+
 
     public async Task<int> GetItemsCountByWishlistAsync(int wishlistId)
     {
@@ -184,6 +192,7 @@ public class ItemRepository : IItemRepository
         return (int)count;
     }
 
+
     public async Task<int> GetReservedItemsCountByUserAsync(int userId)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -196,6 +205,7 @@ public class ItemRepository : IItemRepository
         var count = (long)(await cmd.ExecuteScalarAsync() ?? 0);
         return (int)count;
     }
+
 
     public async Task<int> GetItemsCountByUserAsync(int userId)
     {
@@ -211,6 +221,7 @@ public class ItemRepository : IItemRepository
         var count = (long)(await cmd.ExecuteScalarAsync() ?? 0);
         return (int)count;
     }
+
 
     public async Task<List<ItemLink>> GetItemLinksAsync(int itemId)
     {

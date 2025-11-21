@@ -18,6 +18,7 @@ public class FriendService
         _itemRepository = itemRepository;
     }
 
+
     public async Task<List<FriendWishlist>> GetFriendWishlistsAsync(int userId)
     {
         var friendWishlists = await _friendRepository.GetByUserIdAsyncWithWishlist(userId);
@@ -26,13 +27,13 @@ public class FriendService
         {
             if (fw.Wishlist != null && fw.Wishlist.ThemeId != 0)
             {
-                // Загружаем тему вишлиста
                 fw.Wishlist.Theme = await _themeRepository.GetByIdAsync(fw.Wishlist.ThemeId);
             }
         }
 
         return friendWishlists;
     }
+
 
     public async Task<FriendWishlist> AddFriendWishlistAsync(int userId, string shareToken, string friendName)
     {
@@ -63,6 +64,7 @@ public class FriendService
         return await _friendRepository.CreateAsync(friendWishlist);
     }
 
+
     public async Task<FriendWishlist> SaveFriendWishlistFromUrlAsync(int userId, string shareToken, string? friendName)
     {
         if (string.IsNullOrWhiteSpace(shareToken))
@@ -89,7 +91,7 @@ public class FriendService
         return await _friendRepository.CreateAsync(friendWishlist);
     }
 
-    // --- ИЗМЕНЕНО: Уточнение возвращаемого типа ---
+
     public async Task<(FriendWishlist, Wishlist)?> GetFriendWishlistWithItemsForDisplayAsync(int friendWishlistId, int userId)
     {
         var friendWishlist = await _friendRepository.GetByIdAsync(friendWishlistId);
@@ -103,7 +105,6 @@ public class FriendService
         wishlist.Theme = await _themeRepository.GetByIdAsync(wishlist.ThemeId);
         var items = await _itemRepository.GetByWishlistIdAsync(wishlist.Id);
 
-        // ЗАГРУЖАЕМ ССЫЛКИ ДЛЯ КАЖДОГО ПОДАРКА
         foreach (var item in items)
         {
             item.Links = await _itemRepository.GetItemLinksAsync(item.Id);
@@ -113,6 +114,7 @@ public class FriendService
 
         return (friendWishlist, wishlist);
     }
+
 
     public async Task<bool> DeleteFriendWishlistAsync(int friendWishlistId, int userId)
     {

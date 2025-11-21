@@ -38,6 +38,7 @@ public class FriendRepository : IFriendRepository
         return null;
     }
 
+
     public async Task<List<FriendWishlist>> GetByUserIdAsyncWithWishlist(int userId)
     {
         var friendWishlists = new List<FriendWishlist>();
@@ -80,6 +81,7 @@ public class FriendRepository : IFriendRepository
 
         return friendWishlists;
     }
+
 
     public async Task<List<FriendWishlist>> GetByUserIdAsync(int userId)
     {
@@ -124,6 +126,7 @@ public class FriendRepository : IFriendRepository
         return friendWishlists;
     }
 
+
     public async Task<FriendWishlist?> GetByUserAndWishlistAsync(int userId, int wishlistId)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -150,6 +153,7 @@ public class FriendRepository : IFriendRepository
         return null;
     }
 
+
     public async Task<FriendWishlist> CreateAsync(FriendWishlist friendWishlist)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -174,6 +178,7 @@ public class FriendRepository : IFriendRepository
         return friendWishlist;
     }
 
+
     public async Task<bool> DeleteAsync(int id)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -185,6 +190,7 @@ public class FriendRepository : IFriendRepository
         var affected = await cmd.ExecuteNonQueryAsync();
         return affected > 0;
     }
+
 
     public async Task<bool> ExistsAsync(int userId, int wishlistId)
     {

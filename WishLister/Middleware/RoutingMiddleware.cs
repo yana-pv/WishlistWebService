@@ -46,11 +46,9 @@ public class RoutingMiddleware
     {
         var request = context.Request;
         var path = request.Url?.AbsolutePath ?? "";
-        Console.WriteLine($"[Routing] Processing API route: {path}"); // <-- ДОБАВЬТЕ ЭТО
 
         try
         {
-            // Публичные вишлисты
             if (path.StartsWith("/api/public/wishlists/"))
             {
                 await _wishlistController.HandleRequest(context);
@@ -59,22 +57,19 @@ public class RoutingMiddleware
 
             if (path == "/api/auth/check")
             {
-                await _next(context); // Передаём в AuthMiddleware
+                await _next(context); 
                 return;
             }
 
-            // Остальные маршруты остаются без изменений
             if (path.StartsWith("/api/auth/"))
             {
                 await _authController.HandleRequest(context);
                 return;
             }
-
-            
+    
 
             if (path.StartsWith("/api/user/"))
             {
-                Console.WriteLine($"[Routing] Routing to UserController: {path}"); // <-- ЛОГ
                 await _userController.HandleRequest(context);
                 return;
             }
@@ -119,6 +114,7 @@ public class RoutingMiddleware
             await WriteJsonResponse(context, new { status = "error", message = ex.Message });
         }
     }
+
 
     private static async Task WriteJsonResponse(HttpListenerContext context, object data)
     {

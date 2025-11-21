@@ -17,10 +17,8 @@ public class StaticFilesMiddleware
     {
         var request = context.Request;
         var response = context.Response;
-        var path = request.Url?.AbsolutePath ?? ""; // <-- ДОБАВЬ ЭТУ СТРОКУ
-        Console.WriteLine($"[StaticFilesMiddleware] Processing path: {path}"); // Лог
+        var path = request.Url?.AbsolutePath ?? ""; 
 
-        // Обрабатываем публичные вишлисты
         if (path.StartsWith("/wishlist/"))
         {
             var publicWishlistPath = Path.Combine(_staticFilesPath, "public-wishlist.html");
@@ -33,7 +31,6 @@ public class StaticFilesMiddleware
 
         if (path.StartsWith("/api/"))
         {
-            Console.WriteLine($"[StaticFilesMiddleware] API path detected, calling next: {path}"); // Лог
             await _next(context);
             return;
         }
@@ -44,6 +41,7 @@ public class StaticFilesMiddleware
         {
             await ServeStaticFile(context, filePath);
         }
+
         else
         {
             var indexPath = Path.Combine(_staticFilesPath, "index.html");
@@ -85,7 +83,6 @@ public class StaticFilesMiddleware
         catch (Exception ex)
         {
             response.StatusCode = 500;
-            Console.WriteLine($"Error serving static file: {ex.Message}");
             await _next(context);
         }
     }

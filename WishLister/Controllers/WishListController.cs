@@ -22,6 +22,7 @@ public class WishlistController : BaseController
 
     }
 
+
     public async Task HandleRequest(HttpListenerContext context)
     {
         var request = context.Request;
@@ -32,17 +33,14 @@ public class WishlistController : BaseController
             var path = request.Url?.AbsolutePath ?? "";
             var method = request.HttpMethod;
 
-            // Публичный доступ к вишлисту по share token
             if (method == "GET" && path.StartsWith("/api/public/wishlists/"))
             {
-                var publicUserId = await GetAuthenticatedUserId(context); // переименовали переменную
+                var publicUserId = await GetAuthenticatedUserId(context); 
                 await GetPublicWishlist(context, publicUserId);
                 return;
             }
 
-            // Для защищенных маршрутов проверяем аутентификацию
-            var authenticatedUserId = await GetAuthenticatedUserId(context); // переименовали переменную
-            Console.WriteLine($"[WishlistController] Authenticated user ID: {authenticatedUserId}");
+            var authenticatedUserId = await GetAuthenticatedUserId(context); 
 
             if (method == "GET" && path == "/api/wishlists")
             {
@@ -54,6 +52,7 @@ public class WishlistController : BaseController
                 }
                 await GetUserWishlists(context, authenticatedUserId.Value);
             }
+
             else if (method == "POST" && path == "/api/wishlists")
             {
                 if (authenticatedUserId == null)
@@ -64,10 +63,12 @@ public class WishlistController : BaseController
                 }
                 await CreateWishlist(context, authenticatedUserId.Value);
             }
+
             else if (method == "GET" && path.StartsWith("/api/wishlists/"))
             {
                 await GetWishlist(context, authenticatedUserId);
             }
+
             else if (method == "PUT" && path.StartsWith("/api/wishlists/"))
             {
                 if (authenticatedUserId == null)
@@ -78,7 +79,7 @@ public class WishlistController : BaseController
                 }
                 await UpdateWishlist(context, authenticatedUserId.Value);
             }
-            // В методе HandleRequest, после UpdateWishlist, добавь:
+
             else if (method == "DELETE" && path.StartsWith("/api/wishlists/"))
             {
                 if (authenticatedUserId == null)
@@ -107,6 +108,7 @@ public class WishlistController : BaseController
         }
     }
 
+
     private async Task GetPublicWishlist(HttpListenerContext context, int? userId)
     {
         var path = context.Request.Url?.AbsolutePath ?? "";
@@ -128,12 +130,8 @@ public class WishlistController : BaseController
         }
 
         var isOwner = userId.HasValue && wishlist.UserId == userId.Value;
-
-        // ИСПРАВЛЕНО: Для публичного доступа ВСЕГДА скрываем информацию о бронировании
-        // Только владелец вишлиста видит реальный статус бронирования
         var showReservationDetails = isOwner;
 
-        // Подготавливаем список предметов с нужной информацией
         var itemsForDisplay = wishlist.Items.Select(i => new
         {
             id = i.Id,
@@ -143,7 +141,6 @@ public class WishlistController : BaseController
             imageUrl = i.ImageUrl,
             desireLevel = i.DesireLevel,
             comment = i.Comment,
-            // ИСПРАВЛЕНО: Показываем реальный статус бронирования только владельцу
             isReserved = showReservationDetails ? i.IsReserved : false,
             reservedByUserId = showReservationDetails ? i.ReservedByUserId : null,
             links = i.Links?.Select(l => new
@@ -180,6 +177,7 @@ public class WishlistController : BaseController
         });
     }
 
+
     private async Task GetUserWishlists(HttpListenerContext context, int userId)
     {
         var wishlists = await _wishlistService.GetUserWishlistsAsync(userId);
@@ -188,7 +186,6 @@ public class WishlistController : BaseController
 
         foreach (var w in wishlists)
         {
-            // Подсчитываем количество подарков для каждого вишлиста
             var itemCount = await _itemRepository.GetItemsCountByWishlistAsync(w.Id);
 
             wishlistData.Add(new
@@ -204,7 +201,7 @@ public class WishlistController : BaseController
                     color = w.Theme.Color
                 },
                 shareToken = w.ShareToken,
-                itemCount = itemCount, // <-- Используем реальное количество
+                itemCount = itemCount, 
                 createdAt = w.CreatedAt
             });
         }
@@ -215,6 +212,7 @@ public class WishlistController : BaseController
             wishlists = wishlistData
         });
     }
+
 
     private async Task CreateWishlist(HttpListenerContext context, int userId)
     {
@@ -243,6 +241,7 @@ public class WishlistController : BaseController
         });
     }
 
+
     private async Task GetWishlist(HttpListenerContext context, int? userId)
     {
         var wishlistId = GetIdFromUrl(context.Request.Url?.AbsolutePath);
@@ -264,7 +263,6 @@ public class WishlistController : BaseController
 
         var isOwner = userId.HasValue && wishlist.UserId == userId.Value;
 
-        // Подготавливаем список предметов с нужной информацией
         var itemsForDisplay = wishlist.Items.Select(i => new
         {
             id = i.Id,
@@ -295,7 +293,7 @@ public class WishlistController : BaseController
                 id = wishlist.Id,
                 title = wishlist.Title,
                 description = wishlist.Description,
-                eventDate = wishlist.EventDate?.ToString("yyyy-MM-dd"), // Изменено
+                eventDate = wishlist.EventDate?.ToString("yyyy-MM-dd"), 
                 theme = new
                 {
                     id = wishlist.Theme.Id,
@@ -310,6 +308,8 @@ public class WishlistController : BaseController
             }
         });
     }
+
+
     private async Task GetThemes(HttpListenerContext context)
     {
         var themes = await _themeService.GetAllThemesAsync();
@@ -327,6 +327,7 @@ public class WishlistController : BaseController
             })
         });
     }
+
 
     private async Task UpdateWishlist(HttpListenerContext context, int userId)
     {
@@ -366,12 +367,13 @@ public class WishlistController : BaseController
             {
                 id = updatedWishlist.Id,
                 title = updatedWishlist.Title,
-                eventDate = updatedWishlist.EventDate?.ToString("yyyy-MM-dd"), // Добавлено
+                eventDate = updatedWishlist.EventDate?.ToString("yyyy-MM-dd"), 
                 description = updatedWishlist.Description,
                 themeId = updatedWishlist.ThemeId
             }
         });
     }
+
 
     private async Task DeleteWishlist(HttpListenerContext context, int userId)
     {
@@ -408,6 +410,7 @@ public class WishlistController : BaseController
     }
 }
 
+
 public class CreateWishlistRequest
 {
     public string Title { get; set; } = string.Empty;
@@ -415,6 +418,7 @@ public class CreateWishlistRequest
     public DateTime? EventDate { get; set; }
     public int ThemeId { get; set; }
 }
+
 
 public class UpdateWishlistRequest
 {

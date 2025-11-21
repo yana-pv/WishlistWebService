@@ -30,6 +30,7 @@ public static class PasswordHasher
         return Convert.ToBase64String(hashBytes);
     }
 
+
     public static bool VerifyPassword(string password, string hashedPassword)
     {
         try
@@ -55,19 +56,5 @@ public static class PasswordHasher
         {
             return false;
         }
-    }
-
-    public static string GenerateRandomPassword(int length = 12)
-    {
-        const string validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*";
-        var random = new Random();
-
-        var chars = new char[length];
-        for (int i = 0; i < length; i++)
-        {
-            chars[i] = validChars[random.Next(validChars.Length)];
-        }
-
-        return new string(chars);
     }
 }

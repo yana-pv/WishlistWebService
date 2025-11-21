@@ -13,6 +13,7 @@ public class LinkRepository : ILinkRepository
         _connectionString = ConfigHelper.GetConnectionString();
     }
 
+
     public async Task<List<ItemLink>> GetByItemIdAsync(int itemId)
     {
         var links = new List<ItemLink>();
@@ -44,6 +45,7 @@ public class LinkRepository : ILinkRepository
         return links;
     }
 
+
     public async Task<ItemLink> CreateAsync(ItemLink link)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -71,18 +73,17 @@ public class LinkRepository : ILinkRepository
         return link;
     }
 
+
     public async Task<bool> SetSelectedLinkAsync(int itemId, int linkId)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
         await conn.OpenAsync();
 
-        // Сначала снимаем выделение со всех ссылок этого товара
         var clearCmd = new NpgsqlCommand(
             "UPDATE item_links SET is_selected = false WHERE item_id = @itemId", conn);
         clearCmd.Parameters.AddWithValue("@itemId", itemId);
         await clearCmd.ExecuteNonQueryAsync();
 
-        // Затем выделяем выбранную ссылку
         var selectCmd = new NpgsqlCommand(
             "UPDATE item_links SET is_selected = true WHERE id = @linkId AND item_id = @itemId", conn);
         selectCmd.Parameters.AddWithValue("@linkId", linkId);
@@ -91,6 +92,7 @@ public class LinkRepository : ILinkRepository
         var affected = await selectCmd.ExecuteNonQueryAsync();
         return affected > 0;
     }
+
 
     public async Task<bool> DeleteByItemIdAsync(int itemId)
     {
@@ -103,6 +105,7 @@ public class LinkRepository : ILinkRepository
         var affected = await cmd.ExecuteNonQueryAsync();
         return affected > 0;
     }
+
 
     public async Task<bool> DeleteAsync(int id)
     {

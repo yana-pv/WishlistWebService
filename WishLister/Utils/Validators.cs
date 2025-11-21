@@ -18,6 +18,7 @@ public static class Validators
         }
     }
 
+
     public static bool IsValidUsername(string username)
     {
         if (string.IsNullOrWhiteSpace(username))
@@ -26,13 +27,6 @@ public static class Validators
         return Regex.IsMatch(username, Constants.UsernameRegex);
     }
 
-    public static bool IsValidPhone(string phone)
-    {
-        if (string.IsNullOrWhiteSpace(phone))
-            return true;
-
-        return Regex.IsMatch(phone, Constants.PhoneRegex);
-    }
 
     public static bool IsValidPassword(string password)
     {
@@ -45,6 +39,7 @@ public static class Validators
         return hasLetter && hasDigit;
     }
 
+
     public static bool IsValidUrl(string url)
     {
         if (string.IsNullOrWhiteSpace(url))
@@ -53,22 +48,6 @@ public static class Validators
         return Uri.TryCreate(url, UriKind.Absolute, out _);
     }
 
-    public static bool IsValidImageFile(string fileName)
-    {
-        if (string.IsNullOrWhiteSpace(fileName))
-            return false;
-
-        var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp" };
-        var extension = Path.GetExtension(fileName).ToLower();
-
-        return allowedExtensions.Contains(extension);
-    }
-
-    public static bool IsValidImageSize(long fileSizeInBytes)
-    {
-        var maxSizeInBytes = Constants.MaxImageSizeMB * 1024 * 1024;
-        return fileSizeInBytes <= maxSizeInBytes;
-    }
 
     public static bool IsValidPrice(decimal? price)
     {
@@ -78,10 +57,12 @@ public static class Validators
         return price >= 0 && price <= 9999999.99m;
     }
 
+
     public static bool IsValidDesireLevel(int level)
     {
         return level >= 1 && level <= 3;
     }
+
 
     public static (bool isValid, string message) ValidateUserRegistration(string username, string email, string password, string confirmPassword)
     {
@@ -100,6 +81,7 @@ public static class Validators
         return (true, "Валидация успешна");
     }
 
+
     public static (bool isValid, string message) ValidateWishlist(string title, string? description)
     {
         if (string.IsNullOrWhiteSpace(title) || title.Length < 2)
@@ -113,6 +95,7 @@ public static class Validators
 
         return (true, "Валидация успешна");
     }
+
 
     public static (bool isValid, string message) ValidateItem(string title, decimal? price, int desireLevel)
     {

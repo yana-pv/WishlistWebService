@@ -14,6 +14,7 @@ public class UserRepository : IUserRepository
         _connectionString = Utils.ConfigHelper.GetConnectionString();
     }
 
+
     public async Task<User?> GetByIdAsync(int id)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -42,6 +43,7 @@ public class UserRepository : IUserRepository
         }
         return null;
     }
+
 
     public async Task<User?> GetByLoginAsync(string login)
     {
@@ -72,6 +74,7 @@ public class UserRepository : IUserRepository
         return null;
     }
 
+
     public async Task<User> CreateAsync(User user)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -100,6 +103,7 @@ public class UserRepository : IUserRepository
         return user;
     }
 
+
     public async Task<bool> LoginExistsAsync(string login)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -110,6 +114,7 @@ public class UserRepository : IUserRepository
         var count = (long)(await cmd.ExecuteScalarAsync() ?? 0);
         return count > 0;
     }
+
 
     public async Task<bool> EmailExistsAsync(string email)
     {
@@ -122,6 +127,7 @@ public class UserRepository : IUserRepository
         return count > 0;
     }
 
+
     public async Task<User?> GetByEmailAsync(string email)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -129,7 +135,7 @@ public class UserRepository : IUserRepository
 
         var cmd = new NpgsqlCommand(
             "SELECT id, username, email, login, password_hash, avatar_url, phone, created_at, updated_at " +
-            "FROM users WHERE email = @email", conn); // Запрос по email
+            "FROM users WHERE email = @email", conn); 
         cmd.Parameters.AddWithValue("@email", email);
 
         await using var reader = await cmd.ExecuteReaderAsync();
@@ -148,8 +154,9 @@ public class UserRepository : IUserRepository
                 UpdatedAt = reader.GetDateTime(8)
             };
         }
-        return null; // Пользователь не найден
+        return null; 
     }
+
 
     public async Task<User> UpdateAsync(User user)
     {
@@ -159,7 +166,7 @@ public class UserRepository : IUserRepository
         var cmd = new NpgsqlCommand(
             "UPDATE users SET username = @username, email = @email, login = @login, " +
             "avatar_url = @avatar_url, phone = @phone, updated_at = CURRENT_TIMESTAMP " +
-            "WHERE id = @id RETURNING updated_at", conn); // Обновляем поля, кроме пароля
+            "WHERE id = @id RETURNING updated_at", conn); 
 
         cmd.Parameters.AddWithValue("@username", user.Username);
         cmd.Parameters.AddWithValue("@email", user.Email);
@@ -171,7 +178,7 @@ public class UserRepository : IUserRepository
         await using var reader = await cmd.ExecuteReaderAsync();
         if (await reader.ReadAsync())
         {
-            user.UpdatedAt = reader.GetDateTime(0); // Обновляем время в объекте
+            user.UpdatedAt = reader.GetDateTime(0);
         }
         else
         {
@@ -180,6 +187,7 @@ public class UserRepository : IUserRepository
 
         return user;
     }
+
 
     public async Task<bool> DeleteAsync(int id)
     {

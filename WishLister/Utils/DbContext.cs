@@ -7,16 +7,6 @@ public class DbContext
 {
     public static string ConnectionString => ConfigHelper.GetConnectionString();
 
-    [Obsolete("Используйте PasswordHasher.VerifyPassword")]
-    public static bool VerifyPassword(string password, string storedHash, string storedSalt)
-    {
-        byte[] saltBytes = Convert.FromBase64String(storedSalt);
-        byte[] passwordWithSalt = Encoding.UTF8.GetBytes(password + Convert.ToBase64String(saltBytes));
-        byte[] hashBytes = SHA256.Create().ComputeHash(passwordWithSalt);
-        string computedHash = Convert.ToBase64String(hashBytes);
-        return computedHash == storedHash;
-    }
-
     public async Task CreateTablesAsync(CancellationToken token)
     {
         await using var conn = new NpgsqlConnection(ConnectionString);
@@ -89,7 +79,6 @@ public class DbContext
             UNIQUE(user_id, wishlist_id)
         );
 
-        -- Таблица для сессий
         CREATE TABLE IF NOT EXISTS sessions (
             id TEXT PRIMARY KEY,
             user_id INT REFERENCES users(id) ON DELETE CASCADE,

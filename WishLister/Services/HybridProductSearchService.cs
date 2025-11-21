@@ -1,5 +1,4 @@
-﻿// WishLister.Services\HybridProductSearchService.cs
-using System.Net;
+﻿using System.Net;
 using HtmlAgilityPack;
 using WishLister.Models;
 
@@ -16,23 +15,19 @@ public class HybridProductSearchService
         _httpClient.Timeout = TimeSpan.FromSeconds(10);
     }
 
+
     public async Task<List<ProductSearchResult>> SearchProductsAsync(string productName)
     {
         if (string.IsNullOrWhiteSpace(productName))
             return GenerateSmartLinks(productName);
 
-        // Пытаемся спарсить реальные товары
         var parsedResults = await TryParseRealProductsAsync(productName);
 
-        // Если нашли реальные товары - возвращаем их
         if (parsedResults.Any())
         {
-            Console.WriteLine($"Найдено {parsedResults.Count} реальных товаров для '{productName}'");
             return parsedResults.Take(5).ToList();
         }
 
-        // Если не нашли - генерируем умные ссылки на поиск
-        Console.WriteLine($"Реальных товаров не найдено, генерируем умные ссылки для '{productName}'");
         return GenerateSmartLinks(productName);
     }
 
@@ -40,7 +35,6 @@ public class HybridProductSearchService
     {
         var results = new List<ProductSearchResult>();
 
-        // Пробуем разные магазины параллельно
         var tasks = new List<Task<List<ProductSearchResult>>>
         {
             TryParseCitilinkAsync(productName),
@@ -48,28 +42,20 @@ public class HybridProductSearchService
             TryParseWildberriesAsync(productName)
         };
 
-        try
-        {
-            // Ждем не больше 5 секунд
-            var timeoutTask = Task.Delay(5000);
-            var completedTask = await Task.WhenAny(Task.WhenAll(tasks), timeoutTask);
+        var timeoutTask = Task.Delay(5000);
+        var completedTask = await Task.WhenAny(Task.WhenAll(tasks), timeoutTask);
 
-            if (completedTask == timeoutTask)
-            {
-                Console.WriteLine("Таймаут парсинга магазинов");
-                return results;
-            }
-
-            var allResults = await Task.WhenAll(tasks);
-            results = allResults.SelectMany(x => x).ToList();
-        }
-        catch (Exception ex)
+        if (completedTask == timeoutTask)
         {
-            Console.WriteLine($"Ошибка при парсинге магазинов: {ex.Message}");
+            return results;
         }
 
+        var allResults = await Task.WhenAll(tasks);
+        results = allResults.SelectMany(x => x).ToList();
+             
         return results;
     }
+
 
     private async Task<List<ProductSearchResult>> TryParseCitilinkAsync(string productName)
     {
@@ -83,7 +69,6 @@ public class HybridProductSearchService
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
 
-            // Парсим карточки товаров Citilink
             var productNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'ProductCardHorizontal')]") ??
                               doc.DocumentNode.SelectNodes("//div[contains(@class, 'product_data')]");
 
@@ -105,7 +90,6 @@ public class HybridProductSearchService
                             var productUrl = href.StartsWith("http") ? href : "https://www.citilink.ru" + href;
                             var price = ExtractPrice(priceNode?.InnerText);
 
-                            // Проверяем, что ссылка выглядит как ссылка на товар (содержит /product/)
                             if (productUrl.Contains("/product/"))
                             {
                                 results.Add(new ProductSearchResult
@@ -134,6 +118,7 @@ public class HybridProductSearchService
         return results;
     }
 
+
     private async Task<List<ProductSearchResult>> TryParseDNSAsync(string productName)
     {
         var results = new List<ProductSearchResult>();
@@ -146,7 +131,6 @@ public class HybridProductSearchService
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
 
-            // Парсим карточки товаров DNS
             var productNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'catalog-product')]") ??
                               doc.DocumentNode.SelectNodes("//a[contains(@class, 'catalog-product__name')]");
 
@@ -167,7 +151,6 @@ public class HybridProductSearchService
                             var productUrl = href.StartsWith("http") ? href : "https://www.dns-shop.ru" + href;
                             var price = ExtractPrice(priceNode?.InnerText);
 
-                            // Проверяем, что ссылка выглядит как ссылка на товар
                             if (productUrl.Contains("/product/"))
                             {
                                 results.Add(new ProductSearchResult
@@ -181,6 +164,7 @@ public class HybridProductSearchService
                             }
                         }
                     }
+
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Ошибка парсинга карточки DNS: {ex.Message}");
@@ -188,6 +172,7 @@ public class HybridProductSearchService
                 }
             }
         }
+
         catch (Exception ex)
         {
             Console.WriteLine($"Ошибка парсинга DNS: {ex.Message}");
@@ -195,6 +180,7 @@ public class HybridProductSearchService
 
         return results;
     }
+
 
     private async Task<List<ProductSearchResult>> TryParseWildberriesAsync(string productName)
     {
@@ -208,7 +194,6 @@ public class HybridProductSearchService
             var doc = new HtmlDocument();
             doc.LoadHtml(html);
 
-            // Парсим карточки товаров Wildberries
             var productNodes = doc.DocumentNode.SelectNodes("//div[contains(@class, 'product-card')]") ??
                               doc.DocumentNode.SelectNodes("//a[contains(@class, 'product-card__link')]");
 
@@ -227,7 +212,6 @@ public class HybridProductSearchService
                             var href = linkNode.GetAttributeValue("href", "");
                             var productUrl = href.StartsWith("http") ? href : "https://www.wildberries.ru" + href;
 
-                            // Проверяем, что ссылка выглядит как ссылка на товар (содержит /catalog/)
                             if (productUrl.Contains("/catalog/") && productUrl.Contains("/detail.aspx"))
                             {
                                 results.Add(new ProductSearchResult
@@ -240,6 +224,7 @@ public class HybridProductSearchService
                             }
                         }
                     }
+
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Ошибка парсинга карточки Wildberries: {ex.Message}");
@@ -247,6 +232,7 @@ public class HybridProductSearchService
                 }
             }
         }
+
         catch (Exception ex)
         {
             Console.WriteLine($"Ошибка парсинга Wildberries: {ex.Message}");
@@ -254,6 +240,7 @@ public class HybridProductSearchService
 
         return results;
     }
+
 
     private List<ProductSearchResult> GenerateSmartLinks(string productName)
     {
@@ -299,6 +286,7 @@ public class HybridProductSearchService
         };
     }
 
+
     private decimal? ExtractPrice(string priceText)
     {
         if (string.IsNullOrEmpty(priceText))
@@ -306,11 +294,10 @@ public class HybridProductSearchService
 
         try
         {
-            // Извлекаем числа из строки цены (рубли)
             var cleanPrice = new string(priceText.Where(c => char.IsDigit(c)).ToArray());
             if (long.TryParse(cleanPrice, out long priceLong) && priceLong > 0)
             {
-                return priceLong / 100m; // Предполагаем, что цена в копейках
+                return priceLong / 100m; 
             }
             return null;
         }

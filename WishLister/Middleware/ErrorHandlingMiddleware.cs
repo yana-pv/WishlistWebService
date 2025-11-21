@@ -24,6 +24,7 @@ public class ErrorHandlingMiddleware
         }
     }
 
+
     private static async Task HandleExceptionAsync(HttpListenerContext context, Exception exception)
     {
         context.Response.StatusCode = exception switch

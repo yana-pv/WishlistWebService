@@ -13,6 +13,7 @@ public class WishlistRepository : IWishlistRepository
         _connectionString = ConfigHelper.GetConnectionString();
     }
 
+
     public async Task<Wishlist?> GetByIdAsync(int id)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -42,6 +43,7 @@ public class WishlistRepository : IWishlistRepository
         return null;
     }
 
+
     public async Task<Wishlist?> GetByShareTokenAsync(string shareToken)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -70,6 +72,7 @@ public class WishlistRepository : IWishlistRepository
         }
         return null;
     }
+
 
     public async Task<List<Wishlist>> GetByUserIdAsync(int userId)
     {
@@ -103,6 +106,7 @@ public class WishlistRepository : IWishlistRepository
         return wishlists;
     }
 
+
     public async Task<int> GetWishlistsCountByUserAsync(int userId)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -114,6 +118,7 @@ public class WishlistRepository : IWishlistRepository
         var count = (long)(await cmd.ExecuteScalarAsync() ?? 0);
         return (int)count;
     }
+
 
     public async Task<Wishlist> CreateAsync(Wishlist wishlist)
     {
@@ -143,6 +148,7 @@ public class WishlistRepository : IWishlistRepository
         return wishlist;
     }
 
+
     public async Task<bool> UserOwnsWishlistAsync(int wishlistId, int userId)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -156,6 +162,7 @@ public class WishlistRepository : IWishlistRepository
         var count = (long)(await cmd.ExecuteScalarAsync() ?? 0);
         return count > 0;
     }
+
 
     public async Task<Wishlist> UpdateAsync(Wishlist wishlist)
     {
@@ -181,6 +188,7 @@ public class WishlistRepository : IWishlistRepository
 
         return wishlist;
     }
+
 
     public async Task<bool> DeleteAsync(int id)
     {

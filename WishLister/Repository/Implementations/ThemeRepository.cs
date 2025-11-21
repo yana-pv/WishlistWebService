@@ -13,6 +13,7 @@ public class ThemeRepository : IThemeRepository
         _connectionString = ConfigHelper.GetConnectionString();
     }
 
+
     public async Task<Theme?> GetByIdAsync(int id)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -36,6 +37,7 @@ public class ThemeRepository : IThemeRepository
         }
         return null;
     }
+
 
     public async Task<List<Theme>> GetAllAsync()
     {

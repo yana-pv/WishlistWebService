@@ -16,6 +16,7 @@ public class ItemController : BaseController
         _minioService = minioService;
     }
 
+
     public async Task HandleRequest(HttpListenerContext context)
     {
         var request = context.Request;
@@ -26,8 +27,6 @@ public class ItemController : BaseController
             var userId = await GetAuthenticatedUserId(context);
             var path = request.Url?.AbsolutePath ?? "";
             var method = request.HttpMethod;
-
-            Console.WriteLine($"[ItemController] Path: {path}, Method: {method}, UserId: {userId}");
 
             if (RequiresAuth(path, method) && userId == null)
             {
@@ -83,6 +82,7 @@ public class ItemController : BaseController
         }
     }
 
+
     private bool RequiresAuth(string path, string method)
     {
         if (method == "GET")
@@ -91,6 +91,7 @@ public class ItemController : BaseController
         }
         return true;
     }
+
 
     private async Task CreateItem(HttpListenerContext context, int userId)
     {
@@ -107,6 +108,7 @@ public class ItemController : BaseController
         }
     }
 
+
     private async Task CreateItemWithImage(HttpListenerContext context, int userId, CreateItemRequestWithImage request)
     {
         string? imageUrl = null;
@@ -115,9 +117,7 @@ public class ItemController : BaseController
         {
             try
             {
-                Console.WriteLine($"[ItemController] Saving base64 image for item: {request.Title}");
                 imageUrl = await _minioService.SaveBase64Image(request.ImageData);
-                Console.WriteLine($"[ItemController] Image saved: {imageUrl}");
             }
             catch (Exception ex)
             {
@@ -136,7 +136,7 @@ public class ItemController : BaseController
             Title = request.Title,
             Description = request.Description,
             Price = request.Price,
-            ImageUrl = imageUrl, // Используем URL из MinIO
+            ImageUrl = imageUrl, 
             DesireLevel = request.DesireLevel,
             Comment = request.Comment,
             WishlistId = request.WishlistId
@@ -179,20 +179,12 @@ public class ItemController : BaseController
                 }
             });
         }
+
         catch (Exception ex)
         {
-            // Если создание товара не удалось, удаляем загруженное изображение
             if (!string.IsNullOrEmpty(imageUrl))
             {
-                try
-                {
-                    await _minioService.DeleteImageAsync(imageUrl);
-                    Console.WriteLine($"[ItemController] Cleaned up image after failed item creation: {imageUrl}");
-                }
-                catch (Exception deleteEx)
-                {
-                    Console.WriteLine($"[ItemController] Error cleaning up image: {deleteEx.Message}");
-                }
+                await _minioService.DeleteImageAsync(imageUrl);   
             }
 
             context.Response.StatusCode = 400;
@@ -203,6 +195,7 @@ public class ItemController : BaseController
             });
         }
     }
+
 
     private async Task CreateItemWithUrl(HttpListenerContext context, int userId, CreateItemRequest request)
     {
@@ -253,6 +246,7 @@ public class ItemController : BaseController
         });
     }
 
+
     private async Task GetItem(HttpListenerContext context, int userId)
     {
         var itemId = GetIdFromUrl(context.Request.Url?.AbsolutePath);
@@ -300,6 +294,7 @@ public class ItemController : BaseController
         });
     }
 
+
     private async Task UpdateItem(HttpListenerContext context, int userId)
     {
         var path = context.Request.Url?.AbsolutePath ?? "";
@@ -320,24 +315,20 @@ public class ItemController : BaseController
 
         var request = await ReadRequestBody<UpdateItemRequest>(context.Request);
 
-        // --- ИЗМЕНЕНО: Проверяем, есть ли новое изображение ---
-        string imageUrlToUpdate = request.ImageUrl; // <-- По умолчанию новое изображение
+        string imageUrlToUpdate = request.ImageUrl; 
 
         if (string.IsNullOrEmpty(request.ImageData))
         {
-            // Если нет нового изображения (base64), оставляем старое
             var existingItem = await _itemService.GetItemByIdAsync(itemId.Value, userId);
             if (existingItem != null)
             {
-                imageUrlToUpdate = existingItem.ImageUrl; // <-- Сохраняем старое изображение
+                imageUrlToUpdate = existingItem.ImageUrl; 
             }
         }
         else
         {
-            // Если есть новое изображение (base64), сохраняем его и получаем URL
             imageUrlToUpdate = await _minioService.SaveBase64Image(request.ImageData);
         }
-        // --- /ИЗМЕНЕНО ---
 
         var item = new WishlistItem
         {
@@ -345,9 +336,7 @@ public class ItemController : BaseController
             Title = request.Title,
             Description = request.Description,
             Price = request.Price,
-            // --- ИЗМЕНЕНО: Используем imageUrlToUpdate ---
             ImageUrl = imageUrlToUpdate,
-            // --- /ИЗМЕНЕНО ---
             DesireLevel = request.DesireLevel,
             Comment = request.Comment
         };
@@ -366,7 +355,7 @@ public class ItemController : BaseController
                     title = updatedItem.Title,
                     description = updatedItem.Description,
                     price = updatedItem.Price,
-                    imageUrl = updatedItem.ImageUrl, // <-- Возвращаем обновлённый URL
+                    imageUrl = updatedItem.ImageUrl, 
                     desireLevel = updatedItem.DesireLevel,
                     comment = updatedItem.Comment,
                     links = updatedItem.Links.Select(l => new
@@ -387,6 +376,7 @@ public class ItemController : BaseController
             await WriteJsonResponse(context, new { status = "error", message = ex.Message });
         }
     }
+
 
     private async Task DeleteItem(HttpListenerContext context, int userId)
     {
@@ -426,6 +416,7 @@ public class ItemController : BaseController
         }
     }
 
+
     private async Task ReserveItem(HttpListenerContext context, int userId)
     {
         var path = context.Request.Url?.AbsolutePath ?? "";
@@ -456,6 +447,7 @@ public class ItemController : BaseController
             });
         }
     }
+
 
     private async Task UnreserveItem(HttpListenerContext context, int userId)
     {
@@ -488,6 +480,7 @@ public class ItemController : BaseController
         }
     }
 
+
     private async Task UploadImage(HttpListenerContext context)
     {
         var request = context.Request;
@@ -517,6 +510,7 @@ public class ItemController : BaseController
     }
 }
 
+
 public class CreateItemRequest
 {
     public string Title { get; set; } = string.Empty;
@@ -529,6 +523,7 @@ public class CreateItemRequest
     public List<CreateLinkRequest>? Links { get; set; }
 }
 
+
 public class CreateLinkRequest
 {
     public string Url { get; set; } = string.Empty;
@@ -538,17 +533,19 @@ public class CreateLinkRequest
     public bool IsSelected { get; set; }
 }
 
+
 public class UpdateItemRequest
 {
     public string Title { get; set; } = string.Empty;
     public string? Description { get; set; }
     public decimal? Price { get; set; }
     public string? ImageUrl { get; set; }
-    public string? ImageData { get; set; } // <-- ДОБАВЛЕНО
+    public string? ImageData { get; set; } 
     public int DesireLevel { get; set; }
     public string? Comment { get; set; }
     public List<CreateLinkRequest>? Links { get; set; }
 }
+
 
 public class CreateItemRequestWithImage
 {

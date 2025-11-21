@@ -14,9 +14,6 @@ public static class Constants
     public const int MaxLinksPerItem = 10;
     public const int MaxImageSizeMB = 5;
 
-    public const string DefaultAvatarUrl = "/images/default-avatar.png";
-    public const string DefaultItemImageUrl = "/images/default-item.png";
-
     public const string DefaultWelcomeMessage = "Добро пожаловать в WishLister!";
     public const string ItemReservedMessage = "Подарок забронирован";
     public const string ItemUnreservedMessage = "Бронирование отменено";

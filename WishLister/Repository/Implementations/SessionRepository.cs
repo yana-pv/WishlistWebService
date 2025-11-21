@@ -20,14 +20,11 @@ public class SessionRepository : ISessionRepository
         _connectionString = ConfigHelper.GetConnectionString();
     }
 
+
     public async Task<Session> CreateAsync(Session session)
     {
-        Console.WriteLine($"[SessionRepository] Connection string: {_connectionString}"); // <-- ЛОГ
-
         await using var conn = new NpgsqlConnection(_connectionString);
         await conn.OpenAsync();
-
-        Console.WriteLine($"[SessionRepository] Connected to DB for session: {session.Id}"); // <-- ЛОГ
 
         var cmd = new NpgsqlCommand(
             "INSERT INTO sessions (id, user_id, expires_at) VALUES (@id, @user_id, @expires_at)",
@@ -36,14 +33,11 @@ public class SessionRepository : ISessionRepository
         cmd.Parameters.AddWithValue("@user_id", session.UserId);
         cmd.Parameters.AddWithValue("@expires_at", session.ExpiresAt);
 
-        Console.WriteLine($"[SessionRepository] Before ExecuteNonQueryAsync for session: {session.Id}"); // <-- ЛОГ
-
         await cmd.ExecuteNonQueryAsync();
-
-        Console.WriteLine($"[SessionRepository] After ExecuteNonQueryAsync for session: {session.Id}"); // <-- ЛОГ
 
         return session;
     }
+
 
     public async Task<Session?> GetByIdAsync(string sessionId)
     {
@@ -69,6 +63,7 @@ public class SessionRepository : ISessionRepository
         return null;
     }
 
+
     public async Task<bool> DeleteAsync(string sessionId)
     {
         await using var conn = new NpgsqlConnection(_connectionString);
@@ -80,6 +75,7 @@ public class SessionRepository : ISessionRepository
         var affected = await cmd.ExecuteNonQueryAsync();
         return affected > 0;
     }
+
 
     public async Task CleanupExpiredSessionsAsync()
     {

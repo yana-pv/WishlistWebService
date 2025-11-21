@@ -8,7 +8,7 @@ public class AuthMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly SessionService _sessionService;
-    private readonly IUserRepository _userRepository; // Добавляем отдельно
+    private readonly IUserRepository _userRepository; 
 
 
     public AuthMiddleware(RequestDelegate next, SessionService sessionService, IUserRepository userRepository)
@@ -18,27 +18,21 @@ public class AuthMiddleware
         _userRepository = userRepository;
     }
 
-    // Упрощенный AuthMiddleware - только для /api/auth/check
     public async Task InvokeAsync(HttpListenerContext context)
     {
         var request = context.Request;
         var path = request.Url?.AbsolutePath ?? "";
-        Console.WriteLine($"[AuthMiddleware] Path: {path}");
 
-        // Специальный маршрут для проверки авторизации
         if (path == "/api/auth/check")
         {
             var sessionId = ExtractSessionIdFromRequest(context.Request);
-            Console.WriteLine($"[AuthMiddleware] Session ID from request: {sessionId}");
 
             if (!string.IsNullOrEmpty(sessionId))
             {
                 var session = await _sessionService.ValidateSessionAsync(sessionId);
-                Console.WriteLine($"[AuthMiddleware] Session validation result: {session != null}");
                 if (session != null)
                 {
                     var user = await _userRepository.GetByIdAsync(session.UserId);
-                    Console.WriteLine($"[AuthMiddleware] User found: {user != null}, ID: {user?.Id}");
                     if (user != null)
                     {
                         context.Response.Headers.Add("X-Is-Authenticated", "true");
@@ -66,7 +60,6 @@ public class AuthMiddleware
             return;
         }
 
-        // Для всех остальных маршрутов просто пропускаем
         await _next(context);
     }
 

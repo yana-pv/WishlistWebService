@@ -6,8 +6,4 @@ public class ReservedItem
     public int ReservedByUserId { get; set; }
     public DateTime ReservedAt { get; set; }
     public string? Message { get; set; }
-
-    // Навигационные свойства
-    public WishlistItem Item { get; set; } = new();
-    public User ReservedByUser { get; set; } = new();
 }

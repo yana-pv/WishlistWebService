@@ -14,6 +14,7 @@ public abstract class BaseController
         _sessionService = sessionService;
     }
 
+
     protected async Task<int?> GetAuthenticatedUserId(HttpListenerContext context)
     {
         var sessionId = ExtractSessionIdFromRequest(context.Request);
@@ -29,16 +30,15 @@ public abstract class BaseController
         return session.UserId;
     }
 
+
     protected string? ExtractSessionIdFromRequest(HttpListenerRequest request)
     {
-        // Проверяем Authorization header
         var authHeader = request.Headers["Authorization"];
         if (!string.IsNullOrEmpty(authHeader) && authHeader.StartsWith("Bearer ", StringComparison.OrdinalIgnoreCase))
         {
             return authHeader.Substring(7);
         }
 
-        // Проверяем cookies
         var cookieHeader = request.Headers["Cookie"];
         if (!string.IsNullOrEmpty(cookieHeader))
         {
@@ -53,7 +53,6 @@ public abstract class BaseController
             }
         }
 
-        // Проверяем query string
         var querySession = request.QueryString["session"];
         if (!string.IsNullOrEmpty(querySession))
         {
@@ -62,6 +61,7 @@ public abstract class BaseController
 
         return null;
     }
+
 
     protected static async Task<T> ReadRequestBody<T>(HttpListenerRequest request)
     {
@@ -73,6 +73,7 @@ public abstract class BaseController
         }) ?? throw new ArgumentException("Invalid request body");
     }
 
+
     protected static async Task WriteJsonResponse(HttpListenerContext context, object data)
     {
         var json = JsonSerializer.Serialize(data);
@@ -82,6 +83,7 @@ public abstract class BaseController
         context.Response.ContentLength64 = bytes.Length;
         await context.Response.OutputStream.WriteAsync(bytes);
     }
+
 
     protected static int? GetIdFromUrl(string? url)
     {
@@ -93,17 +95,6 @@ public abstract class BaseController
             if (int.TryParse(part, out var id))
                 return id;
         }
-        return null;
-    }
-
-    protected static int? GetIdFromUrl(string? url, int position)
-    {
-        if (string.IsNullOrEmpty(url)) return null;
-
-        var parts = url.Split('/');
-        if (parts.Length > position && int.TryParse(parts[position], out var id))
-            return id;
-
         return null;
     }
 }

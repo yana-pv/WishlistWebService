@@ -14,6 +14,7 @@ public class UserController : BaseController
         _userService = userService;
     }
 
+
     public async Task HandleRequest(HttpListenerContext context)
     {
         var request = context.Request;
@@ -22,7 +23,6 @@ public class UserController : BaseController
         try
         {
             var userId = await GetAuthenticatedUserId(context);
-            Console.WriteLine($"[UserController] Authenticated user ID: {userId}");
 
             if (userId == null)
             {
@@ -62,6 +62,7 @@ public class UserController : BaseController
         }
     }
 
+
     private async Task GetProfile(HttpListenerContext context, int userId)
     {
         var user = await _userService.GetUserProfileAsync(userId);
@@ -80,11 +81,12 @@ public class UserController : BaseController
                 id = user.Id,
                 username = user.Username,
                 email = user.Email,
-                avatarUrl = user.AvatarUrl, // <-- Проверь, что это не null
+                avatarUrl = user.AvatarUrl, 
                 createdAt = user.CreatedAt
             }
         });
     }
+
 
     private async Task UpdateProfile(HttpListenerContext context, int userId)
     {
@@ -107,13 +109,13 @@ public class UserController : BaseController
         });
     }
 
+
     private async Task DeleteAccount(HttpListenerContext context, int userId)
     {
         var request = await ReadRequestBody<DeleteAccountRequest>(context.Request);
 
         await _userService.DeleteAccountAsync(userId, request.ConfirmPassword);
 
-        // Удаляем сессию из куки
         context.Response.SetCookie(new Cookie("session_id", "", "/")
         {
             Expires = DateTime.UtcNow.AddDays(-1),
@@ -128,6 +130,7 @@ public class UserController : BaseController
         });
     }
 
+
     private async Task GetStats(HttpListenerContext context, int userId)
     {
         var stats = await _userService.GetUserStatsAsync(userId);
@@ -140,6 +143,7 @@ public class UserController : BaseController
     }
 }
 
+
 public class UpdateProfileRequest
 {
     public string Username { get; set; } = string.Empty;
@@ -147,14 +151,10 @@ public class UpdateProfileRequest
     public string? AvatarUrl { get; set; }
 }
 
+
 public class DeleteAccountRequest
 {
     public string ConfirmPassword { get; set; } = string.Empty;
 }
 
-//public class ChangePasswordRequest
-//{
-//    public string CurrentPassword { get; set; } = string.Empty;
-//    public string NewPassword { get; set; } = string.Empty;
-//}
 

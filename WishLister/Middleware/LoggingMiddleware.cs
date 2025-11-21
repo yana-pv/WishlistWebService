@@ -14,14 +14,10 @@ public class LoggingMiddleware
     {
         var request = context.Request;
         var response = context.Response;
-
         var startTime = DateTime.UtcNow;
-
-        Console.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {request.HttpMethod} {request.Url}");
 
         await _next(context);
 
         var duration = DateTime.UtcNow - startTime;
-        Console.WriteLine($"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {request.HttpMethod} {request.Url} - {response.StatusCode} ({duration.TotalMilliseconds}ms)");
     }
 }

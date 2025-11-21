@@ -15,10 +15,12 @@ public class AuthService
         _sessionService = sessionService;
     }
 
+
     public async Task<bool> LogoutAsync(string sessionId)
     {
         return await _sessionService.LogoutAsync(sessionId);
     }
+
 
     public async Task<(bool success, string message, string? sessionId)> RegisterAsync(RegisterRequest request)
     {
@@ -47,18 +49,15 @@ public class AuthService
         try
         {
             var createdUser = await _userRepository.CreateAsync(user);
-            Console.WriteLine($"[AuthService] User created: {createdUser.Id}"); // <-- ЛОГ
-
             var result = await _sessionService.CreateSessionAsync(createdUser.Id);
-            Console.WriteLine($"[AuthService] Session creation result: {result.success}, Session ID: {result.session?.Id}"); // <-- ЛОГ
             return (result.success, result.message, result.session?.Id);
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"[AuthService] Error creating user: {ex.Message}"); // <-- ЛОГ
             return (false, $"Ошибка при создании пользователя: {ex.Message}", null);
         }
     }
+
 
     public async Task<(bool success, string message, string? sessionId)> LoginAsync(LoginRequest request)
     {
@@ -72,10 +71,7 @@ public class AuthService
         if (!PasswordHasher.VerifyPassword(request.Password, user.PasswordHash))
             return (false, "Неверный логин или пароль", null);
 
-        Console.WriteLine($"[AuthService] User found for login: {user.Id}"); // <-- ЛОГ
-
         var result = await _sessionService.CreateSessionAsync(user.Id);
-        Console.WriteLine($"[AuthService] Session creation result: {result.success}, Session ID: {result.session?.Id}"); // <-- ЛОГ
         return (result.success, result.message, result.session?.Id);
     }
 

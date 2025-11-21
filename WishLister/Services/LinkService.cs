@@ -15,6 +15,7 @@ public class LinkService
         _searchService = searchService;
     }
 
+
     public async Task<ItemLink> AddLinkAsync(ItemLink link)
     {
         if (string.IsNullOrWhiteSpace(link.Url))
@@ -26,15 +27,18 @@ public class LinkService
         return await _linkRepository.CreateAsync(link);
     }
 
+
     public async Task<bool> SetSelectedLinkAsync(int itemId, int linkId)
     {
         return await _linkRepository.SetSelectedLinkAsync(itemId, linkId);
     }
 
+
     public async Task<bool> DeleteLinkAsync(int linkId)
     {
         return await _linkRepository.DeleteAsync(linkId);
     }
+
 
     public async Task<List<ItemLink>> GenerateAILinksAsync(string itemTitle)
     {

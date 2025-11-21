@@ -1,5 +1,4 @@
-﻿// WishLister.Utils\ServiceContainer.cs
-using WishLister.Controllers;
+﻿using WishLister.Controllers;
 using WishLister.Repository.Implementations;
 using WishLister.Repository.Interfaces;
 using WishLister.Services;
@@ -10,6 +9,7 @@ public interface IServiceContainer
     T GetService<T>();
 }
 
+
 public class ServiceContainer : IServiceContainer
 {
     private readonly Dictionary<Type, object> _services = new();
@@ -18,6 +18,7 @@ public class ServiceContainer : IServiceContainer
     {
         RegisterDependencies();
     }
+
 
     private void RegisterDependencies()
     {
@@ -43,16 +44,14 @@ public class ServiceContainer : IServiceContainer
         var hybridSearchService = new HybridProductSearchService();
         var linkService = new LinkService(linkRepository, hybridSearchService);
 
-        // Контроллеры (теперь наследуются от BaseController)
+        // Контроллеры 
         var authController = new AuthController(authService);
         var userController = new UserController(userService, sessionService);
-        var wishlistController = new WishlistController(wishlistService, themeService, itemRepository, sessionService); // <-- Исправлено
+        var wishlistController = new WishlistController(wishlistService, themeService, itemRepository, sessionService); 
         var itemController = new ItemController(itemService, minioService, sessionService);
         var friendController = new FriendController(friendService, sessionService);
         var linkController = new LinkController(linkService, sessionService);
         var themeController = new ThemeController(themeService);
-
-        // --- РЕГИСТРИРУЕМ ВСЕ ЗАВИСИМОСТИ ---
 
         // Репозитории
         _services[typeof(IUserRepository)] = userRepository;
@@ -85,6 +84,7 @@ public class ServiceContainer : IServiceContainer
         _services[typeof(LinkController)] = linkController;
         _services[typeof(ThemeController)] = themeController;
     }
+
 
     public T GetService<T>()
     {

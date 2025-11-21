@@ -19,16 +19,15 @@ public class SessionService
         _userRepository = userRepository;
     }
 
+
     public async Task<(bool success, string message, Session? session)> CreateSessionAsync(int userId)
     {
         var user = await _userRepository.GetByIdAsync(userId);
         if (user == null)
         {
-            Console.WriteLine($"[SessionService] User {userId} not found"); // <-- ЛОГ
             return (false, "Пользователь не найден", null);
         }
 
-        Console.WriteLine($"[SessionService] Creating session for user: {userId}"); // <-- ЛОГ
 
         var session = new Session
         {
@@ -38,9 +37,10 @@ public class SessionService
         };
 
         var createdSession = await _sessionRepository.CreateAsync(session);
-        Console.WriteLine($"[SessionService] Session created successfully: {createdSession.Id} for user {userId}"); // <-- ЛОГ
+
         return (true, "Сессия создана", createdSession);
     }
+
 
     public async Task<Session?> ValidateSessionAsync(string sessionId)
     {
@@ -51,15 +51,14 @@ public class SessionService
         if (session == null)
             return null;
 
-        // Автоматическое продление сессии
         if (session.ExpiresAt > DateTime.UtcNow.AddHours(1)) // если больше 1 часа до истечения
         {
             session.ExpiresAt = DateTime.UtcNow.AddDays(7);
-            // тут можно обновить в БД, если хотите продлевать
         }
 
         return session;
     }
+
 
     public async Task<bool> LogoutAsync(string sessionId)
     {

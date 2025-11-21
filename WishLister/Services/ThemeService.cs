@@ -11,10 +11,12 @@ public class ThemeService
         _themeRepository = themeRepository;
     }
 
+
     public async Task<List<Theme>> GetAllThemesAsync()
     {
         return await _themeRepository.GetAllAsync();
     }
+
 
     public async Task<Theme?> GetThemeAsync(int id)
     {

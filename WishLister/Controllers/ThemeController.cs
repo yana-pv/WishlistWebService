@@ -12,6 +12,7 @@ public class ThemeController
         _themeService = themeService;
     }
 
+
     public async Task HandleRequest(HttpListenerContext context)
     {
         var request = context.Request;
@@ -43,6 +44,7 @@ public class ThemeController
         }
     }
 
+
     private async Task GetThemes(HttpListenerContext context)
     {
         var themes = await _themeService.GetAllThemesAsync();
@@ -60,6 +62,7 @@ public class ThemeController
             })
         });
     }
+
 
     private async Task GetTheme(HttpListenerContext context)
     {
@@ -94,6 +97,7 @@ public class ThemeController
         });
     }
 
+
     private static int? GetIdFromUrl(string path)
     {
         if (string.IsNullOrEmpty(path)) return null;
@@ -106,6 +110,7 @@ public class ThemeController
         }
         return null;
     }
+
 
     private static async Task WriteJsonResponse(HttpListenerContext context, object data)
     {

@@ -49,6 +49,7 @@ public class AuthController
         }
     }
 
+
     private async Task Register(HttpListenerContext context)
     {
         var request = await ReadRequestBody<RegisterRequest>(context.Request);
@@ -63,14 +64,14 @@ public class AuthController
             {
                 HttpOnly = true,
                 Expires = DateTime.UtcNow.AddDays(7),
-                Secure = false, // Не HTTPS для разработки
+                Secure = false, 
             });
 
             await WriteJsonResponse(context, new
             {
                 status = "success",
                 message = result.message,
-                user = new { id = result.sessionId } // Можно добавить базовую информацию о пользователе
+                user = new { id = result.sessionId }
             });
         }
         else
@@ -82,6 +83,7 @@ public class AuthController
             });
         }
     }
+
 
     private async Task Login(HttpListenerContext context)
     {
@@ -95,7 +97,7 @@ public class AuthController
             {
                 HttpOnly = true,
                 Expires = DateTime.UtcNow.AddDays(7),
-                Secure = false, // Не HTTPS для разработки
+                Secure = false, 
             });
 
             await WriteJsonResponse(context, new
@@ -113,6 +115,7 @@ public class AuthController
             });
         }
     }
+
 
     private async Task Logout(HttpListenerContext context)
     {
@@ -135,6 +138,7 @@ public class AuthController
             message = "Выход выполнен"
         });
     }
+
 
     private string? ExtractSessionIdFromRequest(HttpListenerRequest request)
     {
@@ -167,6 +171,7 @@ public class AuthController
         return null;
     }
 
+
     private static async Task<T> ReadRequestBody<T>(HttpListenerRequest request)
     {
         using var reader = new StreamReader(request.InputStream, request.ContentEncoding);
@@ -176,6 +181,7 @@ public class AuthController
             PropertyNameCaseInsensitive = true
         }) ?? throw new ArgumentException("Invalid request body");
     }
+
 
     private static async Task WriteJsonResponse(HttpListenerContext context, object data)
     {

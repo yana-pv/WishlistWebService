@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
-using WishLister.Models;
+using WishLister.Models.Entities;
+using WishLister.Models.Requests.Items;
 using WishLister.Services;
 
 namespace WishLister.Controllers;
@@ -511,50 +512,12 @@ public class ItemController : BaseController
 }
 
 
-public class CreateItemRequest
-{
-    public string Title { get; set; } = string.Empty;
-    public string? Description { get; set; }
-    public decimal? Price { get; set; }
-    public string? ImageUrl { get; set; }
-    public int DesireLevel { get; set; } = 1;
-    public string? Comment { get; set; }
-    public int WishlistId { get; set; }
-    public List<CreateLinkRequest>? Links { get; set; }
-}
 
 
-public class CreateLinkRequest
-{
-    public string Url { get; set; } = string.Empty;
-    public string? Title { get; set; }
-    public decimal? Price { get; set; }
-    public bool IsFromAI { get; set; }
-    public bool IsSelected { get; set; }
-}
 
 
-public class UpdateItemRequest
-{
-    public string Title { get; set; } = string.Empty;
-    public string? Description { get; set; }
-    public decimal? Price { get; set; }
-    public string? ImageUrl { get; set; }
-    public string? ImageData { get; set; } 
-    public int DesireLevel { get; set; }
-    public string? Comment { get; set; }
-    public List<CreateLinkRequest>? Links { get; set; }
-}
 
 
-public class CreateItemRequestWithImage
-{
-    public string Title { get; set; } = string.Empty;
-    public string? Description { get; set; }
-    public decimal? Price { get; set; }
-    public string? ImageData { get; set; } 
-    public int DesireLevel { get; set; } = 1;
-    public string? Comment { get; set; }
-    public int WishlistId { get; set; }
-    public List<CreateLinkRequest>? Links { get; set; }
-}
+
+
+

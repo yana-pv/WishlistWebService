@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text;
 using System.Text.Json;
-using WishLister.Models.Auth;
+using WishLister.Models.Requests.Auth;
 using WishLister.Services;
 
 namespace WishLister.Controllers;

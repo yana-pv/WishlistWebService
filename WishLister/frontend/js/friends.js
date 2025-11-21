@@ -284,7 +284,6 @@ WishListerApp.prototype.removeFriendWishlist = async function (friendWishlistId)
         if (response.ok) {
             this.showNotification('Вишлист друга удален', 'success');
             await this.loadFriendWishlists();
-            this.closeModal('friend-wishlist-view-modal');
         }
         else {
             this.showNotification('Ошибка удаления вишлиста друга', 'error');

@@ -504,7 +504,6 @@
             if (response.ok) {
                 this.showNotification('Вишлист удален', 'success');
                 await this.loadMyWishlists();
-                this.closeModal('wishlist-view-modal');
             }
             else {
                 this.showNotification('Ошибка удаления вишлиста', 'error');

@@ -34,7 +34,6 @@ public class ServiceContainer : IServiceContainer
         // Сервисы
         var sessionService = new SessionService(sessionRepository, userRepository);
         var minioService = new MinIOService();
-        var cacheService = new CacheService();
         var authService = new AuthService(userRepository, sessionService);
         var userService = new UserService(userRepository, wishlistRepository, itemRepository);
         var themeService = new ThemeService(themeRepository);
@@ -66,7 +65,6 @@ public class ServiceContainer : IServiceContainer
         _services[typeof(SessionService)] = sessionService;
         _services[typeof(AuthService)] = authService;
         _services[typeof(MinIOService)] = minioService;
-        _services[typeof(CacheService)] = cacheService;
         _services[typeof(UserService)] = userService;
         _services[typeof(ThemeService)] = themeService;
         _services[typeof(WishlistService)] = wishlistService;

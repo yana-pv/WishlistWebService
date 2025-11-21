@@ -1,4 +1,5 @@
-﻿using WishLister.Models;
+﻿using WishLister.Models.Entities;
+using WishLister.Models.Responses;
 using WishLister.Repository.Interfaces;
 using WishLister.Utils;
 
@@ -81,9 +82,3 @@ public class UserService
 }
 
 
-public class UserStats
-{
-    public int WishlistsCount { get; set; }
-    public int ItemsCount { get; set; }
-    public int ReservedItemsCount { get; set; }
-}

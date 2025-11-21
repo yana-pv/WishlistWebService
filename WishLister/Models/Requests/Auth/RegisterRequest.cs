@@ -1,4 +1,4 @@
-﻿namespace WishLister.Models.Auth;
+﻿namespace WishLister.Models.Requests.Auth;
 public class RegisterRequest
 {
     public string Username { get; set; } = string.Empty;

@@ -1,6 +1,6 @@
 ﻿using System.Net;
-using System.Text.Json;
-using WishLister.Models;
+using WishLister.Models.Entities;
+using WishLister.Models.Requests.Wishlists;
 using WishLister.Services;
 
 namespace WishLister.Controllers;
@@ -253,15 +253,6 @@ public class FriendController : BaseController
 }
 
 
-public class AddFriendWishlistRequest
-{
-    public string ShareToken { get; set; } = string.Empty;
-    public string FriendName { get; set; } = string.Empty;
-}
 
 
-public class SaveFriendWishlistRequest
-{
-    public string ShareToken { get; set; } = string.Empty;
-    public string? FriendName { get; set; }
-}
+

@@ -18,7 +18,6 @@ public abstract class BaseController
     protected async Task<int?> GetAuthenticatedUserId(HttpListenerContext context)
     {
         var sessionId = ExtractSessionIdFromRequest(context.Request);
-        Console.WriteLine($"[{GetType().Name}] Session ID: {sessionId}");
 
         if (string.IsNullOrEmpty(sessionId))
             return null;

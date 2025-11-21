@@ -1,5 +1,5 @@
 ﻿using WishLister.Controllers;
-using WishLister.Models;
+using WishLister.Models.Entities;
 using WishLister.Repository.Interfaces;
 using WishLister.Utils;
 
@@ -100,7 +100,7 @@ public class ItemService
     }
 
 
-    public async Task<WishlistItem> UpdateItemAsync(WishlistItem item, List<CreateLinkRequest>? links = null)
+    public async Task<WishlistItem> UpdateItemAsync(WishlistItem item, List<Models.Requests.Links.CreateLinkRequest>? links = null)
     {
         var (isValid, validationMessage) = Validators.ValidateItem(item.Title, item.Price, item.DesireLevel);
         if (!isValid)

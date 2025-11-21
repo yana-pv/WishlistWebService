@@ -1,4 +1,4 @@
-﻿using WishLister.Models; // Убираем: using WishLister.DTOs;
+﻿using WishLister.Models.Entities;
 using WishLister.Repository.Implementations;
 using WishLister.Repository.Interfaces;
 using WishLister.Utils;

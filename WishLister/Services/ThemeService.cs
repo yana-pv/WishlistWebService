@@ -1,4 +1,4 @@
-﻿using WishLister.Models;
+﻿using WishLister.Models.Entities;
 using WishLister.Repository.Interfaces;
 
 namespace WishLister.Services;

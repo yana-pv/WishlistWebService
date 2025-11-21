@@ -1,5 +1,6 @@
 ﻿using Npgsql;
 using WishLister.Models;
+using WishLister.Models.Entities;
 using WishLister.Repository.Interfaces;
 using WishLister.Utils;
 

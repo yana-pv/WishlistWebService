@@ -1,4 +1,4 @@
-﻿namespace WishLister.Models;
+﻿namespace WishLister.Models.Entities;
 public class WishlistItem
 {
     public int Id { get; set; }

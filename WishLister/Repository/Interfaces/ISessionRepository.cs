@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WishLister.Models;
+using WishLister.Models.Entities;
 
 namespace WishLister.Repository.Interfaces;
 

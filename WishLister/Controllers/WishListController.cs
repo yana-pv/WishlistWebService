@@ -1,7 +1,6 @@
 ﻿using System.Net;
-using System.Text.Json;
-using WishLister.Models;
-using WishLister.Repository.Implementations;
+using WishLister.Models.Entities;
+using WishLister.Models.Requests.Wishlists;
 using WishLister.Repository.Interfaces;
 using WishLister.Services;
 
@@ -411,19 +410,6 @@ public class WishlistController : BaseController
 }
 
 
-public class CreateWishlistRequest
-{
-    public string Title { get; set; } = string.Empty;
-    public string? Description { get; set; }
-    public DateTime? EventDate { get; set; }
-    public int ThemeId { get; set; }
-}
 
 
-public class UpdateWishlistRequest
-{
-    public string Title { get; set; } = string.Empty;
-    public string? Description { get; set; }
-    public DateTime? EventDate { get; set; }
-    public int ThemeId { get; set; }
-}
+

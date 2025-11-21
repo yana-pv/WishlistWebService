@@ -1,4 +1,4 @@
-﻿namespace WishLister.Models;
+﻿namespace WishLister.Models.Services;
 public class ProductSearchResult
 {
     public string Title { get; set; } = string.Empty;

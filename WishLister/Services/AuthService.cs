@@ -1,5 +1,6 @@
 ﻿using WishLister.Models;
-using WishLister.Models.Auth;
+using WishLister.Models.Entities;
+using WishLister.Models.Requests.Auth;
 using WishLister.Repository.Interfaces;
 using WishLister.Utils;
 

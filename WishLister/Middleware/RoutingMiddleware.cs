@@ -109,7 +109,6 @@ public class RoutingMiddleware
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"[Routing] Error: {ex.Message}");
             context.Response.StatusCode = 500;
             await WriteJsonResponse(context, new { status = "error", message = ex.Message });
         }

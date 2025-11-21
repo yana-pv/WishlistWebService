@@ -3,6 +3,10 @@
 namespace WishLister.Utils;
 public static class Validators
 {
+    public const string EmailRegex = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
+    public const string UsernameRegex = @"^[a-zA-Z0-9_]{3,20}$";
+
+
     public static bool IsValidEmail(string email)
     {
         if (string.IsNullOrWhiteSpace(email))
@@ -10,7 +14,7 @@ public static class Validators
 
         try
         {
-            return Regex.IsMatch(email, Constants.EmailRegex, RegexOptions.IgnoreCase);
+            return Regex.IsMatch(email, EmailRegex, RegexOptions.IgnoreCase);
         }
         catch
         {
@@ -24,7 +28,7 @@ public static class Validators
         if (string.IsNullOrWhiteSpace(username))
             return false;
 
-        return Regex.IsMatch(username, Constants.UsernameRegex);
+        return Regex.IsMatch(username, UsernameRegex);
     }
 
 

@@ -1,7 +1,6 @@
 ﻿using System.Net;
-using System.Text.Json;
-using WishLister.Models;
 using WishLister.Services;
+using WishLister.Models.Requests.Users;
 
 namespace WishLister.Controllers;
 public class UserController : BaseController
@@ -144,17 +143,7 @@ public class UserController : BaseController
 }
 
 
-public class UpdateProfileRequest
-{
-    public string Username { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-    public string? AvatarUrl { get; set; }
-}
 
 
-public class DeleteAccountRequest
-{
-    public string ConfirmPassword { get; set; } = string.Empty;
-}
 
 

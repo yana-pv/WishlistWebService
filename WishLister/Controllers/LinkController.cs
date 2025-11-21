@@ -1,6 +1,6 @@
 ﻿using System.Net;
-using System.Text.Json;
-using WishLister.Models;
+using WishLister.Models.Entities;
+using WishLister.Models.Requests.Links;
 using WishLister.Services;
 
 namespace WishLister.Controllers;
@@ -212,21 +212,6 @@ public class LinkController : BaseController
 }
 
 
-public class AddLinkRequest
-{
-    public string Url { get; set; } = string.Empty;
-    public string? Title { get; set; }
-    public decimal? Price { get; set; }
-    public bool IsFromAI { get; set; }
-    public bool IsSelected { get; set; }
-    public int ItemId { get; set; }
-}
 
 
-public class UpdateLinkRequest
-{
-    public string? Title { get; set; }
-    public decimal? Price { get; set; }
-    public bool IsSelected { get; set; }
-    public int ItemId { get; set; }
-}
+

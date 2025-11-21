@@ -1,4 +1,4 @@
-﻿using WishLister.Models;
+﻿using WishLister.Models.Entities;
 
 namespace WishLister.Repository.Interfaces;
 public interface IFriendRepository

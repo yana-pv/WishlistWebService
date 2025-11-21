@@ -16,7 +16,6 @@ public static class ConfigHelper
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Warning: Could not load appsettings.json: {ex.Message}");
             Configuration = new ConfigurationBuilder().Build();
         }
     }

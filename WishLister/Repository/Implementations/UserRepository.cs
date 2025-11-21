@@ -1,6 +1,6 @@
 ﻿// WishLister.Repository.Implementations\UserRepository.cs
 using Npgsql;
-using WishLister.Models;
+using WishLister.Models.Entities;
 using WishLister.Repository.Interfaces;
 using WishLister.Utils;
 
@@ -11,7 +11,7 @@ public class UserRepository : IUserRepository
 
     public UserRepository()
     {
-        _connectionString = Utils.ConfigHelper.GetConnectionString();
+        _connectionString = ConfigHelper.GetConnectionString();
     }
 
 

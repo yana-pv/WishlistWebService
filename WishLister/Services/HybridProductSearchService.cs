@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using HtmlAgilityPack;
-using WishLister.Models;
+using WishLister.Models.Services;
 
 namespace WishLister.Services;
 public class HybridProductSearchService

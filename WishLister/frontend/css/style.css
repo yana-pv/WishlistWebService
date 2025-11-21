@@ -18,7 +18,6 @@ body {
     padding: 0 20px;
 }
 
-/* Страницы */
 .page {
     display: none;
     min-height: 100vh;
@@ -28,7 +27,6 @@ body {
         display: block;
     }
 
-/* Landing Page */
 .logo-container {
     display: flex;
     align-items: center;
@@ -106,7 +104,6 @@ body {
     flex-wrap: wrap;
 }
 
-/* Кнопки */
 .btn {
     padding: 12px 24px;
     border: none;
@@ -170,7 +167,6 @@ body {
         background: #ff5252;
     }
 
-/* Формы авторизации */
 .auth-container {
     max-width: 400px;
     margin: 100px auto;
@@ -236,7 +232,6 @@ body {
         display: block;
     }
 
-/* Главное приложение */
 .app-header {
     background: white;
     box-shadow: 0 2px 10px rgba(255, 182, 193, 0.08);
@@ -320,14 +315,12 @@ body {
         font-size: 2rem;
     }
 
-/* Сетка вишлистов */
 .wishlists-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
 }
 
-/* Уже есть */
 .wishlist-card {
     background: white;
     border-radius: 12px;
@@ -338,7 +331,6 @@ body {
     border-left: 4px solid #ff69b4;
 }
 
-    /* Добавь эти стили ПОСЛЕ .wishlist-card */
     .wishlist-card.wishlist-theme-1 {
         background: linear-gradient(135deg, #fff0f5 0%, #ffe0e8 100%) !important;
         border-left: 4px solid #ff69b4;
@@ -382,7 +374,6 @@ body {
         max-height: calc(1.4em * 3);
     }
 
-/* Цвет заголовка в зависимости от темы */
 .wishlist-theme-1 .wishlist-card-title {
     color: #ff69b4;
 }
@@ -399,7 +390,6 @@ body {
     color: #8a2be2;
 }
 
-/* Увеличенный шрифт */
 .wishlist-card-title {
     font-size: 1.4rem;
     font-weight: 600;
@@ -419,7 +409,6 @@ body {
     margin-top: 1rem;
 }
 
-/* Модальные окна */
 .modal {
     display: none;
     position: fixed;
@@ -428,7 +417,7 @@ body {
     width: 100%;
     height: 100%;
     background: rgba(90, 61, 92, 0.3);
-    z-index: 1000; /* Уже есть */
+    z-index: 1000; 
     overflow-y: auto;
 }
 
@@ -449,7 +438,7 @@ body {
     overflow-y: auto;
     margin: 1rem;
     z-index: 1001;
-    position: relative; /* Важно для z-index */
+    position: relative; 
 }
 
 .wide-modal {
@@ -463,7 +452,6 @@ body {
     margin-top: 1.5rem;
 }
 
-/* Выбор темы */
 .theme-selector {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -497,7 +485,6 @@ body {
     border: 2px solid;
 }
 
-/* Уровень желания */
 .desire-level {
     display: flex;
     align-items: center;
@@ -525,7 +512,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* Загрузка изображения */
 .image-upload {
     display: flex;
     flex-direction: column;
@@ -558,7 +544,6 @@ body {
     }
     }
 
-/* Ссылки */
 .links-section {
     border: 1px solid #f8e8ec;
     border-radius: 8px;
@@ -604,23 +589,20 @@ body {
     gap: 0.5rem;
 }
 
-/* Просмотр вишлиста */
 .wishlist-view .wishlist-header {
     color: #5a3d5c;
     padding: 2rem;
     border-radius: 12px 12px 0 0;
     margin: -2rem -2rem 2rem -2rem;
-    /* Будет переопределяться JS */
 }
 
-/* Контейнер подарков в вишлисте */
 #wishlist-page-items-container {
     background: white;
-    border-radius: 16px; /* Закруглённые углы */
-    padding: 2rem; /* Внутренние отступы */
+    border-radius: 16px; 
+    padding: 2rem; 
     box-shadow: 0 4px 6px rgba(255, 182, 193, 0.05);
-    margin-top: 1rem; /* Отступ сверху */
-    min-height: 400px; /* Минимальная высота */
+    margin-top: 1rem; 
+    min-height: 400px; 
 }
    
 .items-grid {
@@ -684,7 +666,7 @@ body {
 }
 
 .item-details-left {
-    flex: 0 0 300px; /* Ширина левой части */
+    flex: 0 0 300px; 
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -737,12 +719,12 @@ body {
 
 .item-detail-actions-bottom {
     display: flex;
-    justify-content: flex-end; /* Кнопка справа */
-    margin-top: 1rem; /* Отступ сверху */
+    justify-content: flex-end; 
+    margin-top: 1rem; 
 }
 
     .item-detail-actions-bottom .btn {
-        margin-left: auto; /* Кнопка прижата к правому краю */
+        margin-left: auto; 
     }
 
 .item-description, .item-comment {
@@ -823,7 +805,6 @@ body {
     font-size: 0.8rem;
 }
 
-/* Профиль */
 .profile-container {
     background: white;
     border-radius: 12px;
@@ -899,7 +880,6 @@ body {
     flex-wrap: wrap;
 }
 
-/* Уведомления */
 .notification {
     position: fixed;
     top: 20px;
@@ -929,30 +909,26 @@ body {
         background: #2563eb;
     }
 
-/* Стили для разных тем вишлистов */
-/* Нежные градиенты для фона вишлиста */
 .wishlist-theme-1 {
-    background: linear-gradient(135deg, #fff0f5 0%, #ffe0e8 100%); /* Розовый */
+    background: linear-gradient(135deg, #fff0f5 0%, #ffe0e8 100%);
     border-left: 4px solid #ff69b4;
 }
 
 .wishlist-theme-2 {
-    background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); /* Синий */
+    background: linear-gradient(135deg, #f0f8ff 0%, #e0f0ff 100%); 
     border-left: 4px solid #1e90ff;
 }
 
 .wishlist-theme-3 {
-    background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); /* Зелёный */
+    background: linear-gradient(135deg, #f0fff0 0%, #e0ffe0 100%); 
     border-left: 4px solid #32cd32;
 }
 
 .wishlist-theme-4 {
-    background: linear-gradient(135deg, #f8f0ff 0%, #eee0ff 100%); /* Фиолетовый */
+    background: linear-gradient(135deg, #f8f0ff 0%, #eee0ff 100%); 
     border-left: 4px solid #8a2be2;
 }
 
-
-/* Цвет заголовка вишлиста при просмотре в зависимости от темы */
 .wishlist-theme-1 .wishlist-view-title {
     color: #ff69b4;
 }
@@ -969,14 +945,12 @@ body {
     color: #8a2be2;
 }
 
-/* Увеличенный шрифт для заголовка при просмотре */
 .wishlist-view-title {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
 }
 
-/* Яркие цвета для кнопок */
 .theme-button-1 {
     background: #ff69b4;
     border-color: #ff69b4;
@@ -1063,26 +1037,26 @@ body {
 
 .remove-link-btn {
     flex-shrink: 0;
-    padding: 0.25rem; /* Увеличим внутренние отступы */
-    font-size: 1.2rem; /* Увеличим размер шрифта */
-    color: #dc2626; /* Цвет крестика */
+    padding: 0.25rem; 
+    font-size: 1.2rem; 
+    color: #dc2626; 
     background: none;
     border: none;
     cursor: pointer;
-    width: 24px; /* Зафиксируем ширину */
-    height: 24px; /* Зафиксируем высоту */
+    width: 24px; 
+    height: 24px; 
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 50%; /* Сделаем круглым */
-    background-color: #f8fafc; /* Светлый фон */
-    border: 1px solid #e5e7eb; /* Легкая рамка */
+    border-radius: 50%; 
+    background-color: #f8fafc; 
+    border: 1px solid #e5e7eb; 
 }
 
     .remove-link-btn:hover {
         color: #b91c1c;
-        background-color: #fef2f2; /* Фон при наведении */
-        border-color: #fecaca; /* Рамка при наведении */
+        background-color: #fef2f2; 
+        border-color: #fecaca; 
     }
 
 .price-input-wrapper {
@@ -1092,7 +1066,7 @@ body {
 }
 
     .price-input-wrapper input {
-        padding-right: 2rem; /* Отступ справа для значка */
+        padding-right: 2rem; 
     }
 
 .currency-symbol {
@@ -1101,13 +1075,12 @@ body {
     top: 50%;
     transform: translateY(-50%);
     color: #6b7280;
-    pointer-events: none; /* Не мешает клику в поле */
+    pointer-events: none; 
     font-size: 0.875rem;
 }
 
-/* Заголовок вишлиста с закруглёнными углами и цветом темы */
 #wishlist-page-header {
-    border-radius: 16px; /* Закруглённые углы */
+    border-radius: 16px; 
     padding: 1.5rem;
     margin-bottom: 1.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -1118,7 +1091,6 @@ body {
     gap: 1rem;
 }
 
-/* Кнопка "Назад" в цвет темы */
 .wishlist-body-theme-1 .wishlist-page-actions .btn-outline:first-of-type {
     background: #ff69b4 !important;
     border-color: #ff69b4 !important;
@@ -1167,7 +1139,6 @@ body {
         color: white !important;
     }
 
-/* Цвет заголовка вишлиста друга в зависимости от темы */
 .wishlist-theme-1 .wishlist-view-title {
     color: #ff69b4;
 }
@@ -1184,14 +1155,12 @@ body {
     color: #8a2be2;
 }
 
-/* Увеличенный шрифт для заголовка вишлиста друга */
 .wishlist-view-title {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
 }
 
-/* Кнопка "Назад" в цвете темы */
 .wishlist-theme-1 .wishlist-page-actions .btn-outline:first-of-type {
     background: #ff69b4;
     border-color: #ff69b4;
@@ -1240,7 +1209,6 @@ body {
         color: white;
     }
 
-/* Цвет заголовка вишлиста при просмотре в зависимости от темы */
 .wishlist-theme-1 .wishlist-view-title {
     color: #ff69b4;
 }
@@ -1257,46 +1225,41 @@ body {
     color: #8a2be2;
 }
 
-/* Увеличенный шрифт для заголовка при просмотре */
 .wishlist-view-title {
     font-size: 2.5rem;
     font-weight: 700;
     margin-bottom: 1rem;
 }
 
-/* Стили для описания */
 #wishlist-view-description {
-    color: #333; /* Тёмный цвет для описания */
+    color: #333; 
     margin-bottom: 1rem;
     font-size: 1.1rem;
     line-height: 1.5;
 }
 
-/* Цвет названия вишлиста в зависимости от темы */
 .wishlist-theme-1 .wishlist-card-title {
-    color: #ff69b4; /* Розовый */
+    color: #ff69b4; 
 }
 
 .wishlist-theme-2 .wishlist-card-title {
-    color: #1e90ff; /* Синий */
+    color: #1e90ff; 
 }
 
 .wishlist-theme-3 .wishlist-card-title {
-    color: #32cd32; /* Зелёный */
+    color: #32cd32; 
 }
 
 .wishlist-theme-4 .wishlist-card-title {
-    color: #8a2be2; /* Фиолетовый */
+    color: #8a2be2; 
 }
 
-/* Увеличенный шрифт для названия вишлиста */
 .wishlist-card-title {
     font-size: 1.4rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
 }
 
-/* Красная кнопка */
 .btn-danger {
     background-color: #dc3545;
     border-color: #dc3545;
@@ -1308,7 +1271,6 @@ body {
         border-color: #bd2130;
     }
 
-/* Красная обводка */
 .btn-outline-danger {
     color: #dc3545;
     border-color: #dc3545;
@@ -1321,7 +1283,6 @@ body {
         color: white;
     }
 
-    /* Для disabled состояния */
     .btn-outline-danger:disabled {
         color: #dc3545;
         border-color: #dc3545;
@@ -1330,8 +1291,6 @@ body {
         cursor: not-allowed;
     }
 
-
-/* Стили для страницы вишлиста друга */
 #friend-wishlist-page-header {
     border-radius: 16px;
     padding: 2rem;
@@ -1376,7 +1335,6 @@ body {
     flex-shrink: 0;
 }
 
-/* Цвет заголовка и описания вишлиста друга в зависимости от темы */
 .wishlist-theme-1 #friend-wishlist-page-title {
     color: #ff69b4 !important;
 }
@@ -1422,105 +1380,6 @@ body {
     min-height: 400px;
 }
 
-/* Стили для публичного вишлиста */
-.public-wishlist-header {
-    border-radius: 16px;
-    padding: 2rem;
-    margin-bottom: 1.5rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    color: white;
-}
-
-.wishlist-header-main {
-    width: 100%;
-}
-
-#public-wishlist-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    line-height: 1.2;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-}
-
-.wishlist-header-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-.wishlist-description {
-    font-size: 1.2rem !important;
-    line-height: 1.5 !important;
-    margin: 0 !important;
-    opacity: 0.9 !important;
-    display: block !important;
-    flex: 1;
-    min-width: 300px;
-    color: inherit !important;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-}
-
-.wishlist-page-actions {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    flex-shrink: 0;
-}
-
-.public-actions {
-    text-align: center;
-    margin-bottom: 2rem;
-    padding: 2rem;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.public-items-container {
-    background: white;
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    margin-top: 1rem;
-    min-height: 400px;
-}
-
-.owner-notice {
-    background: rgba(255,255,255,0.2);
-    padding: 1rem;
-    border-radius: 8px;
-    display: inline-block;
-    margin-bottom: 1rem;
-    color: #333;
-}
-
-.action-hint {
-    color: #666;
-    font-size: 0.9rem;
-    margin-top: 0.5rem;
-}
-
-/* Цвета тем для публичного вишлиста */
-.wishlist-theme-1.public-wishlist-header {
-    background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
-}
-
-.wishlist-theme-2.public-wishlist-header {
-    background: linear-gradient(135deg, #1e90ff 0%, #0000ff 100%);
-}
-
-.wishlist-theme-3.public-wishlist-header {
-    background: linear-gradient(135deg, #32cd32 0%, #008000 100%);
-}
-
-.wishlist-theme-4.public-wishlist-header {
-    background: linear-gradient(135deg, #8a2be2 0%, #9400d3 100%);
-}
-
-/* Стили для аватара пользователя в шапке */
 .user-avatar-container {
     display: flex;
     align-items: center;
@@ -1548,7 +1407,6 @@ body {
 }
 
 
-/* Адаптивные стили */
 @media (max-width: 1200px) {
     .container {
         max-width: 100%;
@@ -1565,7 +1423,6 @@ body {
 }
 
 @media (max-width: 768px) {
-    /* Общие стили для мобильных */
     body {
         font-size: 14px;
     }
@@ -1574,7 +1431,6 @@ body {
         padding: 0 10px;
     }
 
-    /* Landing Page */
     .landing-header {
         padding: 60px 0 30px;
     }
@@ -1615,14 +1471,12 @@ body {
         justify-content: center;
     }
 
-    /* Формы авторизации */
     .auth-container {
         margin: 50px auto;
         padding: 1.5rem;
         max-width: 90%;
     }
 
-    /* Шапка приложения */
     .header-content {
         flex-direction: column;
         text-align: center;
@@ -1652,7 +1506,6 @@ body {
         order: 2;
     }
 
-    /* Основной контент */
     .app-main {
         padding: 1rem 10px;
     }
@@ -1667,7 +1520,6 @@ body {
             font-size: 1.5rem;
         }
 
-    /* Сетки */
     .wishlists-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
@@ -1678,7 +1530,6 @@ body {
         gap: 1rem;
     }
 
-    /* Карточки */
     .wishlist-card {
         padding: 1.25rem;
     }
@@ -1687,7 +1538,6 @@ body {
         padding: 1.25rem;
     }
 
-    /* Модальные окна */
     .modal.active {
         padding: 1rem;
         align-items: flex-start;
@@ -1712,7 +1562,6 @@ body {
             width: 100%;
         }
 
-    /* Выбор темы */
     .theme-selector {
         grid-template-columns: repeat(2, 1fr);
         gap: 0.75rem;
@@ -1722,13 +1571,11 @@ body {
         padding: 0.75rem;
     }
 
-    /* Формы в модальных окнах */
     .form-row {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
 
-    /* Детали подарка */
     .item-details-layout {
         flex-direction: column;
         gap: 1.5rem;
@@ -1744,7 +1591,6 @@ body {
         height: 250px;
     }
 
-    /* Профиль */
     .profile-container {
         padding: 1.5rem;
     }
@@ -1768,7 +1614,6 @@ body {
             width: 100%;
         }
 
-    /* Заголовки вишлистов */
     .wishlist-view-title {
         font-size: 2rem;
     }
@@ -1795,14 +1640,12 @@ body {
             min-width: 120px;
         }
 
-    /* Контейнеры подарков */
     #wishlist-page-items-container,
     #friend-wishlist-page-items-container {
         padding: 1.5rem;
         border-radius: 12px;
     }
 
-    /* Уведомления */
     .notification {
         right: 10px;
         left: 10px;
@@ -1811,7 +1654,6 @@ body {
 }
 
 @media (max-width: 480px) {
-    /* Очень маленькие экраны */
     .container {
         padding: 0 5px;
     }
@@ -1893,14 +1735,12 @@ body {
         padding: 1.25rem;
     }
 
-    /* Адаптация для элементов форм */
     .form-group input,
     .form-group textarea {
         padding: 10px;
-        font-size: 16px; /* Предотвращает масштабирование в iOS */
+        font-size: 16px; 
     }
 
-    /* Адаптация для кнопок действий */
     .wishlist-actions,
     .item-actions {
         flex-wrap: wrap;
@@ -1915,7 +1755,6 @@ body {
         }
 }
 
-/* Особые стили для планшетов */
 @media (min-width: 769px) and (max-width: 1024px) {
     .wishlists-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1944,7 +1783,6 @@ body {
     }
 }
 
-/* Портретная ориентация мобильных устройств */
 @media (max-width: 768px) and (orientation: portrait) {
     .landing-header {
         padding: 40px 0 20px;
@@ -1955,7 +1793,6 @@ body {
     }
 }
 
-/* Ландшафтная ориентация мобильных устройств */
 @media (max-width: 768px) and (orientation: landscape) {
     .landing-header {
         padding: 30px 0 20px;
@@ -1970,7 +1807,6 @@ body {
     }
 }
 
-/* Поддержка высоких экранов */
 @media (min-height: 800px) and (max-width: 768px) {
     .landing-header {
         padding: 80px 0 40px;
@@ -1981,7 +1817,6 @@ body {
     }
 }
 
-/* Улучшение доступности для касаний */
 @media (hover: none) and (pointer: coarse) {
     .btn,
     .nav-btn,
@@ -2002,9 +1837,7 @@ body {
     }
 }
 
-/* Поддержка темной темы */
 @media (prefers-color-scheme: dark) {
-    /* Базовые настройки для темной темы */
     body {
         background: linear-gradient(135deg, #2a1a2a 0%, #3a2a3a 100%);
         color: #e8d8e8;
@@ -2020,11 +1853,8 @@ body {
         color: #e8d8e8;
         border-color: #4a3a4a;
     }
-
-    /* Дополнительные стили для темной темы... */
 }
 
-/* Печать */
 @media print {
     .app-header,
     .auth-buttons,
@@ -2059,10 +1889,9 @@ body {
     position: absolute;
     object-fit: contain;
     animation: floatGentle 40s infinite ease-in-out;
-    opacity: 0.7; /* Легкая прозрачность */
+    opacity: 0.7; 
 }
 
-    /* Три размера: большой, средний, маленький */
     .bg-picture.size-large {
         width: 70px;
         height: 70px;
@@ -2078,7 +1907,6 @@ body {
         height: 35px;
     }
 
-    /* УГЛЫ */
     .bg-picture:nth-child(1) {
         top: 5%;
         left: 5%;
@@ -2107,7 +1935,6 @@ body {
         transform: rotate(32deg);
     }
 
-    /* ВЕРХ */
     .bg-picture:nth-child(5) {
         top: 8%;
         left: 25%;
@@ -2129,7 +1956,6 @@ body {
         transform: rotate(-25deg);
     }
 
-    /* ЦЕНТР - смещены влево и вправо от центра */
     .bg-picture:nth-child(8) {
         top: 50%;
         left: 50%;
@@ -2140,33 +1966,32 @@ body {
 
     .bg-picture:nth-child(9) {
         top: 40%;
-        left: 20%; /* Смещено левее */
+        left: 20%; 
         animation-delay: -22s;
         transform: rotate(-8deg);
     }
 
     .bg-picture:nth-child(10) {
         top: 40%;
-        right: 20%; /* Смещено правее */
+        right: 20%; 
         animation-delay: -12s;
         transform: rotate(18deg);
     }
 
     .bg-picture:nth-child(11) {
         top: 60%;
-        left: 25%; /* Смещено левее */
+        left: 25%; 
         animation-delay: -32s;
         transform: rotate(-30deg);
     }
 
     .bg-picture:nth-child(12) {
         top: 60%;
-        right: 25%; /* Смещено правее */
+        right: 25%; 
         animation-delay: -38s;
         transform: rotate(25deg);
     }
 
-    /* НИЗ */
     .bg-picture:nth-child(13) {
         bottom: 8%;
         left: 25%;
@@ -2188,7 +2013,6 @@ body {
         transform: rotate(8deg);
     }
 
-    /* БОКОВЫЕ СТОРОНЫ */
     .bg-picture:nth-child(16) {
         top: 30%;
         left: 10%;
@@ -2196,7 +2020,6 @@ body {
         transform: rotate(-15deg);
     }
 
-    /* Анимация для центральных картинок */
     .bg-picture:nth-child(8) {
         animation: floatGentleCenter 40s infinite ease-in-out;
     }
@@ -2239,7 +2062,7 @@ body {
 
 @media (max-width: 768px) {
     .bg-picture {
-        opacity: 0.65; /* Немного меньше прозрачности на маленьких экранах */
+        opacity: 0.65; 
     }
 
         .bg-picture.size-large {
@@ -2257,7 +2080,6 @@ body {
             height: 30px;
         }
 
-        /* Адаптивное расположение для планшетов - скрываем часть картинок */
         .bg-picture:nth-child(9),
         .bg-picture:nth-child(10),
         .bg-picture:nth-child(11),
@@ -2266,7 +2088,6 @@ body {
             display: none;
         }
 
-        /* Обновляем позиции оставшихся */
         .bg-picture:nth-child(1) {
             top: 3%;
             left: 3%;
@@ -2325,7 +2146,7 @@ body {
 
 @media (max-width: 480px) {
     .bg-picture {
-        opacity: 0.6; /* Еще меньше прозрачности на мобильных */
+        opacity: 0.6; 
     }
 
         .bg-picture.size-large {
@@ -2343,7 +2164,6 @@ body {
             height: 25px;
         }
 
-        /* На мобильных оставляем только основные позиции */
         .bg-picture:nth-child(5),
         .bg-picture:nth-child(7),
         .bg-picture:nth-child(13),
@@ -2351,7 +2171,6 @@ body {
             display: none;
         }
 
-        /* Оставляем 8 картинок: углы + верх/низ по центру + главный центр */
         .bg-picture:nth-child(1) {
             top: 5%;
             left: 5%;
@@ -2388,7 +2207,6 @@ body {
         }
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
     .site-logo {
         width: 40px;

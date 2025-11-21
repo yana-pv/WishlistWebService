@@ -1,9 +1,7 @@
-﻿// В auth.js
-document.addEventListener('DOMContentLoaded', function () {
+﻿document.addEventListener('DOMContentLoaded', function () {
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
 
-    // Вход
     if (loginForm) {
         loginForm.addEventListener('submit', async function (e) {
             e.preventDefault();
@@ -34,22 +32,23 @@ document.addEventListener('DOMContentLoaded', function () {
                     await new Promise(resolve => setTimeout(resolve, 200));
 
                     if (typeof app !== 'undefined' && app) {
-                        // Вызываем метод напрямую, без window.app
                         await app.checkAuth();
                         // Небольшая задержка перед перенаправлением
                         setTimeout(() => {
                             window.location.href = '/';
                         }, 300);
-                    } else {
-                        // Если app не инициализирован, перезагружаем
+                    }
+                    else {
                         setTimeout(() => {
                             location.reload();
                         }, 300);
                     }
-                } else {
+                }
+                else {
                     app.showNotification(data.message || 'Ошибка входа', 'error');
                 }
-            } catch (error) {
+            }
+            catch (error) {
                 console.error('Login error:', error);
                 if (app) {
                     app.showNotification('Ошибка соединения', 'error');
@@ -58,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Регистрация
     if (registerForm) {
         registerForm.addEventListener('submit', async function (e) {
             e.preventDefault();
@@ -92,22 +90,23 @@ document.addEventListener('DOMContentLoaded', function () {
                     await new Promise(resolve => setTimeout(resolve, 200));
 
                     if (typeof app !== 'undefined' && app) {
-                        // Вызываем метод напрямую, без window.app
                         await app.checkAuth();
                         // Небольшая задержка перед перенаправлением
                         setTimeout(() => {
                             window.location.href = '/';
                         }, 300);
-                    } else {
-                        // Если app не инициализирован, перезагружаем
+                    }
+                    else {
                         setTimeout(() => {
                             location.reload();
                         }, 300);
                     }
-                } else {
+                }
+                else {
                     app.showNotification(data.message || 'Ошибка регистрации', 'error');
                 }
-            } catch (error) {
+            }
+            catch (error) {
                 console.error('Registration error:', error);
                 if (app) {
                     app.showNotification('Ошибка соединения', 'error');
@@ -117,7 +116,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// Валидация формы входа
 function validateLoginForm() {
     let isValid = true;
     const username = document.getElementById('login-username');
@@ -130,7 +128,8 @@ function validateLoginForm() {
     if (!username.value.trim()) {
         showError('login-username-error', 'Логин обязателен');
         isValid = false;
-    } else if (username.value.trim().length < 3) {
+    }
+    else if (username.value.trim().length < 3) {
         showError('login-username-error', 'Логин должен содержать минимум 3 символа');
         isValid = false;
     }
@@ -139,7 +138,8 @@ function validateLoginForm() {
     if (!password.value) {
         showError('login-password-error', 'Пароль обязателен');
         isValid = false;
-    } else if (password.value.length < 6) {
+    }
+    else if (password.value.length < 6) {
         showError('login-password-error', 'Пароль должен содержать минимум 6 символов');
         isValid = false;
     }
@@ -147,7 +147,6 @@ function validateLoginForm() {
     return isValid;
 }
 
-// Валидация формы регистрации
 function validateRegisterForm() {
     let isValid = true;
     const username = document.getElementById('register-username');
@@ -163,10 +162,12 @@ function validateRegisterForm() {
     if (!username.value.trim()) {
         showError('register-username-error', 'Имя пользователя обязательно');
         isValid = false;
-    } else if (username.value.trim().length < 3) {
+    }
+    else if (username.value.trim().length < 3) {
         showError('register-username-error', 'Имя должно содержать минимум 3 символа');
         isValid = false;
-    } else if (!/^[a-zA-Zа-яА-Я0-9_ ]+$/.test(username.value)) {
+    }
+    else if (!/^[a-zA-Zа-яА-Я0-9_ ]+$/.test(username.value)) {
         showError('register-username-error', 'Имя может содержать только буквы, цифры, пробелы и подчеркивания');
         isValid = false;
     }
@@ -175,7 +176,8 @@ function validateRegisterForm() {
     if (!email.value.trim()) {
         showError('register-email-error', 'Email обязателен');
         isValid = false;
-    } else if (!isValidEmail(email.value)) {
+    }
+    else if (!isValidEmail(email.value)) {
         showError('register-email-error', 'Введите корректный email адрес');
         isValid = false;
     }
@@ -184,10 +186,12 @@ function validateRegisterForm() {
     if (!login.value.trim()) {
         showError('register-login-error', 'Логин обязателен');
         isValid = false;
-    } else if (login.value.trim().length < 3) {
+    }
+    else if (login.value.trim().length < 3) {
         showError('register-login-error', 'Логин должен содержать минимум 3 символа');
         isValid = false;
-    } else if (!/^[a-zA-Z0-9_]+$/.test(login.value)) {
+    }
+    else if (!/^[a-zA-Z0-9_]+$/.test(login.value)) {
         showError('register-login-error', 'Логин может содержать только латинские буквы, цифры и подчеркивания');
         isValid = false;
     }
@@ -196,10 +200,12 @@ function validateRegisterForm() {
     if (!password.value) {
         showError('register-password-error', 'Пароль обязателен');
         isValid = false;
-    } else if (password.value.length < 6) {
+    }
+    else if (password.value.length < 6) {
         showError('register-password-error', 'Пароль должен содержать минимум 6 символов');
         isValid = false;
-    } else if (!/(?=.*[a-zA-Z])(?=.*\d)/.test(password.value)) {
+    }
+    else if (!/(?=.*[a-zA-Z])(?=.*\d)/.test(password.value)) {
         showError('register-password-error', 'Пароль должен содержать буквы и цифры');
         isValid = false;
     }
@@ -208,7 +214,8 @@ function validateRegisterForm() {
     if (!confirmPassword.value) {
         showError('register-confirm-password-error', 'Подтвердите пароль');
         isValid = false;
-    } else if (password.value !== confirmPassword.value) {
+    }
+    else if (password.value !== confirmPassword.value) {
         showError('register-confirm-password-error', 'Пароли не совпадают');
         isValid = false;
     }
@@ -216,7 +223,6 @@ function validateRegisterForm() {
     return isValid;
 }
 
-// Вспомогательные функции валидации
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
@@ -246,7 +252,6 @@ function clearErrors(formType) {
     });
 }
 
-// Реальная валидация при вводе
 document.addEventListener('DOMContentLoaded', function () {
     // Валидация логина в реальном времени
     const loginInputs = ['login-username', 'login-password'];
@@ -281,7 +286,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     input.classList.remove('error');
                 }
 
-                // Особенная логика для подтверждения пароля
                 if (inputId === 'register-password' || inputId === 'register-confirm-password') {
                     const password = document.getElementById('register-password').value;
                     const confirmPassword = document.getElementById('register-confirm-password').value;

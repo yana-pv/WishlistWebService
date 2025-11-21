@@ -27,7 +27,7 @@
         <img src="images/background-gift.png" class="bg-picture size-large" alt="Подарок">
     </div>
     <div id="app">
-        <!-- Landing Page -->
+        <!-- Ознакомительная страница -->
         <div id="landing-page" class="page active">
             <div class="container">
                 <header class="landing-header">
@@ -68,7 +68,6 @@
             </div>
         </div>
 
-        <!-- Auth Pages -->
         <div id="login-page" class="page">
             <div class="auth-container">
                 <h2>Вход в аккаунт</h2>
@@ -169,7 +168,7 @@
                     <div id="friend-wishlists-container" class="wishlists-grid"></div>
                 </div>
 
-                <!-- Вишлист страница (новая вкладка) -->
+                <!-- Вишлист страница -->
                 <div id="wishlist-page-page" class="app-section">
                     <div class="section-header" id="wishlist-page-header">
                         <h2 id="wishlist-page-title">Загрузка...</h2>
@@ -184,7 +183,6 @@
                     <div id="wishlist-page-items-container" class="items-grid"></div>
                 </div>
 
-                <!-- В app-main, перед закрывающим </main> -->
                 <div id="friend-wishlist-page-page" class="app-section">
                     <div class="section-header" id="friend-wishlist-page-header">
                         <div class="wishlist-header-main">
@@ -336,7 +334,6 @@
                         <label>Ссылки на товары:</label>
                         <div class="links-section">
                             <div class="ai-links" id="ai-links">
-                                <!-- AI ссылки будут здесь -->
                             </div>
                             <div class="manual-links">
                                 <div class="link-input">
@@ -344,7 +341,6 @@
                                     <button type="button" id="add-manual-link" class="btn btn-outline">Добавить ссылку</button>
                                 </div>
                                 <div class="links-list" id="manual-links-list">
-                                    <!-- Ручные ссылки будут здесь -->
                                 </div>
                             </div>
                         </div>
@@ -358,24 +354,6 @@
             </div>
         </div>
 
-        <!-- Просмотр вишлиста -->
-        <div id="wishlist-view-modal" class="modal">
-            <div class="modal-content wide-modal wishlist-view">
-                <div class="wishlist-header" id="wishlist-view-header">
-                    <h3 id="wishlist-view-title"></h3>
-                    <p id="wishlist-view-description"></p>
-                    <div class="wishlist-actions">
-                        <button id="share-wishlist-btn" class="btn btn-outline">📤 Поделиться</button>
-                        <button id="edit-wishlist-btn" class="btn btn-outline">✏️ Редактировать</button>
-                        <button id="add-item-btn" class="btn btn-primary">+ Добавить подарок</button>
-                    </div>
-                </div>
-                <div class="items-grid" id="wishlist-items-container">
-                    <!-- Подарки будут здесь -->
-                </div>
-            </div>
-        </div>
-
         <!-- Модальное окно деталей подарка -->
         <div id="item-details-modal" class="modal">
             <div class="modal-content wide-modal">
@@ -383,21 +361,6 @@
                     <h3 id="item-details-title">Детали подарка</h3>
                 </div>
                 <div id="item-details-content">
-                    <!-- Сюда будет загружаться информация о подарке -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Просмотр вишлиста друга -->
-        <div id="friend-wishlist-view-modal" class="modal">
-            <div class="modal-content wide-modal wishlist-view">
-                <div class="wishlist-header" id="friend-wishlist-view-header">
-                    <h3 id="friend-wishlist-view-title"></h3>
-                    <p id="friend-wishlist-view-description"></p>
-                    <p class="friend-name" id="friend-wishlist-owner"></p>
-                </div>
-                <div class="items-grid" id="friend-wishlist-items-container">
-                    <!-- Подарки друга будут здесь -->
                 </div>
             </div>
         </div>
@@ -440,8 +403,6 @@
         <!-- Уведомления -->
         <div id="notification" class="notification"></div>
     </div>
-
-    <!-- В конце body, перед закрывающим тегом -->
     <script src="js/app.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/validation.js"></script>

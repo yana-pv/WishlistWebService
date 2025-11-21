@@ -1,5 +1,4 @@
-﻿// Обработчики для модального окна подарка
-document.addEventListener('DOMContentLoaded', function () {
+﻿document.addEventListener('DOMContentLoaded', function () {
     const itemForm = document.getElementById('item-form');
     if (itemForm) {
         itemForm.addEventListener('submit', async (e) => {
@@ -10,7 +9,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Уровень желания (сердечки)
     document.querySelectorAll('.heart').forEach(heart => {
         heart.addEventListener('click', function () {
             const level = parseInt(this.dataset.level);
@@ -20,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Загрузка изображения
     const imagePreview = document.getElementById('image-preview');
     const imageInput = document.getElementById('item-image');
 
@@ -42,7 +39,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Генерация AI ссылок
     const itemTitleInput = document.getElementById('item-title');
     if (itemTitleInput) {
         let timeout;
@@ -56,7 +52,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Добавление ручных ссылок
     const addManualLinkBtn = document.getElementById('add-manual-link');
     if (addManualLinkBtn) {
         addManualLinkBtn.addEventListener('click', () => {
@@ -68,7 +63,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-// Методы для работы с подарками
 WishListerApp.prototype.showCreateItemModal = function () {
     if (!this.currentWishlist) return;
 
@@ -101,21 +95,20 @@ WishListerApp.prototype.editItem = async function (itemId) {
 
             this.setDesireLevel(item.desireLevel);
 
-            // --- ИЗМЕНЕНО: Загрузка изображения ---
             if (item.imageUrl) {
-                this.loadImage(item.imageUrl); // <-- Устанавливает preview и this.currentImageData
-            } else {
-                this.removeImage(); // <-- Убирает preview и this.currentImageData
+                this.loadImage(item.imageUrl); 
             }
-            // --- /ИЗМЕНЕНО ---
+            else {
+                this.removeImage(); 
+            }
 
-            // Загрузка ссылок
             this.loadItemLinks(item.links || []);
 
             this.currentItem = item;
             this.showModal('item-modal');
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error loading item for edit:', error);
         this.showNotification('Ошибка загрузки подарка', 'error');
     }
@@ -125,17 +118,17 @@ WishListerApp.prototype.saveItem = async function () {
     if (!validateItemForm()) return;
 
     if (!this.currentWishlist) {
-        console.log('No current wishlist');
         return;
     }
 
     const activeHearts = document.querySelectorAll('.heart.active[data-level]');
-    let desireLevel = 1; // По умолчанию
+    let desireLevel = 1; 
 
     if (activeHearts.length > 0) {
         const levels = Array.from(activeHearts).map(heart => parseInt(heart.dataset.level));
         desireLevel = Math.max(...levels);
-    } else {
+    }
+    else {
         const firstHeart = document.querySelector('.heart[data-level]');
         if (firstHeart) {
             desireLevel = parseInt(firstHeart.dataset.level);
@@ -149,7 +142,7 @@ WishListerApp.prototype.saveItem = async function () {
         price: document.getElementById('item-price').value ?
             parseFloat(document.getElementById('item-price').value) : null,
         comment: document.getElementById('item-comment').value.trim() || null,
-        desireLevel: desireLevel, // <-- Теперь передаётся правильно
+        desireLevel: desireLevel, 
         wishlistId: this.currentWishlist.id,
         links: this.getLinksData()
     };
@@ -185,21 +178,19 @@ WishListerApp.prototype.saveItem = async function () {
             this.closeModal('item-modal');
             this.currentItem = null;
 
-            // Обновляем вишлист
             if (this.currentWishlist) {
                 if (typeof app !== 'undefined' && app) {
-                    // Обновляем список вишлистов
                     await app.loadMyWishlists();
-
-                    // ОБНОВЛЯЕМ ТЕКУЩИЙ ВИШЛИСТ ЕСЛИ МЫ НА ЕГО СТРАНИЦЕ
                     await app.refreshCurrentWishlist();
                 }
             }
 
-        } else {
+        }
+        else {
             this.showNotification(data.message || 'Ошибка сохранения', 'error');
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error saving item:', error);
         this.showNotification('Ошибка соединения', 'error');
     }
@@ -222,20 +213,18 @@ WishListerApp.prototype.deleteItem = async function (itemId) {
         if (response.ok) {
             this.showNotification('Подарок удален', 'success');
 
-            // Обновляем вишлист
             if (this.currentWishlist) {
                 if (typeof app !== 'undefined' && app) {
-                    // Обновляем список вишлистов
                     await app.loadMyWishlists();
-
-                    // ОБНОВЛЯЕМ ТЕКУЩИЙ ВИШЛИСТ ЕСЛИ МЫ НА ЕГО СТРАНИЦЕ
                     await app.refreshCurrentWishlist();
                 }
             }
-        } else {
+        }
+        else {
             this.showNotification('Ошибка удаления подарка', 'error');
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error deleting item:', error);
         this.showNotification('Ошибка соединения', 'error');
     }
@@ -254,9 +243,7 @@ WishListerApp.prototype.handleImageUpload = function (event) {
 
     const reader = new FileReader();
     reader.onload = (e) => {
-        // --- ДОБАВЛЕНО: Устанавливаем currentImageData ---
         this.currentImageData = e.target.result;
-        // --- /ДОБАВЛЕНО ---
         this.loadImage(e.target.result);
     };
     reader.readAsDataURL(file);
@@ -269,9 +256,7 @@ WishListerApp.prototype.loadImage = function (imageData) {
     preview.innerHTML = `<img src="${imageData}" alt="Preview">`;
     removeBtn.style.display = 'block';
 
-    // --- ДОБАВЛЕНО: Устанавливаем currentImageData ---
     this.currentImageData = imageData;
-    // --- /ДОБАВЛЕНО ---
 };
 
 WishListerApp.prototype.removeImage = function () {
@@ -283,9 +268,7 @@ WishListerApp.prototype.removeImage = function () {
     removeBtn.style.display = 'none';
     fileInput.value = '';
 
-    // --- ДОБАВЛЕНО: Обнуляем currentImageData ---
     this.currentImageData = null;
-    // --- /ДОБАВЛЕНО ---
 };
 
 WishListerApp.prototype.getImageData = function () {
@@ -294,15 +277,14 @@ WishListerApp.prototype.getImageData = function () {
 
 // Уровень желания
 WishListerApp.prototype.setDesireLevel = function (level) {
-    console.log('Setting desire level:', level); // <-- ДОБАВЬ ЛОГ
-
     const hearts = document.querySelectorAll('.heart');
     const desireText = document.getElementById('desire-text');
 
     hearts.forEach((heart, index) => {
         if (index < level) {
             heart.classList.add('active');
-        } else {
+        }
+        else {
             heart.classList.remove('active');
         }
     });
@@ -316,7 +298,6 @@ WishListerApp.prototype.setDesireLevel = function (level) {
     desireText.textContent = texts[level] || 'Немного хочу';
 };
 
-// Работа со ссылками
 WishListerApp.prototype.generateAILinks = async function (itemTitle) {
     try {
         const encodedTitle = encodeURIComponent(itemTitle);
@@ -368,7 +349,7 @@ WishListerApp.prototype.addManualLink = function () {
         return;
     }
 
-    this.addLinkToList(url, '', null, false); // <-- Убран текст 'Ручная ссылка'
+    this.addLinkToList(url, '', null, false);
     urlInput.value = '';
 };
 
@@ -393,12 +374,10 @@ WishListerApp.prototype.addLinkToList = function (url, title, price, isFromAI) {
 };
 
 WishListerApp.prototype.selectLink = function (url) {
-    // Помечаем выбранную ссылку
     document.querySelectorAll('.link-item').forEach(item => {
         item.classList.remove('selected');
     });
 
-    // --- ИСПРАВЛЕНО: Находим элемент по ID из Map ---
     let linkId = null;
     for (const [id, storedUrl] of this.linkUrls.entries()) {
         if (storedUrl === url) {
@@ -430,7 +409,6 @@ WishListerApp.prototype.loadItemLinks = function (links) {
     this.clearLinks();
 
     links.forEach(link => {
-        // --- ИСПРАВЛЕНО: Получаем ID при добавлении ---
         const linkId = this.addLinkToList(
             link.url,
             link.title || 'Без названия',
@@ -439,13 +417,12 @@ WishListerApp.prototype.loadItemLinks = function (links) {
         );
 
         if (link.isSelected && linkId) {
-            this.selectLinkById(linkId); // <-- Вызываем метод из app.js
+            this.selectLinkById(linkId); 
         }
     });
 };
 
 WishListerApp.prototype.selectLinkById = function (linkId) {
-    // Помечаем выбранную ссылку
     document.querySelectorAll('.manual-link-item').forEach(item => {
         item.classList.remove('selected');
     });
@@ -459,7 +436,6 @@ WishListerApp.prototype.selectLinkById = function (linkId) {
 WishListerApp.prototype.getLinksData = function () {
     const links = [];
 
-    // Только ручные ссылки
     document.querySelectorAll('#manual-links-list .manual-link-item').forEach(item => {
         const linkId = item.id;
         const url = this.linkUrls.get(linkId); 

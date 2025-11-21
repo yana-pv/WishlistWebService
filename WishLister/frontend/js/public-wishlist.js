@@ -12,19 +12,14 @@
         const shareToken = this.getShareToken();
         if (!shareToken) return;
 
-        console.log('🔍 Loading public wishlist with token:', shareToken);
-
         try {
             const response = await fetch(`/api/public/wishlists/${shareToken}`);
 
-            console.log('🔍 Response status:', response.status);
-
             if (response.ok) {
                 const data = await response.json();
-                console.log('🔍 Received data:', data);
                 this.renderPublicWishlist(data.wishlist);
             } else {
-                console.error('🔍 Error response:', response.status);
+                console.error('Error response:', response.status);
                 this.showError('Вишлист не найден');
             }
         } catch (error) {
@@ -37,19 +32,16 @@
         const container = document.getElementById('public-wishlist-container');
         if (!container) return;
 
-        // ОЧИЩАЕМ контейнер перед рендерингом
         container.innerHTML = '';
 
         const isOwner = wishlist.isOwner;
 
-        // Форматируем дату события
         let eventDateDisplay = '';
         if (wishlist.eventDate) {
             const eventDate = new Date(wishlist.eventDate);
             eventDateDisplay = `📅 ${eventDate.toLocaleDateString('ru-RU')}`;
         }
 
-        // Создаем основную структуру
         container.innerHTML = `
             <div class="public-wishlist-header" id="public-wishlist-header">
                 <div class="wishlist-header-main">
@@ -94,38 +86,33 @@
             </div>
         `;
 
-        // Применяем тему
         const headerElement = document.getElementById('public-wishlist-header');
         headerElement.className = `public-wishlist-header wishlist-theme-${wishlist.theme.id}`;
 
-        // Обновляем кнопку "На главную" в цвет темы
         const backButton = document.querySelector('#public-wishlist-header .btn-outline');
         if (backButton && wishlist.theme?.id) {
             backButton.className = `btn btn-outline theme-button-${wishlist.theme.id}`;
         }
 
-        // Обновляем блок действий
         const actionsElement = document.getElementById('public-wishlist-actions');
         if (!isOwner) {
             actionsElement.innerHTML = `
-        <button id="save-friend-wishlist" class="btn btn-primary theme-button-${wishlist.theme.id}">
-            💾 Запомнить вишлист друга
-        </button>
-        <p class="action-hint">Войдите или зарегистрируйтесь, чтобы сохранить этот вишлист и бронировать подарки</p>
-    `;
+                <button id="save-friend-wishlist" class="btn btn-primary theme-button-${wishlist.theme.id}">
+                    💾 Запомнить вишлист друга
+                </button>
+                <p class="action-hint">Войдите или зарегистрируйтесь, чтобы сохранить этот вишлист и бронировать подарки</p>
+            `;
             actionsElement.style.display = 'block';
         } else {
             actionsElement.innerHTML = `
-        <p class="owner-notice">👋 Это ваш вишлист!</p>
-        <p class="action-hint">Поделитесь этой ссылкой с друзьями, чтобы они могли посмотреть ваш вишлист</p>
-    `;
+                <p class="owner-notice">👋 Это ваш вишлист!</p>
+                <p class="action-hint">Поделитесь этой ссылкой с друзьями, чтобы они могли посмотреть ваш вишлист</p>
+            `;
             actionsElement.style.display = 'block';
         }
 
-        // Сохраняем данные вишлиста для использования в модальном окне
         this.currentPublicWishlist = wishlist;
 
-        // Рендерим подарки
         const itemsContainer = document.getElementById('public-wishlist-items');
         if (wishlist.items && wishlist.items.length > 0) {
             itemsContainer.innerHTML = wishlist.items.map(item => `
@@ -151,15 +138,15 @@
                 </div>
             `).join('');
 
-            // Применяем белый фон к контейнеру подарков
             itemsContainer.className = 'items-grid public-items-container';
-        } else {
+        }
+        else {
             itemsContainer.innerHTML = `
-        <div class="empty-state">
-            <h3>В этом вишлисте пока нет подарков</h3>
-            ${isOwner ? '<p>Добавьте первый подарок в своем аккаунте</p>' : '<p>Ваш друг ещё не добавил желаемые подарки</p>'}
-        </div>
-    `;
+                <div class="empty-state">
+                    <h3>В этом вишлисте пока нет подарков</h3>
+                    ${isOwner ? '<p>Добавьте первый подарок в своем аккаунте</p>' : '<p>Ваш друг ещё не добавил желаемые подарки</p>'}
+                </div>
+            `;
             itemsContainer.className = 'empty-items-container';
         }
     }
@@ -200,14 +187,17 @@
             if (response.ok) {
                 alert('Вишлист друга сохранен! Теперь вы можете бронировать подарки.');
                 window.location.href = '/';
-            } else if (response.status === 401) {
+            }
+            else if (response.status === 401) {
                 alert('Пожалуйста, войдите или зарегистрируйтесь, чтобы сохранить вишлист друга.');
                 window.location.href = '/#login';
-            } else {
+            }
+            else {
                 const data = await response.json();
                 alert(data.message || 'Ошибка сохранения вишлиста');
             }
-        } catch (error) {
+        }
+        catch (error) {
             console.error('Error saving friend wishlist:', error);
             alert('Ошибка соединения');
         }
@@ -232,10 +222,7 @@
         return div.innerHTML;
     }
 
-    // Добавьте эти методы в класс PublicWishlistApp
-
     viewPublicItem(itemId) {
-        // Находим подарок в текущем вишлисте
         const item = this.currentPublicWishlist.items.find(i => i.id === itemId);
 
         if (item) {
@@ -249,40 +236,39 @@
         const isOwner = this.currentPublicWishlist.isOwner;
 
         container.innerHTML = `
-        <div class="item-details-layout">
-            <div class="item-details-left">
-                ${item.imageUrl ? `
-                    <img src="${item.imageUrl}" alt="${this.escapeHtml(item.title)}" class="item-detail-image" 
-                         onerror="this.style.display='none'">
-                ` : ''}
-                <h3 class="item-detail-title">${this.escapeHtml(item.title)}</h3>
-                ${item.price ? `<div class="item-price">${item.price.toLocaleString('ru-RU')} ₽</div>` : ''}
-                <div class="desire-level">
-                    ${'💖'.repeat(item.desireLevel)}${'🤍'.repeat(3 - item.desireLevel)}
-                </div>
-                <!-- УБРАНО: статус бронирования для публичного просмотра -->
-            </div>
-            <div class="item-details-right">
-                ${item.description ? `<p class="item-description"><strong>Описание:</strong> ${this.escapeHtml(item.description)}</p>` : ''}
-                ${item.comment ? `<p class="item-comment"><strong>Комментарий:</strong> ${this.escapeHtml(item.comment)}</p>` : ''}
-                ${item.links && item.links.length > 0 ? `
-                    <div class="item-links">
-                        <h4>Ссылки на товары:</h4>
-                        ${item.links.map(link => `
-                            <div class="link-item">
-                                <a href="${link.url}" target="_blank" rel="noopener noreferrer">
-                                    ${this.escapeHtml(link.title || link.url)}
-                                </a>
-                                ${link.price ? `<span class="link-price">${link.price.toLocaleString('ru-RU')} ₽</span>` : ''}
-                            </div>
-                        `).join('')}
+            <div class="item-details-layout">
+                <div class="item-details-left">
+                    ${item.imageUrl ? `
+                        <img src="${item.imageUrl}" alt="${this.escapeHtml(item.title)}" class="item-detail-image" 
+                             onerror="this.style.display='none'">
+                    ` : ''}
+                    <h3 class="item-detail-title">${this.escapeHtml(item.title)}</h3>
+                    ${item.price ? `<div class="item-price">${item.price.toLocaleString('ru-RU')} ₽</div>` : ''}
+                    <div class="desire-level">
+                        ${'💖'.repeat(item.desireLevel)}${'🤍'.repeat(3 - item.desireLevel)}
                     </div>
-                ` : ''}
+                    <!-- УБРАНО: статус бронирования для публичного просмотра -->
+                </div>
+                <div class="item-details-right">
+                    ${item.description ? `<p class="item-description"><strong>Описание:</strong> ${this.escapeHtml(item.description)}</p>` : ''}
+                    ${item.comment ? `<p class="item-comment"><strong>Комментарий:</strong> ${this.escapeHtml(item.comment)}</p>` : ''}
+                    ${item.links && item.links.length > 0 ? `
+                        <div class="item-links">
+                            <h4>Ссылки на товары:</h4>
+                            ${item.links.map(link => `
+                                <div class="link-item">
+                                    <a href="${link.url}" target="_blank" rel="noopener noreferrer">
+                                        ${this.escapeHtml(link.title || link.url)}
+                                    </a>
+                                    ${link.price ? `<span class="link-price">${link.price.toLocaleString('ru-RU')} ₽</span>` : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                </div>
             </div>
-        </div>
-    `;
+        `;
 
-        // Обновляем заголовок модального окна
         document.getElementById('public-item-modal-title').textContent = this.escapeHtml(item.title);
     }
 
@@ -294,7 +280,6 @@
         document.getElementById('public-item-modal').classList.remove('active');
     }
 
-    // Обновите метод setupPublicEvents для закрытия модального окна
     setupPublicEvents() {
         document.addEventListener('click', (e) => {
             if (e.target.id === 'save-friend-wishlist') {
@@ -316,7 +301,6 @@
     }
 }
 
-// Создаем глобальную ссылку для вызова из HTML
 let publicWishlistApp;
 
 document.addEventListener('DOMContentLoaded', () => {

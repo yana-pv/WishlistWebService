@@ -1,12 +1,9 @@
-﻿// Управление вишлистами друзей
-document.addEventListener('DOMContentLoaded', function () {
-    // Загрузка вишлистов друзей при переходе на вкладку
+﻿document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('[data-page="friend-wishlists"]').addEventListener('click', () => {
         app.loadFriendWishlists();
     });
 });
 
-// Методы для работы с вишлистами друзей
 WishListerApp.prototype.loadFriendWishlists = async function () {
     try {
         const response = await fetch('/api/friend-wishlists', {
@@ -25,22 +22,19 @@ WishListerApp.prototype.loadFriendWishlists = async function () {
 };
 
 WishListerApp.prototype.renderFriendWishlists = function (wishlists) {
-    console.log('🔍 ALL FRIEND WISHLISTS DATA:', wishlists);
-
     const container = document.getElementById('friend-wishlists-container');
 
     if (!wishlists || wishlists.length === 0) {
         container.innerHTML = `
-            <div class="empty-state">
-                <h3>У вас пока нет вишлистов друзей</h3>
-                <p>Перейдите по ссылке друга и нажмите "Запомнить вишлист", чтобы добавить его сюда</p>
-            </div>
-        `;
+                <div class="empty-state">
+                    <h3>У вас пока нет вишлистов друзей</h3>
+                    <p>Перейдите по ссылке друга и нажмите "Запомнить вишлист", чтобы добавить его сюда</p>
+                </div>
+            `;
         return;
     }
 
     container.innerHTML = wishlists.map(fw => {
-        // Используем eventDate из данных вишлиста
         const dateDisplay = fw.eventDate ?
             '📅 ' + new Date(fw.eventDate).toLocaleDateString('ru-RU') :
             '🗓️ Без даты события';
@@ -68,27 +62,19 @@ WishListerApp.prototype.renderFriendWishlists = function (wishlists) {
 
 WishListerApp.prototype.renderFriendWishlistPage = function (result) {
     this.currentFriendWishlist = result;
-
     const wishlist = result.wishlist;
-
-    // Обновляем заголовок страницы
     const titleElement = document.getElementById('friend-wishlist-page-title');
-    titleElement.textContent = wishlist.title;
-    // --- НОВОЕ: Применяем цвет темы к заголовку ---
-    titleElement.style.color = wishlist.theme.color;
-    // --- /НОВОЕ ---
 
-    // Применяем тему к заголовку
+    titleElement.textContent = wishlist.title;
+    titleElement.style.color = wishlist.theme.color;
+
     const header = document.getElementById('friend-wishlist-page-header');
     header.className = `section-header wishlist-theme-${wishlist.theme.id}`;
 
-    // Назначаем обработчики кнопок
     document.getElementById('save-friend-wishlist-btn').onclick = () => this.saveFriendWishlist(result);
 
-    // Назначаем классы кнопкам
     document.getElementById('save-friend-wishlist-btn').className = `btn btn-primary theme-button-${wishlist.theme.id}`;
 
-    // Рендерим подарки
     this.renderFriendWishlistPageItems(wishlist.items || []);
 };
 
@@ -102,72 +88,59 @@ WishListerApp.prototype.viewFriendWishlist = async function (friendWishlistId) {
             const data = await response.json();
             const result = data.wishlist;
 
-            console.log('🔍 Friend wishlist full data:', result);
-            console.log('🔍 Description in full data:', result.description);
-
-            // Устанавливаем текущий вишлист друга
             this.currentFriendWishlist = result;
 
-            // Обновляем заголовок страницы
             const titleElement = document.getElementById('friend-wishlist-page-title');
             titleElement.textContent = result.title;
 
-            // Применяем цвет темы к названию
             if (result.theme?.color) {
                 titleElement.style.color = result.theme.color;
             }
 
-            // ОБНОВЛЯЕМ ОПИСАНИЕ - КРИТИЧЕСКИ ВАЖНО!
             const descriptionElement = document.getElementById('friend-wishlist-page-description');
-            console.log('🔍 Description element found:', !!descriptionElement);
 
             if (descriptionElement) {
                 if (result.description && result.description.trim() !== '') {
-                    console.log('🔍 Setting description text:', result.description);
                     descriptionElement.textContent = result.description;
                     descriptionElement.style.display = 'block';
-                    // Описание тоже в цвете темы
                     if (result.theme?.color) {
                         descriptionElement.style.color = result.theme.color;
                         descriptionElement.style.opacity = '0.8';
                     }
-                } else {
-                    console.log('🔍 Hiding description - empty or null');
+                }
+                else {
                     descriptionElement.style.display = 'none';
                 }
             }
 
-            // Применяем стили как в моих вишлистах
             this.applyFriendWishlistTheme(result);
-
-            // Рендерим подарки
             this.renderFriendWishlistPageItems(result.items || []);
-
-            // Показываем вкладку
             this.showPage('app-page');
             this.showAppSection('friend-wishlist-page');
-        } else {
+        }
+        else {
             this.showNotification('Ошибка загрузки вишлиста друга', 'error');
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error loading friend wishlist:', error);
         this.showNotification('Ошибка соединения', 'error');
     }
 };
 
-// Добавьте этот метод в конец файла friends.js
 WishListerApp.prototype.viewFriendItemDetails = async function (itemId) {
     try {
-        // Находим подарок в текущем вишлисте друга
         const item = this.currentFriendWishlist.items.find(i => i.id === itemId);
 
         if (item) {
             this.renderFriendItemDetailsModal(item);
             this.showModal('item-details-modal');
-        } else {
+        }
+        else {
             this.showNotification('Подарок не найден', 'error');
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error loading friend item details:', error);
         this.showNotification('Ошибка соединения', 'error');
     }
@@ -175,8 +148,6 @@ WishListerApp.prototype.viewFriendItemDetails = async function (itemId) {
 
 WishListerApp.prototype.renderFriendItemDetailsModal = function (item) {
     const container = document.getElementById('item-details-content');
-
-    // Получаем ID темы текущего вишлиста друга
     const themeId = this.currentFriendWishlist?.theme?.id || 1;
 
     container.innerHTML = `
@@ -219,7 +190,6 @@ WishListerApp.prototype.renderFriendItemDetailsModal = function (item) {
             </div>
         </div>
         <div class="item-detail-actions-bottom">
-            <!-- Для вишлистов друга кнопка "Редактировать" не показывается -->
         </div>
     `;
 };
@@ -227,21 +197,15 @@ WishListerApp.prototype.renderFriendItemDetailsModal = function (item) {
 
 WishListerApp.prototype.reserveItem = async function (itemId) {
     try {
-        console.log('Reserving item:', itemId); // Отладка
-
         const response = await fetch(`/api/items/${itemId}/reserve`, {
             method: 'POST',
             credentials: 'include'
         });
 
-        console.log('Reserve response status:', response.status); // Отладка
-
         if (response.ok) {
             this.showNotification('Подарок забронирован!', 'success');
 
-            // Обновляем просмотр вишлиста друга
             if (this.currentFriendWishlist) {
-                // Используем ID из хэша URL вместо this.currentFriendWishlist.id
                 const hash = window.location.hash;
                 if (hash.startsWith('#friend-wishlist/')) {
                     const friendWishlistId = parseInt(hash.split('/')[1]);
@@ -250,15 +214,14 @@ WishListerApp.prototype.reserveItem = async function (itemId) {
                     }
                 }
             }
-
-            // Обновляем статистику профиля
             await this.loadProfileStats();
-        } else {
+        }
+        else {
             const data = await response.json();
-            console.log('Reserve error:', data); // Отладка
             this.showNotification(data.message || 'Ошибка бронирования', 'error');
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error reserving item:', error);
         this.showNotification('Ошибка соединения', 'error');
     }
@@ -281,9 +244,7 @@ WishListerApp.prototype.unreserveItem = async function (itemId) {
         if (response.ok) {
             this.showNotification('Бронирование отменено', 'success');
 
-            // Обновляем просмотр вишлиста друга
             if (this.currentFriendWishlist) {
-                // Используем ID из хэша URL
                 const hash = window.location.hash;
                 if (hash.startsWith('#friend-wishlist/')) {
                     const friendWishlistId = parseInt(hash.split('/')[1]);
@@ -293,13 +254,14 @@ WishListerApp.prototype.unreserveItem = async function (itemId) {
                 }
             }
 
-            // Обновляем статистику профиля
             await this.loadProfileStats();
-        } else {
+        }
+        else {
             const data = await response.json();
             this.showNotification(data.message || 'Ошибка отмены бронирования', 'error');
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error unreserving item:', error);
         this.showNotification('Ошибка соединения', 'error');
     }
@@ -323,10 +285,12 @@ WishListerApp.prototype.removeFriendWishlist = async function (friendWishlistId)
             this.showNotification('Вишлист друга удален', 'success');
             await this.loadFriendWishlists();
             this.closeModal('friend-wishlist-view-modal');
-        } else {
+        }
+        else {
             this.showNotification('Ошибка удаления вишлиста друга', 'error');
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error deleting friend wishlist:', error);
         this.showNotification('Ошибка соединения', 'error');
     }

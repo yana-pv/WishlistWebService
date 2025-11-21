@@ -1,5 +1,4 @@
-﻿/* Стили для публичного вишлиста */
-.public-container {
+﻿.public-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem 20px;
@@ -19,7 +18,6 @@
             text-decoration: underline;
         }
 
-/* Стили для публичного вишлиста */
 .public-wishlist-header {
     border-radius: 16px;
     padding: 2rem;
@@ -55,7 +53,7 @@
     display: block;
     flex: 1;
     min-width: 300px;
-    color: inherit;
+    color: #666;
 }
 
 .wishlist-page-actions {
@@ -63,6 +61,81 @@
     gap: 1rem;
     align-items: center;
     flex-shrink: 0;
+}
+
+.wishlist-info {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.wishlist-event-date {
+    font-size: 1.1rem;
+    font-weight: 500;
+    opacity: 0.9;
+    color: inherit;
+}
+
+.wishlist-theme-1.public-wishlist-header {
+    background: #fff0f5;
+    border-left: 4px solid #ff69b4;
+    color: #333;
+}
+
+.wishlist-theme-2.public-wishlist-header {
+    background: #f0f8ff;
+    border-left: 4px solid #1e90ff;
+    color: #333;
+}
+
+.wishlist-theme-3.public-wishlist-header {
+    background: #f0fff0;
+    border-left: 4px solid #32cd32;
+    color: #333;
+}
+
+.wishlist-theme-4.public-wishlist-header {
+    background: #f8f0ff;
+    border-left: 4px solid #8a2be2;
+    color: #333;
+}
+
+.wishlist-theme-1 #public-wishlist-title,
+.wishlist-theme-1 .wishlist-description {
+    color: #ff69b4 !important;
+}
+
+.wishlist-theme-2 #public-wishlist-title,
+.wishlist-theme-2 .wishlist-description {
+    color: #1e90ff !important;
+}
+
+.wishlist-theme-3 #public-wishlist-title,
+.wishlist-theme-3 .wishlist-description {
+    color: #32cd32 !important;
+}
+
+.wishlist-theme-4 #public-wishlist-title,
+.wishlist-theme-4 .wishlist-description {
+    color: #8a2be2 !important;
+}
+
+.wishlist-theme-1 .wishlist-event-date {
+    color: #ff69b4 !important;
+}
+
+.wishlist-theme-2 .wishlist-event-date {
+    color: #1e90ff !important;
+}
+
+.wishlist-theme-3 .wishlist-event-date {
+    color: #32cd32 !important;
+}
+
+.wishlist-theme-4 .wishlist-event-date {
+    color: #8a2be2 !important;
 }
 
 .public-actions {
@@ -129,84 +202,6 @@
         margin-bottom: 1rem;
     }
 
-/* Адаптивность */
-@media (max-width: 768px) {
-    .wishlist-header-bottom {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 1rem;
-    }
-
-    .wishlist-description {
-        min-width: auto;
-        text-align: center;
-    }
-
-    .wishlist-page-actions {
-        justify-content: center;
-    }
-
-    #public-wishlist-title {
-        font-size: 2rem;
-        text-align: center;
-    }
-
-    .public-wishlist-header {
-        padding: 1.5rem;
-    }
-
-    .public-actions {
-        padding: 1.5rem;
-    }
-}
-
-/* ЦВЕТА ТЕМ ДЛЯ ПУБЛИЧНОГО ВИШЛИСТА - как в style.css */
-.wishlist-theme-1.public-wishlist-header {
-    background: #fff0f5;
-    border-left: 4px solid #ff69b4;
-    color: #333;
-}
-
-.wishlist-theme-2.public-wishlist-header {
-    background: #f0f8ff;
-    border-left: 4px solid #1e90ff;
-    color: #333;
-}
-
-.wishlist-theme-3.public-wishlist-header {
-    background: #f0fff0;
-    border-left: 4px solid #32cd32;
-    color: #333;
-}
-
-.wishlist-theme-4.public-wishlist-header {
-    background: #f8f0ff;
-    border-left: 4px solid #8a2be2;
-    color: #333;
-}
-
-/* ЦВЕТА ЗАГОЛОВКОВ И ОПИСАНИЙ - как в style.css */
-.wishlist-theme-1 #public-wishlist-title,
-.wishlist-theme-1 .wishlist-description {
-    color: #ff69b4 !important;
-}
-
-.wishlist-theme-2 #public-wishlist-title,
-.wishlist-theme-2 .wishlist-description {
-    color: #1e90ff !important;
-}
-
-.wishlist-theme-3 #public-wishlist-title,
-.wishlist-theme-3 .wishlist-description {
-    color: #32cd32 !important;
-}
-
-.wishlist-theme-4 #public-wishlist-title,
-.wishlist-theme-4 .wishlist-description {
-    color: #8a2be2 !important;
-}
-
-/* ЦВЕТА КНОПОК - как в style.css */
 .theme-button-1 {
     background: #ff69b4;
     border-color: #ff69b4;
@@ -251,7 +246,6 @@
         border-color: #9400d3;
     }
 
-/* Дополнительные стили для состояний */
 .empty-state {
     text-align: center;
     padding: 3rem 2rem;
@@ -340,7 +334,7 @@
         color: #333;
     }
 
-/* Стили для деталей подарка (аналогичные основному приложению) */
+/* Стили для деталей подарка */
 .item-details-layout {
     display: flex;
     gap: 2rem;
@@ -425,39 +419,6 @@
     font-weight: 500;
 }
 
-
-/* Стили для информации о вишлисте */
-.wishlist-info {
-    flex: 1;
-    min-width: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.wishlist-event-date {
-    font-size: 1.1rem;
-    font-weight: 500;
-    opacity: 0.9;
-    color: inherit;
-}
-
-/* Добавьте в style.css fallback стили */
-.user-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    background: #f3f4f6;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-    /* Индикатор загрузки */
-    .user-avatar.loading {
-        background: #e5e7eb;
-        animation: pulse 2s infinite;
-    }
-
 @keyframes pulse {
     0% {
         opacity: 0.6;
@@ -472,24 +433,6 @@
     }
 }
 
-/* Цвет даты события в зависимости от темы */
-.wishlist-theme-1 .wishlist-event-date {
-    color: #ff69b4 !important;
-}
-
-.wishlist-theme-2 .wishlist-event-date {
-    color: #1e90ff !important;
-}
-
-.wishlist-theme-3 .wishlist-event-date {
-    color: #32cd32 !important;
-}
-
-.wishlist-theme-4 .wishlist-event-date {
-    color: #8a2be2 !important;
-}
-
-/* Адаптивность для мобильных */
 @media (max-width: 768px) {
     .wishlist-info {
         min-width: auto;
@@ -502,7 +445,25 @@
         gap: 1rem;
     }
 
+    .wishlist-description {
+        min-width: auto;
+        text-align: center;
+    }
+
     .wishlist-page-actions {
         justify-content: center;
+    }
+
+    #public-wishlist-title {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .public-wishlist-header {
+        padding: 1.5rem;
+    }
+
+    .public-actions {
+        padding: 1.5rem;
     }
 }

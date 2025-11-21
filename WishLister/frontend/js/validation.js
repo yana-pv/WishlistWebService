@@ -1,5 +1,4 @@
-﻿// Общие функции валидации
-class Validators {
+﻿class Validators {
     static validateWishlist(title, description) {
         const errors = [];
 
@@ -57,14 +56,15 @@ class Validators {
         try {
             const urlObj = new URL(url);
             return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
-        } catch {
+        }
+        catch {
             return false;
         }
     }
 
     static validateImageFile(file) {
         const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/bmp'];
-        const maxSize = 5 * 1024 * 1024; // 5MB
+        const maxSize = 5 * 1024 * 1024; 
 
         if (!file) return { isValid: false, error: 'Файл не выбран' };
 
@@ -108,27 +108,30 @@ class Validators {
 
 // Функции для отображения ошибок в формах
 function showFormErrors(formId, errors) {
-    // Сначала очищаем все ошибки
     clearFormErrors(formId);
 
-    // Показываем новые ошибки
     errors.forEach(error => {
-        // Находим поле, к которому относится ошибка
         let fieldId = '';
 
         if (error.includes('Название')) {
             fieldId = formId === 'wishlist' ? 'wishlist-title' : 'item-title';
-        } else if (error.includes('Описание')) {
+        }
+        else if (error.includes('Описание')) {
             fieldId = 'wishlist-description';
-        } else if (error.includes('Цена')) {
+        }
+        else if (error.includes('Цена')) {
             fieldId = 'item-price';
-        } else if (error.includes('Уровень желания')) {
+        }
+        else if (error.includes('Уровень желания')) {
             fieldId = 'desire-level';
-        } else if (error.includes('Тема')) {
+        }
+        else if (error.includes('Тема')) {
             fieldId = 'wishlist-theme';
-        } else if (error.includes('Имя пользователя')) {
+        }
+        else if (error.includes('Имя пользователя')) {
             fieldId = 'edit-username';
-        } else if (error.includes('email')) {
+        }
+        else if (error.includes('email')) {
             fieldId = 'edit-email';
         }
 
@@ -180,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Валидация товара
+    // Валидация подарка
     const itemForm = document.getElementById('item-form');
     if (itemForm) {
         const titleInput = document.getElementById('item-title');
@@ -219,7 +222,8 @@ function validateWishlistForm() {
 
     if (!validation.isValid) {
         showFormErrors('wishlist', validation.errors);
-    } else {
+    }
+    else {
         clearFormErrors('wishlist');
     }
 
@@ -237,7 +241,8 @@ function validateItemForm() {
 
     if (!validation.isValid) {
         showFormErrors('item', validation.errors);
-    } else {
+    }
+    else {
         clearFormErrors('item');
     }
 

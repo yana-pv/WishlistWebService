@@ -1,16 +1,12 @@
-﻿// Управление профилем пользователя
-document.addEventListener('DOMContentLoaded', function () {
-    // Загрузка профиля при переходе на вкладку
+﻿document.addEventListener('DOMContentLoaded', function () {
     document.querySelector('[data-page="profile"]').addEventListener('click', () => {
         app.loadProfile();
     });
 
-    // Редактирование профиля
     document.getElementById('edit-profile-btn').addEventListener('click', () => {
         app.showEditProfileModal();
     });
 
-    // Форма редактирования профиля
     const editProfileForm = document.getElementById('edit-profile-form');
     if (editProfileForm) {
         editProfileForm.addEventListener('submit', async (e) => {
@@ -19,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // Управление аватаром
     const avatarUpload = document.getElementById('avatar-upload');
     const changeAvatarBtn = document.getElementById('change-avatar-btn');
     const removeAvatarBtn = document.getElementById('remove-avatar-btn');
@@ -33,13 +28,11 @@ document.addEventListener('DOMContentLoaded', function () {
         removeAvatarBtn.addEventListener('click', () => app.removeAvatar());
     }
 
-    // Удаление аккаунта
     document.getElementById('delete-account-btn').addEventListener('click', () => {
         app.deleteAccount();
     });
 });
 
-// Методы для работы с профилем
 WishListerApp.prototype.loadProfile = async function () {
     try {
         const response = await fetch('/api/user/profile', {
@@ -51,7 +44,6 @@ WishListerApp.prototype.loadProfile = async function () {
             this.renderProfile(data.user);
             await this.loadProfileStats();
 
-            // ОБНОВЛЯЕМ АВАТАР В ШАПКЕ
             if (data.user.avatarUrl) {
                 this.currentUser.avatarUrl = data.user.avatarUrl;
                 this.updateUserInterface();
@@ -67,42 +59,30 @@ WishListerApp.prototype.renderProfile = function (user) {
     const username = document.getElementById('profile-username');
     const email = document.getElementById('profile-email');
 
-    console.log('Rendering profile, avatarUrl type:', typeof user.avatarUrl);
-    console.log('AvatarUrl first 100 chars:', user.avatarUrl?.substring(0, 100));
-
     if (avatar) {
         avatar.onerror = null;
         avatar.onload = null;
 
         if (user.avatarUrl) {
-            // Проверяем, это base64 или URL
             if (user.avatarUrl.startsWith('data:image/')) {
-                console.log('✅ Avatar is base64 data');
                 avatar.src = user.avatarUrl;
                 avatar.style.display = 'block';
 
-                avatar.onload = function () {
-                    console.log('✅ Base64 avatar loaded successfully');
-                };
-
                 avatar.onerror = function () {
-                    console.error('❌ Base64 avatar failed to load');
                     this.style.display = 'none';
                 };
 
-            } else {
-                // Это URL (старый подход)
-                console.log('⚠️ Avatar is URL, trying to load:', user.avatarUrl);
+            }
+            else {
                 avatar.src = user.avatarUrl;
                 avatar.style.display = 'block';
 
                 avatar.onerror = function () {
-                    console.error('❌ URL avatar failed to load');
+                    console.error('URL avatar failed to load');
                     this.style.display = 'none';
                 };
             }
         } else {
-            console.log('No avatar URL provided');
             avatar.style.display = 'none';
             avatar.src = '';
         }
@@ -130,11 +110,8 @@ WishListerApp.prototype.loadProfileStats = async function () {
             credentials: 'include'
         });
 
-        console.log('Stats response status:', response.status); // <-- Добавь лог
-
         if (response.ok) {
             const data = await response.json();
-            console.log('Stats data:', data); // <-- Добавь лог
             this.renderProfileStats(data.stats);
         }
     } catch (error) {
@@ -199,30 +176,22 @@ WishListerApp.prototype.saveProfile = async function () {
             this.closeModal('edit-profile-modal');
             this.currentProfile = data.user;
             this.renderProfile(data.user);
-
-            // ОБНОВЛЯЕМ АВАТАР В ШАПКЕ
             this.currentUser.avatarUrl = data.user.avatarUrl;
             this.updateUserInterface();
-        } else {
+        }
+        else {
             this.showNotification(data.message || 'Ошибка обновления профиля', 'error');
         }
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error saving profile:', error);
         this.showNotification('Ошибка соединения', 'error');
     }
 };
 
 WishListerApp.prototype.handleAvatarUpload = async function (event) {
-    console.log('handleAvatarUpload called');
-
     const file = event.target.files[0];
     if (!file) return;
-
-    console.log('File details:', {
-        name: file.name,
-        type: file.type,
-        size: file.size
-    });
 
     const validation = Validators.validateImageFile(file);
     if (!validation.isValid) {
@@ -233,8 +202,6 @@ WishListerApp.prototype.handleAvatarUpload = async function (event) {
     const reader = new FileReader();
     reader.onload = async (e) => {
         const imageData = e.target.result;
-
-        console.log('Image converted to base64, length:', imageData.length);
 
         try {
             const response = await fetch('/api/user/profile', {
@@ -252,27 +219,25 @@ WishListerApp.prototype.handleAvatarUpload = async function (event) {
 
             if (response.ok) {
                 const updatedUser = await response.json();
-                console.log('✅ Profile updated with base64 avatar');
                 this.currentProfile = updatedUser.user;
                 this.renderProfile(updatedUser.user);
-
-                // ОБНОВЛЯЕМ АВАТАР В ШАПКЕ
                 this.currentUser.avatarUrl = updatedUser.user.avatarUrl;
                 this.updateUserInterface();
 
                 this.showNotification('Аватар обновлен', 'success');
             } else {
-                console.error('❌ Failed to update profile');
+                console.error('Failed to update profile');
                 this.showNotification('Ошибка обновления профиля', 'error');
             }
-        } catch (error) {
-            console.error('❌ Update error:', error);
+        }
+        catch (error) {
+            console.error('Update error:', error);
             this.showNotification('Ошибка соединения', 'error');
         }
     };
 
     reader.onerror = (error) => {
-        console.error('❌ FileReader error:', error);
+        console.error('FileReader error:', error);
         this.showNotification('Ошибка чтения файла', 'error');
     };
 
@@ -297,7 +262,7 @@ WishListerApp.prototype.removeAvatar = async function () {
             body: JSON.stringify({
                 username: this.currentProfile.username,
                 email: this.currentProfile.email,
-                avatarUrl: null // Устанавливаем null вместо пустой строки
+                avatarUrl: null 
             }),
             credentials: 'include'
         });
@@ -345,7 +310,8 @@ WishListerApp.prototype.deleteAccount = async function () {
                 this.currentUser = null;
                 this.showPage('landing-page');
             }, 2000);
-        } else {
+        }
+        else {
             const data = await response.json();
             this.showNotification(data.message || 'Ошибка удаления аккаунта', 'error');
         }

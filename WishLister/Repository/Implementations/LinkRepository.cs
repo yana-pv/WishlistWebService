@@ -22,8 +22,8 @@ public class LinkRepository : ILinkRepository
         await conn.OpenAsync();
 
         var cmd = new NpgsqlCommand(
-            "SELECT id, url, title, price, is_from_ai, is_selected, item_id, created_at " +
-            "FROM item_links WHERE item_id = @itemId ORDER BY is_selected DESC, created_at", conn);
+            "SELECT id, url, title, is_from_ai, item_id, created_at " +
+            "FROM item_links WHERE item_id = @itemId ORDER BY created_at", conn); // ← убран ORDER BY is_selected
         cmd.Parameters.AddWithValue("@itemId", itemId);
 
         await using var reader = await cmd.ExecuteReaderAsync();
@@ -34,11 +34,9 @@ public class LinkRepository : ILinkRepository
                 Id = reader.GetInt32(0),
                 Url = reader.GetString(1),
                 Title = reader.IsDBNull(2) ? null : reader.GetString(2),
-                Price = reader.IsDBNull(3) ? null : reader.GetDecimal(3),
-                IsFromAI = reader.GetBoolean(4),
-                IsSelected = reader.GetBoolean(5),
-                ItemId = reader.GetInt32(6),
-                CreatedAt = reader.GetDateTime(7)
+                IsFromAI = reader.GetBoolean(3), 
+                ItemId = reader.GetInt32(4), 
+                CreatedAt = reader.GetDateTime(5) 
             });
         }
 
@@ -52,15 +50,13 @@ public class LinkRepository : ILinkRepository
         await conn.OpenAsync();
 
         var cmd = new NpgsqlCommand(
-            "INSERT INTO item_links (url, title, price, is_from_ai, is_selected, item_id) " +
-            "VALUES (@url, @title, @price, @isFromAI, @isSelected, @itemId) " +
+            "INSERT INTO item_links (url, title, is_from_ai, item_id) " +
+            "VALUES (@url, @title, @isFromAI, @itemId) " +
             "RETURNING id, created_at", conn);
 
         cmd.Parameters.AddWithValue("@url", link.Url);
         cmd.Parameters.AddWithValue("@title", (object?)link.Title ?? DBNull.Value);
-        cmd.Parameters.AddWithValue("@price", (object?)link.Price ?? DBNull.Value);
         cmd.Parameters.AddWithValue("@isFromAI", link.IsFromAI);
-        cmd.Parameters.AddWithValue("@isSelected", link.IsSelected);
         cmd.Parameters.AddWithValue("@itemId", link.ItemId);
 
         await using var reader = await cmd.ExecuteReaderAsync();
@@ -71,26 +67,6 @@ public class LinkRepository : ILinkRepository
         }
 
         return link;
-    }
-
-
-    public async Task<bool> SetSelectedLinkAsync(int itemId, int linkId)
-    {
-        await using var conn = new NpgsqlConnection(_connectionString);
-        await conn.OpenAsync();
-
-        var clearCmd = new NpgsqlCommand(
-            "UPDATE item_links SET is_selected = false WHERE item_id = @itemId", conn);
-        clearCmd.Parameters.AddWithValue("@itemId", itemId);
-        await clearCmd.ExecuteNonQueryAsync();
-
-        var selectCmd = new NpgsqlCommand(
-            "UPDATE item_links SET is_selected = true WHERE id = @linkId AND item_id = @itemId", conn);
-        selectCmd.Parameters.AddWithValue("@linkId", linkId);
-        selectCmd.Parameters.AddWithValue("@itemId", itemId);
-
-        var affected = await selectCmd.ExecuteNonQueryAsync();
-        return affected > 0;
     }
 
 

@@ -1,6 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 
 namespace WishLister.Utils;
+
 public static class Validators
 {
     public const string EmailRegex = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
@@ -16,6 +17,7 @@ public static class Validators
         {
             return Regex.IsMatch(email, EmailRegex, RegexOptions.IgnoreCase);
         }
+
         catch
         {
             return false;

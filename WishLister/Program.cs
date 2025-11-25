@@ -28,12 +28,11 @@ RequestDelegate requestDelegate = async (context) =>
     await context.Response.OutputStream.WriteAsync(bytes);
 };
 
-requestDelegate = new LoggingMiddleware(requestDelegate).InvokeAsync;
+requestDelegate = new ErrorHandlingMiddleware(requestDelegate).InvokeAsync; 
 requestDelegate = new AuthMiddleware(requestDelegate, sessionService, userRepository).InvokeAsync; 
 requestDelegate = new RoutingMiddleware(requestDelegate, authController, userController,
     wishlistController, itemController, friendController, linkController, themeController).InvokeAsync;
-requestDelegate = new StaticFilesMiddleware(requestDelegate).InvokeAsync;
-var finalMiddleware = new ErrorHandlingMiddleware(requestDelegate).InvokeAsync;
+var finalMiddleware = new StaticFilesMiddleware(requestDelegate).InvokeAsync;
 
 // Создание БД таблиц
 var dbContext = new DbContext();
@@ -73,3 +72,8 @@ while (httpListener.IsListening)
         }
     });
 }
+
+
+httpListener.Stop();
+httpListener.Close();
+Console.WriteLine("Server stopped");

@@ -42,6 +42,7 @@ public class AuthController
                 await WriteJsonResponse(context, new { status = "error", message = "Route not found" });
             }
         }
+
         catch (Exception ex)
         {
             response.StatusCode = 500;

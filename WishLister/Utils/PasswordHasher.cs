@@ -1,7 +1,8 @@
 ﻿using System.Security.Cryptography;
-using System.Text;
+
 
 namespace WishLister.Utils;
+
 public static class PasswordHasher
 {
     private const int SaltSize = 32;
@@ -48,7 +49,9 @@ public static class PasswordHasher
             for (int i = 0; i < HashSize; i++)
             {
                 if (hashBytes[i + SaltSize] != hash[i])
+                {
                     return false;
+                }
             }
             return true;
         }

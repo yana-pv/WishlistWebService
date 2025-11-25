@@ -1,5 +1,4 @@
 ﻿using System.Net;
-using WishLister.Repository.Implementations;
 using WishLister.Repository.Interfaces;
 using WishLister.Services;
 
@@ -62,6 +61,7 @@ public class AuthMiddleware
 
         await _next(context);
     }
+
 
     private string? ExtractSessionIdFromRequest(HttpListenerRequest request)
     {

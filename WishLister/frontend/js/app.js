@@ -329,29 +329,22 @@
     }
 
     goToMyWishlists() {
-        // Убираем текущий вишлист
         this.currentWishlist = null;
 
-        // Меняем хэш
         window.location.hash = 'wishlists';
 
-        // Явно показываем вкладку
         this.showAppSection('my-wishlists');
     };
 
     goToFriends() {
-        // Убираем текущий вишлист друга
         this.currentFriendWishlist = null;
 
-        // Меняем хэш
         window.location.hash = 'friends';
 
-        // Явно показываем вкладку
         this.showAppSection('friend-wishlists');
     };
 
     setupModalListeners() {
-        // Закрытие модальных окон
         document.querySelectorAll('.modal').forEach(modal => {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
@@ -360,7 +353,6 @@
             });
         });
 
-        // Закрытие по кнопкам
         document.getElementById('close-wishlist-modal').addEventListener('click', () => this.closeModal('wishlist-modal'));
         document.getElementById('close-item-modal').addEventListener('click', () => this.closeModal('item-modal'));
         document.getElementById('close-edit-profile-modal').addEventListener('click', () => this.closeModal('edit-profile-modal'));
@@ -694,62 +686,6 @@
                 </div>
             </div>
         `).join('');
-    };
-
-    renderFriendWishlistPageItems = function (items) {
-        const container = document.getElementById('friend-wishlist-page-items-container');
-
-        if (!items || items.length === 0) {
-            container.innerHTML = `
-                <div class="empty-state">
-                    <h3>В этом вишлисте пока нет подарков</h3>
-                    <p>Ваш друг ещё не добавил желаемые подарки</p>
-                </div>
-            `;
-            return;
-        }
-
-        const themeId = this.currentFriendWishlist?.theme?.id || 1;
-
-        const currentUserId = this.currentUser?.id;
-
-        container.innerHTML = items.map(item => {
-            const isReservedByMe = item.isReserved && item.reservedByUserId === currentUserId;
-
-            return `
-            <div class="item-card ${item.isReserved ? 'reserved' : ''}" data-item-id="${item.id}">
-                ${item.imageUrl ? `
-                    <img src="${item.imageUrl}" alt="${this.escapeHtml(item.title)}" class="item-image" 
-                         onerror="this.style.display='none'">
-                ` : ''}
-                <h4 class="item-title">${this.escapeHtml(item.title)}</h4>
-                ${item.price ? `<div class="item-price">${item.price.toLocaleString('ru-RU')} ₽</div>` : ''}
-                <div class="desire-level">
-                    ${'💖'.repeat(item.desireLevel)}${'🤍'.repeat(3 - item.desireLevel)}
-                </div>
-                <div class="item-meta">
-                    <div class="item-actions">
-                        <!-- Кнопка "Посмотреть" -->
-                        <button class="btn btn-outline theme-button-${themeId}" onclick="app.viewFriendItemDetails(${item.id})">
-                            Посмотреть
-                        </button>
-                
-                        ${!item.isReserved ?
-                        `<button class="btn btn-danger" onclick="app.reserveItem(${item.id})">
-                            Забронировать
-                        </button>` :
-                        isReservedByMe ?
-                            `<button class="btn btn-outline btn-outline-danger" onclick="app.unreserveItem(${item.id})">
-                            Отменить бронь
-                        </button>` :
-                            `<button class="btn btn-outline btn-outline-danger" disabled>
-                            Уже забронирован
-                        </button>`
-                    }
-                    </div>
-                </div>
-            </div>
-        `}).join('');
     };
 
 

@@ -94,6 +94,7 @@ public class WishlistController : BaseController
             {
                 await GetThemes(context);
             }
+
             else
             {
                 response.StatusCode = 404;
@@ -147,9 +148,7 @@ public class WishlistController : BaseController
                 id = l.Id,
                 url = l.Url,
                 title = l.Title,
-                price = l.Price,
                 isFromAI = l.IsFromAI,
-                isSelected = l.IsSelected
             }) 
         }).ToList();
 
@@ -278,9 +277,7 @@ public class WishlistController : BaseController
                 id = l.Id,
                 url = l.Url,
                 title = l.Title,
-                price = l.Price,
                 isFromAI = l.IsFromAI,
-                isSelected = l.IsSelected
             })
         }).ToList();
 

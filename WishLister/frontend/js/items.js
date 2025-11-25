@@ -256,7 +256,11 @@ WishListerApp.prototype.loadImage = function (imageData) {
     preview.innerHTML = `<img src="${imageData}" alt="Preview">`;
     removeBtn.style.display = 'block';
 
-    this.currentImageData = imageData;
+    if (imageData.startsWith('data:image/')) {
+        this.currentImageData = imageData;
+    } else {
+        this.currentImageData = null; 
+    }
 };
 
 WishListerApp.prototype.removeImage = function () {

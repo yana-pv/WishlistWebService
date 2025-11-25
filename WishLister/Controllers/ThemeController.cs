@@ -68,6 +68,7 @@ public class ThemeController
     {
         var path = context.Request.Url?.AbsolutePath ?? "";
         var themeId = GetIdFromUrl(path);
+
         if (themeId == null)
         {
             context.Response.StatusCode = 400;
@@ -106,7 +107,9 @@ public class ThemeController
         foreach (var part in parts)
         {
             if (int.TryParse(part, out var id))
+            {
                 return id;
+            }
         }
         return null;
     }

@@ -84,50 +84,6 @@ public class FriendRepository : IFriendRepository
     }
 
 
-    public async Task<List<FriendWishlist>> GetByUserIdAsync(int userId)
-    {
-        var friendWishlists = new List<FriendWishlist>();
-
-        await using var conn = new NpgsqlConnection(_connectionString);
-        await conn.OpenAsync();
-
-        var cmd = new NpgsqlCommand(
-            "SELECT fw.id, fw.user_id, fw.wishlist_id, fw.friend_name, fw.created_at, " +
-            "w.title, w.description, w.event_date, w.theme_id " +
-            "FROM friend_wishlists fw " +
-            "JOIN wishlists w ON w.id = fw.wishlist_id " +
-            "WHERE fw.user_id = @userId " +
-            "ORDER BY fw.created_at DESC", conn);
-        cmd.Parameters.AddWithValue("@userId", userId);
-
-        await using var reader = await cmd.ExecuteReaderAsync();
-        while (await reader.ReadAsync())
-        {
-            var friendWishlist = new FriendWishlist
-            {
-                Id = reader.GetInt32(0),
-                UserId = reader.GetInt32(1),
-                WishlistId = reader.GetInt32(2),
-                FriendName = reader.GetString(3),
-                CreatedAt = reader.GetDateTime(4)
-            };
-
-            friendWishlist.Wishlist = new Wishlist
-            {
-                Id = friendWishlist.WishlistId,
-                Title = reader.GetString(5),
-                Description = reader.IsDBNull(6) ? null : reader.GetString(6),
-                EventDate = reader.IsDBNull(7) ? null : reader.GetDateTime(7),
-                ThemeId = reader.GetInt32(8)
-            };
-
-            friendWishlists.Add(friendWishlist);
-        }
-
-        return friendWishlists;
-    }
-
-
     public async Task<FriendWishlist?> GetByUserAndWishlistAsync(int userId, int wishlistId)
     {
         await using var conn = new NpgsqlConnection(_connectionString);

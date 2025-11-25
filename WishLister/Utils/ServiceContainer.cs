@@ -4,10 +4,6 @@ using WishLister.Repository.Interfaces;
 using WishLister.Services;
 
 namespace WishLister.Utils;
-public interface IServiceContainer
-{
-    T GetService<T>();
-}
 
 
 public class ServiceContainer : IServiceContainer

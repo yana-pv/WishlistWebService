@@ -147,9 +147,7 @@ public class ItemController : BaseController
         {
             Url = l.Url,
             Title = l.Title,
-            Price = l.Price,
             IsFromAI = l.IsFromAI,
-            IsSelected = l.IsSelected
         }).ToList() ?? new List<ItemLink>();
 
         try
@@ -175,7 +173,6 @@ public class ItemController : BaseController
                         url = l.Url,
                         title = l.Title,
                         isFromAI = l.IsFromAI,
-                        isSelected = l.IsSelected
                     })
                 }
             });
@@ -215,9 +212,7 @@ public class ItemController : BaseController
         {
             Url = l.Url,
             Title = l.Title,
-            Price = l.Price,
             IsFromAI = l.IsFromAI,
-            IsSelected = l.IsSelected
         }).ToList() ?? new List<ItemLink>();
 
         var createdItem = await _itemService.CreateItemAsync(item, links);
@@ -241,7 +236,6 @@ public class ItemController : BaseController
                     url = l.Url,
                     title = l.Title,
                     isFromAI = l.IsFromAI,
-                    isSelected = l.IsSelected
                 })
             }
         });
@@ -286,9 +280,7 @@ public class ItemController : BaseController
                     id = l.Id,
                     url = l.Url,
                     title = l.Title,
-                    price = l.Price,
                     isFromAI = l.IsFromAI,
-                    isSelected = l.IsSelected
                 }),
                 wishlistId = item.WishlistId 
             }
@@ -364,9 +356,7 @@ public class ItemController : BaseController
                         id = l.Id,
                         url = l.Url,
                         title = l.Title,
-                        price = l.Price,
                         isFromAI = l.IsFromAI,
-                        isSelected = l.IsSelected
                     })
                 }
             });

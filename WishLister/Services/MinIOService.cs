@@ -1,6 +1,4 @@
-﻿// WishLister.Services\MinIOService.cs
-using Minio;
-using Minio.DataModel;
+﻿using Minio;
 using Minio.DataModel.Args;
 using System.Net;
 using WishLister.Utils;
@@ -25,6 +23,7 @@ public class MinIOService
             .Build();
     }
 
+
     public async Task<string> UploadImageFromHttpRequest(HttpListenerRequest request)
     {
         try
@@ -47,6 +46,7 @@ public class MinIOService
             }
 
             string fileExtension = ".jpg"; // по умолчанию
+
             if (contentType.StartsWith("image/"))
             {
                 fileExtension = GetFileExtension(contentType);
@@ -60,6 +60,7 @@ public class MinIOService
             var uniqueFileName = $"{Guid.NewGuid()}{fileExtension}";
 
             var bucketExists = await _minioClient.BucketExistsAsync(new BucketExistsArgs().WithBucket(_bucketName));
+
             if (!bucketExists)
             {
                 await _minioClient.MakeBucketAsync(new MakeBucketArgs().WithBucket(_bucketName));
@@ -84,6 +85,7 @@ public class MinIOService
 
             return directUrl;
         }
+
         catch (Exception ex)
         {
             throw;
@@ -97,7 +99,9 @@ public class MinIOService
         {
             var parts = base64Data.Split(',');
             if (parts.Length != 2)
+            {
                 throw new ArgumentException("Invalid base64 data format");
+            }
 
             var mimeType = parts[0].Split(';')[0].Split(':')[1];
             var imageBytes = Convert.FromBase64String(parts[1]);

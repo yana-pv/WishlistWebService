@@ -14,6 +14,7 @@ public class LinkController : BaseController
         _linkService = linkService;
     }
 
+
     public async Task HandleRequest(HttpListenerContext context)
     {
         var request = context.Request;
@@ -38,16 +39,6 @@ public class LinkController : BaseController
                     return;
                 }
                 await AddLink(context);
-            }
-            else if (method == "PUT" && path.StartsWith("/api/links/"))
-            {
-                if (userId == null)
-                {
-                    response.StatusCode = 401;
-                    await WriteJsonResponse(context, new { status = "error", message = "Unauthorized" });
-                    return;
-                }
-                await UpdateLink(context);
             }
             else if (method == "DELETE" && path.StartsWith("/api/links/"))
             {
@@ -95,8 +86,7 @@ public class LinkController : BaseController
             {
                 url = l.Url,
                 title = l.Title,
-                isFromAI = l.IsFromAI,
-                isSelected = l.IsSelected
+                isFromAI = l.IsFromAI
             })
         });
     }
@@ -110,9 +100,7 @@ public class LinkController : BaseController
         {
             Url = request.Url,
             Title = request.Title,
-            Price = request.Price,
             IsFromAI = request.IsFromAI,
-            IsSelected = request.IsSelected,
             ItemId = request.ItemId
         };
 
@@ -127,58 +115,13 @@ public class LinkController : BaseController
                 id = createdLink.Id,
                 url = createdLink.Url,
                 title = createdLink.Title,
-                price = createdLink.Price,
-                isFromAI = createdLink.IsFromAI,
-                isSelected = createdLink.IsSelected
+                isFromAI = createdLink.IsFromAI
             }
         });
     }
 
 
-    private async Task UpdateLink(HttpListenerContext context)
-    {
-        var path = context.Request.Url?.AbsolutePath ?? "";
-        var linkId = GetIdFromUrl(path);
-        if (linkId == null)
-        {
-            context.Response.StatusCode = 400;
-            await WriteJsonResponse(context, new { status = "error", message = "Invalid link ID" });
-            return;
-        }
-
-        var request = await ReadRequestBody<UpdateLinkRequest>(context.Request);
-
-        if (request.IsSelected)
-        {
-            var success = await _linkService.SetSelectedLinkAsync(request.ItemId, linkId.Value);
-            if (success)
-            {
-                await WriteJsonResponse(context, new
-                {
-                    status = "success",
-                    message = "Ссылка выбрана как основная"
-                });
-            }
-            else
-            {
-                await WriteJsonResponse(context, new
-                {
-                    status = "error",
-                    message = "Не удалось выбрать ссылку"
-                });
-            }
-        }
-        else
-        {
-            await WriteJsonResponse(context, new
-            {
-                status = "success",
-                message = "Ссылка обновлена"
-            });
-        }
-    }
-
-
+    
     private async Task DeleteLink(HttpListenerContext context)
     {
         var path = context.Request.Url?.AbsolutePath ?? "";
@@ -210,8 +153,3 @@ public class LinkController : BaseController
         }
     }
 }
-
-
-
-
-

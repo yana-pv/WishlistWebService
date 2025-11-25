@@ -32,10 +32,14 @@ public class AuthService
         }
 
         if (await _userRepository.LoginExistsAsync(request.Login))
+        {
             return (false, "Пользователь с таким логином уже существует", null);
+        }
 
         if (await _userRepository.EmailExistsAsync(request.Email))
+        {
             return (false, "Пользователь с таким email уже существует", null);
+        }
 
         var passwordHash = PasswordHasher.HashPassword(request.Password);
 
@@ -63,14 +67,20 @@ public class AuthService
     public async Task<(bool success, string message, string? sessionId)> LoginAsync(LoginRequest request)
     {
         if (string.IsNullOrWhiteSpace(request.Login) || string.IsNullOrWhiteSpace(request.Password))
+        {
             return (false, "Логин и пароль обязательны", null);
+        }
 
         var user = await _userRepository.GetByLoginAsync(request.Login.Trim());
         if (user == null)
+        {
             return (false, "Неверный логин или пароль", null);
+        }
 
         if (!PasswordHasher.VerifyPassword(request.Password, user.PasswordHash))
+        {
             return (false, "Неверный логин или пароль", null);
+        }
 
         var result = await _sessionService.CreateSessionAsync(user.Id);
         return (result.success, result.message, result.session?.Id);

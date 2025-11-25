@@ -23,6 +23,7 @@ public class SessionService
     public async Task<(bool success, string message, Session? session)> CreateSessionAsync(int userId)
     {
         var user = await _userRepository.GetByIdAsync(userId);
+
         if (user == null)
         {
             return (false, "Пользователь не найден", null);
@@ -45,11 +46,15 @@ public class SessionService
     public async Task<Session?> ValidateSessionAsync(string sessionId)
     {
         if (string.IsNullOrEmpty(sessionId))
+        { 
             return null;
+        }
 
         var session = await _sessionRepository.GetByIdAsync(sessionId);
         if (session == null)
+        {
             return null;
+        }
 
         if (session.ExpiresAt > DateTime.UtcNow.AddHours(1)) // если больше 1 часа до истечения
         {

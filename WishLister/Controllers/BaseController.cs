@@ -20,11 +20,15 @@ public abstract class BaseController
         var sessionId = ExtractSessionIdFromRequest(context.Request);
 
         if (string.IsNullOrEmpty(sessionId))
+        {
             return null;
+        }
 
         var session = await _sessionService.ValidateSessionAsync(sessionId);
         if (session == null)
+        {
             return null;
+        }
 
         return session.UserId;
     }

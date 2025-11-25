@@ -13,6 +13,7 @@
                 password: document.getElementById('login-password').value
             };
 
+
             try {
                 const response = await fetch('/api/auth/login', {
                     method: 'POST',
@@ -25,31 +26,23 @@
 
                 const data = await response.json();
 
-                if (response.ok) {
-                    app.showNotification('Вход выполнен успешно!', 'success');
+                if (response.status === 200 && data.status === "success") {
+                    app.showNotification(data.message || 'Вход выполнен успешно!', 'success');
 
-                    // Устанавливаем куку и даем время для её сохранения
-                    await new Promise(resolve => setTimeout(resolve, 200));
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
 
-                    if (typeof app !== 'undefined' && app) {
-                        await app.checkAuth();
-                        // Небольшая задержка перед перенаправлением
-                        setTimeout(() => {
-                            window.location.href = '/';
-                        }, 300);
-                    }
-                    else {
-                        setTimeout(() => {
-                            location.reload();
-                        }, 300);
-                    }
                 }
+
                 else {
-                    app.showNotification(data.message || 'Ошибка входа', 'error');
+                    app.showNotification(data.message || 'Неверный логин или пароль', 'error');
                 }
+
             }
+
             catch (error) {
-                console.error('Login error:', error);
+                console.error('ОШИБКА СЕТИ:', error);
                 if (app) {
                     app.showNotification('Ошибка соединения', 'error');
                 }
@@ -71,6 +64,7 @@
                 confirmPassword: document.getElementById('register-confirm-password').value
             };
 
+
             try {
                 const response = await fetch('/api/auth/register', {
                     method: 'POST',
@@ -83,29 +77,20 @@
 
                 const data = await response.json();
 
-                if (response.ok) {
-                    app.showNotification('Регистрация успешна!', 'success');
+                
+                if (response.status === 200 && data.status === "success") {
+                    app.showNotification(data.message || 'Регистрация успешна!', 'success');
 
-                    // Устанавливаем куку и даем время для её сохранения
-                    await new Promise(resolve => setTimeout(resolve, 200));
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
 
-                    if (typeof app !== 'undefined' && app) {
-                        await app.checkAuth();
-                        // Небольшая задержка перед перенаправлением
-                        setTimeout(() => {
-                            window.location.href = '/';
-                        }, 300);
-                    }
-                    else {
-                        setTimeout(() => {
-                            location.reload();
-                        }, 300);
-                    }
                 }
                 else {
                     app.showNotification(data.message || 'Ошибка регистрации', 'error');
                 }
             }
+
             catch (error) {
                 console.error('Registration error:', error);
                 if (app) {
@@ -116,15 +101,14 @@
     }
 });
 
+
 function validateLoginForm() {
     let isValid = true;
     const username = document.getElementById('login-username');
     const password = document.getElementById('login-password');
 
-    // Сброс ошибок
     clearErrors('login');
 
-    // Проверка логина
     if (!username.value.trim()) {
         showError('login-username-error', 'Логин обязателен');
         isValid = false;
@@ -134,7 +118,6 @@ function validateLoginForm() {
         isValid = false;
     }
 
-    // Проверка пароля
     if (!password.value) {
         showError('login-password-error', 'Пароль обязателен');
         isValid = false;
@@ -147,6 +130,7 @@ function validateLoginForm() {
     return isValid;
 }
 
+
 function validateRegisterForm() {
     let isValid = true;
     const username = document.getElementById('register-username');
@@ -155,10 +139,8 @@ function validateRegisterForm() {
     const password = document.getElementById('register-password');
     const confirmPassword = document.getElementById('register-confirm-password');
 
-    // Сброс ошибок
     clearErrors('register');
 
-    // Проверка имени пользователя
     if (!username.value.trim()) {
         showError('register-username-error', 'Имя пользователя обязательно');
         isValid = false;
@@ -172,7 +154,6 @@ function validateRegisterForm() {
         isValid = false;
     }
 
-    // Проверка email
     if (!email.value.trim()) {
         showError('register-email-error', 'Email обязателен');
         isValid = false;
@@ -182,7 +163,6 @@ function validateRegisterForm() {
         isValid = false;
     }
 
-    // Проверка логина
     if (!login.value.trim()) {
         showError('register-login-error', 'Логин обязателен');
         isValid = false;
@@ -196,7 +176,6 @@ function validateRegisterForm() {
         isValid = false;
     }
 
-    // Проверка пароля
     if (!password.value) {
         showError('register-password-error', 'Пароль обязателен');
         isValid = false;
@@ -210,7 +189,6 @@ function validateRegisterForm() {
         isValid = false;
     }
 
-    // Проверка подтверждения пароля
     if (!confirmPassword.value) {
         showError('register-confirm-password-error', 'Подтвердите пароль');
         isValid = false;
@@ -223,10 +201,12 @@ function validateRegisterForm() {
     return isValid;
 }
 
+
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
 }
+
 
 function showError(elementId, message) {
     const errorElement = document.getElementById(elementId);
@@ -236,6 +216,7 @@ function showError(elementId, message) {
     const inputElement = document.getElementById(elementId.replace('-error', ''));
     inputElement.classList.add('error');
 }
+
 
 function clearErrors(formType) {
     const errorElements = document.querySelectorAll(`[id$="-error"]`);
@@ -251,50 +232,3 @@ function clearErrors(formType) {
         }
     });
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    // Валидация логина в реальном времени
-    const loginInputs = ['login-username', 'login-password'];
-    loginInputs.forEach(inputId => {
-        const input = document.getElementById(inputId);
-        if (input) {
-            input.addEventListener('blur', validateLoginForm);
-            input.addEventListener('input', function () {
-                const errorElement = document.getElementById(inputId + '-error');
-                if (errorElement) {
-                    errorElement.classList.remove('show');
-                    input.classList.remove('error');
-                }
-            });
-        }
-    });
-
-    // Валидация регистрации в реальном времени
-    const registerInputs = [
-        'register-username', 'register-email', 'register-login',
-        'register-password', 'register-confirm-password'
-    ];
-
-    registerInputs.forEach(inputId => {
-        const input = document.getElementById(inputId);
-        if (input) {
-            input.addEventListener('blur', validateRegisterForm);
-            input.addEventListener('input', function () {
-                const errorElement = document.getElementById(inputId + '-error');
-                if (errorElement) {
-                    errorElement.classList.remove('show');
-                    input.classList.remove('error');
-                }
-
-                if (inputId === 'register-password' || inputId === 'register-confirm-password') {
-                    const password = document.getElementById('register-password').value;
-                    const confirmPassword = document.getElementById('register-confirm-password').value;
-
-                    if (password && confirmPassword && password !== confirmPassword) {
-                        showError('register-confirm-password-error', 'Пароли не совпадают');
-                    }
-                }
-            });
-        }
-    });
-});

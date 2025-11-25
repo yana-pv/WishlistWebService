@@ -244,9 +244,7 @@ public class ItemRepository : IItemRepository
                 ItemId = reader.GetInt32(1),
                 Url = reader.GetString(2),
                 Title = reader.IsDBNull(3) ? null : reader.GetString(3),
-                Price = reader.IsDBNull(4) ? null : reader.GetDecimal(4),
                 IsFromAI = reader.GetBoolean(5),
-                IsSelected = reader.GetBoolean(6)
             });
         }
 

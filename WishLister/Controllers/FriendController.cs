@@ -194,9 +194,7 @@ public class FriendController : BaseController
                 id = l.Id,
                 url = l.Url,
                 title = l.Title,
-                price = l.Price,
                 isFromAI = l.IsFromAI,
-                isSelected = l.IsSelected
             })
         }).ToList();
 

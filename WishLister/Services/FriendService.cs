@@ -38,21 +38,31 @@ public class FriendService
     public async Task<FriendWishlist> AddFriendWishlistAsync(int userId, string shareToken, string friendName)
     {
         if (string.IsNullOrWhiteSpace(shareToken))
+        {
             throw new ArgumentException("Share token is required");
+        }
 
         if (string.IsNullOrWhiteSpace(friendName))
+        {
             throw new ArgumentException("Friend name is required");
+        }
 
         var wishlist = await _wishlistRepository.GetByShareTokenAsync(shareToken);
         if (wishlist == null)
+        {
             throw new KeyNotFoundException("Вишлист не найден");
+        }
 
         if (wishlist.UserId == userId)
+        {
             throw new InvalidOperationException("Нельзя добавить свой собственный вишлист");
+        }
 
         var existing = await _friendRepository.GetByUserAndWishlistAsync(userId, wishlist.Id);
         if (existing != null)
+        {
             throw new InvalidOperationException("Этот вишлист уже добавлен");
+        }
 
         var friendWishlist = new FriendWishlist
         {
@@ -68,18 +78,26 @@ public class FriendService
     public async Task<FriendWishlist> SaveFriendWishlistFromUrlAsync(int userId, string shareToken, string? friendName)
     {
         if (string.IsNullOrWhiteSpace(shareToken))
+        {
             throw new ArgumentException("Share token is required");
+        }
 
         var wishlist = await _wishlistRepository.GetByShareTokenAsync(shareToken);
         if (wishlist == null)
+        {
             throw new KeyNotFoundException("Вишлист не найден");
+        }
 
         if (wishlist.UserId == userId)
+        {
             throw new InvalidOperationException("Нельзя сохранить свой собственный вишлист");
+        }
 
         var existing = await _friendRepository.GetByUserAndWishlistAsync(userId, wishlist.Id);
         if (existing != null)
+        {
             throw new InvalidOperationException("Этот вишлист уже сохранен");
+        }
 
         var friendWishlist = new FriendWishlist
         {
@@ -96,11 +114,15 @@ public class FriendService
     {
         var friendWishlist = await _friendRepository.GetByIdAsync(friendWishlistId);
         if (friendWishlist == null || friendWishlist.UserId != userId)
+        {
             return null;
+        }
 
         var wishlist = await _wishlistRepository.GetByIdAsync(friendWishlist.WishlistId);
         if (wishlist == null)
+        {
             return null;
+        }
 
         wishlist.Theme = await _themeRepository.GetByIdAsync(wishlist.ThemeId);
         var items = await _itemRepository.GetByWishlistIdAsync(wishlist.Id);
@@ -120,7 +142,9 @@ public class FriendService
     {
         var friendWishlist = await _friendRepository.GetByIdAsync(friendWishlistId);
         if (friendWishlist == null || friendWishlist.UserId != userId)
+        {
             return false;
+        }
 
         return await _friendRepository.DeleteAsync(friendWishlistId);
     }

@@ -1,9 +1,4 @@
 ﻿using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WishLister.Models.Entities;
 using WishLister.Repository.Interfaces;
 using WishLister.Utils;
@@ -74,15 +69,5 @@ public class SessionRepository : ISessionRepository
 
         var affected = await cmd.ExecuteNonQueryAsync();
         return affected > 0;
-    }
-
-
-    public async Task CleanupExpiredSessionsAsync()
-    {
-        await using var conn = new NpgsqlConnection(_connectionString);
-        await conn.OpenAsync();
-
-        var cmd = new NpgsqlCommand("DELETE FROM sessions WHERE expires_at <= CURRENT_TIMESTAMP", conn);
-        await cmd.ExecuteNonQueryAsync();
     }
 }

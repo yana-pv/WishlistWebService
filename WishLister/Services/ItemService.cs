@@ -28,27 +28,16 @@ public class ItemService
 
         var wishlist = await _wishlistRepository.GetByIdAsync(item.WishlistId);
         if (wishlist == null)
+        {
             throw new KeyNotFoundException("Вишлист не найден");
+        }
 
         var createdItem = await _itemRepository.CreateAsync(item);
 
-        List<ItemLink> createdLinks = new List<ItemLink>();
         foreach (var link in links)
         {
             link.ItemId = createdItem.Id;
-            var createdLink = await _linkRepository.CreateAsync(link);
-            createdLinks.Add(createdLink);
-        }
-
-        if (createdLinks.Any())
-        {
-            ItemLink selectedLink = null;
-            selectedLink = createdLinks.FirstOrDefault(l => l.IsFromAI && l.IsSelected) ??
-                           createdLinks.FirstOrDefault(l => l.IsFromAI) ??
-                           createdLinks.FirstOrDefault(l => !l.IsFromAI && l.IsSelected) ??
-                           createdLinks.FirstOrDefault(l => !l.IsFromAI) ??
-                           createdLinks.First();
-            await _linkRepository.SetSelectedLinkAsync(createdItem.Id, selectedLink.Id);
+            await _linkRepository.CreateAsync(link);
         }
 
         return createdItem;
@@ -78,10 +67,14 @@ public class ItemService
     {
         var item = await _itemRepository.GetByIdAsync(itemId);
         if (item == null)
+        {
             throw new KeyNotFoundException("Товар не найден");
+        }
 
         if (item.IsReserved)
+        {
             throw new InvalidOperationException("Товар уже забронирован");
+        }
 
         return await _itemRepository.ReserveItemAsync(itemId, userId);
     }
@@ -91,10 +84,14 @@ public class ItemService
     {
         var item = await _itemRepository.GetByIdAsync(itemId);
         if (item == null)
+        {
             throw new KeyNotFoundException("Товар не найден");
+        }
 
         if (!item.IsReserved || item.ReservedByUserId != userId)
+        {
             throw new UnauthorizedAccessException("Вы не можете освободить этот товар");
+        }
 
         return await _itemRepository.UnreserveItemAsync(itemId, userId);
     }
@@ -120,9 +117,7 @@ public class ItemService
                 {
                     Url = link.Url,
                     Title = link.Title,
-                    Price = link.Price,
                     IsFromAI = link.IsFromAI,
-                    IsSelected = link.IsSelected,
                     ItemId = updatedItem.Id
                 };
 

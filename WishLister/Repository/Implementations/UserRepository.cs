@@ -128,36 +128,6 @@ public class UserRepository : IUserRepository
     }
 
 
-    public async Task<User?> GetByEmailAsync(string email)
-    {
-        await using var conn = new NpgsqlConnection(_connectionString);
-        await conn.OpenAsync();
-
-        var cmd = new NpgsqlCommand(
-            "SELECT id, username, email, login, password_hash, avatar_url, phone, created_at, updated_at " +
-            "FROM users WHERE email = @email", conn); 
-        cmd.Parameters.AddWithValue("@email", email);
-
-        await using var reader = await cmd.ExecuteReaderAsync();
-        if (await reader.ReadAsync())
-        {
-            return new User
-            {
-                Id = reader.GetInt32(0),
-                Username = reader.GetString(1),
-                Email = reader.GetString(2),
-                Login = reader.GetString(3),
-                PasswordHash = reader.GetString(4),
-                AvatarUrl = reader.IsDBNull(5) ? null : reader.GetString(5),
-                Phone = reader.IsDBNull(6) ? null : reader.GetString(6),
-                CreatedAt = reader.GetDateTime(7),
-                UpdatedAt = reader.GetDateTime(8)
-            };
-        }
-        return null; 
-    }
-
-
     public async Task<User> UpdateAsync(User user)
     {
         await using var conn = new NpgsqlConnection(_connectionString);

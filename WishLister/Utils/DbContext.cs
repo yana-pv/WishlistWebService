@@ -1,8 +1,8 @@
 ﻿using Npgsql;
-using System.Security.Cryptography;
-using System.Text;
+
 
 namespace WishLister.Utils;
+
 public class DbContext
 {
     public static string ConnectionString => ConfigHelper.GetConnectionString();
@@ -63,9 +63,7 @@ public class DbContext
             id SERIAL PRIMARY KEY,
             url TEXT NOT NULL,
             title TEXT,
-            price DECIMAL(10,2),
             is_from_ai BOOLEAN DEFAULT FALSE,
-            is_selected BOOLEAN DEFAULT FALSE,
             item_id INT REFERENCES wishlist_items(id) ON DELETE CASCADE,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         );

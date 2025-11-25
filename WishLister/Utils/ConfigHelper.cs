@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 
 namespace WishLister.Utils;
+
 public static class ConfigHelper
 {
     private static readonly IConfigurationRoot Configuration;
@@ -20,9 +21,7 @@ public static class ConfigHelper
         }
     }
 
-    public static string GetConnectionString() =>
-        Configuration.GetConnectionString("DefaultConnection");
-
+    public static string GetConnectionString() => Configuration.GetConnectionString("DefaultConnection");
     public static string GetMinIoEndpoint() => Configuration["MinIO:Endpoint"];
     public static string GetMinIoAccessKey() => Configuration["MinIO:AccessKey"];
     public static string GetMinIoSecretKey() => Configuration["MinIO:SecretKey"];

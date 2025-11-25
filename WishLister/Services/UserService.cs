@@ -29,13 +29,19 @@ public class UserService
     {
         var user = await _userRepository.GetByIdAsync(userId);
         if (user == null)
+        {
             throw new KeyNotFoundException("Пользователь не найден");
+        }
 
         if (!Validators.IsValidUsername(username))
+        {
             throw new ArgumentException("Некорректное имя пользователя");
+        }
 
         if (!Validators.IsValidEmail(email))
+        {
             throw new ArgumentException("Некорректный email");
+        }
 
         if (user.Email != email)
         {
@@ -55,14 +61,20 @@ public class UserService
     {
         var user = await _userRepository.GetByIdAsync(userId);
         if (user == null)
+        {
             throw new KeyNotFoundException("Пользователь не найден");
+        }
 
         if (!PasswordHasher.VerifyPassword(confirmPassword, user.PasswordHash))
+        {
             throw new UnauthorizedAccessException("Неверный пароль для подтверждения");
+        }
 
         var success = await _userRepository.DeleteAsync(userId);
         if (!success)
+        {
             throw new InvalidOperationException("Не удалось удалить аккаунт");
+        }
     }
 
 

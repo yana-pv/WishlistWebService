@@ -18,6 +18,7 @@ public class ErrorHandlingMiddleware
         {
             await _next(context);
         }
+
         catch (Exception ex)
         {
             await HandleExceptionAsync(context, ex);

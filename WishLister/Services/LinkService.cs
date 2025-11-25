@@ -19,18 +19,16 @@ public class LinkService
     public async Task<ItemLink> AddLinkAsync(ItemLink link)
     {
         if (string.IsNullOrWhiteSpace(link.Url))
+        {
             throw new ArgumentException("URL ссылки обязателен");
+        }
 
         if (!Validators.IsValidUrl(link.Url))
+        {
             throw new ArgumentException("Некорректный URL");
+        }
 
         return await _linkRepository.CreateAsync(link);
-    }
-
-
-    public async Task<bool> SetSelectedLinkAsync(int itemId, int linkId)
-    {
-        return await _linkRepository.SetSelectedLinkAsync(itemId, linkId);
     }
 
 
@@ -44,13 +42,11 @@ public class LinkService
     {
         var searchResults = await _searchService.SearchProductsAsync(itemTitle);
 
-        return searchResults.Select((result, index) => new ItemLink
+        return searchResults.Select(result => new ItemLink
         {
             Url = result.Url,
             Title = result.Title,
-            Price = result.Price,
             IsFromAI = true,
-            IsSelected = result.IsDirectLink && index == 0 
         }).ToList();
     }
 }
